@@ -1,0 +1,71 @@
+import React from "react";
+
+export default function Header() {
+  return (
+    <header className="bg-gradient-to-b from-blue-400 to-blue-300 rounded-t-xl px-4 pt-4 pb-2">
+      <div className="flex items-center justify-between mb-2">
+        {/* Logo 與標題 */}
+        <div className="flex items-center gap-2">
+          <span className="text-2xl">📖</span>
+          <span className="text-white text-xl font-bold">漫畫館</span>
+        </div>
+        {/* 搜尋框 */}
+        <div className="flex-1 mx-8 max-w-2xl">
+          <form className="flex">
+            <input
+              type="text"
+              placeholder="輸入你要搜尋的漫畫名稱，可使用中文拼音"
+              className="flex-1 rounded-l-lg px-4 py-2 text-gray-700 focus:outline-none bg-white"
+            />
+            <button
+              type="submit"
+              className="bg-orange-500 text-white px-6 py-2 rounded-r-lg font-bold hover:bg-orange-600 transition-colors"
+            >
+              搜索
+            </button>
+          </form>
+        </div>
+        {/* 右側功能連結 */}
+        <div className="flex gap-8 text-white text-base font-medium">
+          <a href="#" className="hover:underline">
+            設為桌面圖標
+          </a>
+          <a href="#" className="hover:underline">
+            收藏看漫畫
+          </a>
+        </div>
+      </div>
+      {/* 主選單 */}
+      {/* <nav className="flex items-center gap-2 mt-2">
+        <button className="text-2xl text-white px-2">☰</button>
+        <a href="#" className="text-white px-3 py-2 font-medium">
+          漫畫大全導航
+        </a>
+        <a href="#" className="text-white px-3 py-2 font-medium">
+          首頁
+        </a>
+        <a href="#" className="text-white px-3 py-2 font-medium">
+          最新更新
+        </a>
+        <a href="#" className="text-white px-3 py-2 font-medium">
+          排行榜
+        </a>
+        <a href="#" className="text-white px-3 py-2 font-medium">
+          連載漫畫
+        </a>
+        <a href="#" className="text-white px-3 py-2 font-medium">
+          完結漫畫
+        </a>
+        <a href="#" className="text-white px-3 py-2 font-medium">
+          漫畫大全
+        </a>
+        <a href="#" className="text-white px-3 py-2 font-medium">
+          漫畫家
+        </a>
+        <a href="#" className="bg-orange-500 text-white px-3 py-2 font-medium rounded">
+          漫畫隨心看
+        </a>
+      </nav> */}
+    </header>
+  );
+}

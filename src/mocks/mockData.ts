@@ -1,0 +1,58 @@
+import { ContentCardProps } from "@/components/ContentCard";
+
+export const mockContentData: ContentCardProps[] = [
+  {
+    id: "1",
+    title: "良太殺死了弟弟",
+    rating: 8.0,
+    updateStatus: "更新至第02話",
+    updateDate: "2025-07-14",
+    tag: "",
+    tagColor: "bg-orange-500",
+  },
+  {
+    id: "2",
+    title: "魔法學院的秘密",
+    rating: 9.2,
+    updateStatus: "更新至第15話",
+    updateDate: "2025-07-13",
+    tag: "熱門",
+    tagColor: "bg-red-500",
+  },
+  {
+    id: "3",
+    title: "都市傳說：午夜電梯",
+    rating: 7.8,
+    updateStatus: "更新至第08話",
+    updateDate: "2025-07-12",
+    tag: "完結",
+    tagColor: "bg-green-500",
+  },
+  {
+    id: "4",
+    title: "咖啡廳的日常",
+    rating: 8.5,
+    updateStatus: "更新至第25話",
+    updateDate: "2025-07-11",
+    tag: "推薦",
+    tagColor: "bg-blue-500",
+  },
+  {
+    id: "5",
+    title: "異世界冒險記",
+    rating: 8.9,
+    updateStatus: "更新至第32話",
+    updateDate: "2025-07-10",
+    tag: "更新",
+    tagColor: "bg-orange-500",
+  },
+  {
+    id: "6",
+    title: "校園戀愛物語",
+    rating: 7.6,
+    updateStatus: "更新至第18話",
+    updateDate: "2025-07-09",
+    tag: "新作",
+    tagColor: "bg-purple-500",
+  },
+];
