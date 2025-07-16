@@ -1,51 +1,52 @@
 import mongoose, { Schema, Document } from "mongoose";
 
 export interface IChapter extends Document {
-  mangaId: mongoose.Types.ObjectId;
+  mangaId: string;
   chapterNumber: number;
   title: string;
   content: string;
   wordCount: number;
   publishDate?: Date;
-  createdAt: Date;
-  updatedAt: Date;
+  createDate: Date;
+  updateDate: Date;
 }
 
-const ChapterSchema: Schema = new Schema(
-  {
-    mangaId: {
-      type: Schema.Types.ObjectId,
-      ref: "Manga",
-      required: true,
-    },
-    chapterNumber: {
-      type: Number,
-      required: true,
-      min: 1,
-    },
-    title: {
-      type: String,
-      required: true,
-      trim: true,
-    },
-    content: {
-      type: String,
-      required: true,
-    },
-    wordCount: {
-      type: Number,
-      default: 0,
-      min: 0,
-    },
-    publishDate: {
-      type: Date,
-      default: Date.now,
-    },
+const ChapterSchema: Schema = new Schema({
+  mangaId: {
+    type: Schema.Types.ObjectId,
+    ref: "Manga",
+    required: true,
   },
-  {
-    timestamps: true,
-  }
-);
+  chapterNumber: {
+    type: Number,
+    required: true,
+    min: 1,
+  },
+  title: {
+    type: String,
+    required: true,
+    trim: true,
+  },
+  content: {
+    type: String,
+    required: true,
+  },
+  wordCount: {
+    type: Number,
+    default: 0,
+    min: 0,
+  },
+  publishDate: {
+    type: Date,
+    default: Date.now,
+  },
+  createDate: {
+    type: Date,
+  },
+  updateDate: {
+    type: Date,
+  },
+});
 
 // 確保每個漫畫的章節編號唯一
 ChapterSchema.index({ mangaId: 1, chapterNumber: 1 }, { unique: true });

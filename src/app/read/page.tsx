@@ -1,42 +1,94 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
-import { mockMangaData, MangaDetail, MangaChapter } from "@/mocks/mangaData";
+
+interface MangaData {
+  _id: string;
+  title: string;
+  description?: string;
+  coverImage?: string;
+  rating: number;
+  totalChapters: number;
+  currentChapter: number;
+  genre: string[];
+  audience?: string;
+  status?: string;
+  year?: number;
+  createdAt?: string;
+  updatedAt?: string;
+}
+
+interface ChapterData {
+  _id: string;
+  mangaId: string;
+  chapterNumber: number;
+  title: string;
+  content: string;
+  wordCount: number;
+  publishDate: string;
+  createdAt?: string;
+  updatedAt?: string;
+}
 
 export default function ReadPage() {
   const searchParams = useSearchParams();
   const router = useRouter();
 
-  const [mangaData, setMangaData] = useState<MangaDetail | null>(null);
-  const [currentChapter, setCurrentChapter] = useState<MangaChapter | null>(null);
+  const [mangaData, setMangaData] = useState<MangaData | null>(null);
+  const [chapters, setChapters] = useState<ChapterData[]>([]);
+  const [currentChapter, setCurrentChapter] = useState<ChapterData | null>(null);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
   const mangaId = searchParams.get("id");
   const chapterNumber = parseInt(searchParams.get("chapter") || "1");
 
+  // 取得漫畫資訊與章節列表
   useEffect(() => {
-    if (mangaId) {
-      // 模擬 API 呼叫
-      const fetchMangaData = async () => {
-        setLoading(true);
-        // 模擬網路延遲
-        await new Promise(resolve => setTimeout(resolve, 500));
+    if (!mangaId) return;
+    setLoading(true);
+    setError(null);
+    const fetchData = async () => {
+      try {
+        // 取得漫畫資訊
+        const mangaRes = await fetch(
+          `/api/mangas?` +
+            new URLSearchParams({ _id: mangaId }).toString() +
+            "&chapter=" +
+            chapterNumber.toString()
+        );
+        const mangaJson = await mangaRes.json();
 
-        const data = mockMangaData[mangaId];
-        if (data) {
-          setMangaData(data);
-          const chapter = data.chapters.find(c => c.chapterNumber === chapterNumber);
-          setCurrentChapter(chapter || data.chapters[0]);
+        if (mangaJson.success && mangaJson.data.length > 0) {
+          setMangaData(mangaJson.data[0]);
+        } else {
+          setError("找不到漫畫唷！");
+          setLoading(false);
+          return;
         }
-        setLoading(false);
-      };
-
-      fetchMangaData();
-    }
+        // 取得章節列表
+        const chaptersRes = await fetch(`/api/mangas/${mangaId}/chapters`);
+        const chaptersJson = await chaptersRes.json();
+        if (chaptersJson.success) {
+          setChapters(chaptersJson.data);
+          // 找到當前章節
+          const chapter =
+            chaptersJson.data.find((c: ChapterData) => c.chapterNumber === chapterNumber) ||
+            chaptersJson.data[0];
+          setCurrentChapter(chapter);
+        } else {
+          setError("找不到章節");
+        }
+      } catch (e) {
+        setError("API 請求失敗");
+      }
+      setLoading(false);
+    };
+    fetchData();
   }, [mangaId, chapterNumber]);
 
   const handleChapterChange = (newChapter: number) => {
-    if (mangaData && newChapter >= 1 && newChapter <= mangaData.totalChapters) {
+    if (chapters.length > 0 && newChapter >= 1 && newChapter <= chapters.length) {
       router.push(`/read?id=${mangaId}&chapter=${newChapter}`);
     }
   };
@@ -56,11 +108,11 @@ export default function ReadPage() {
     );
   }
 
-  if (!mangaData || !currentChapter) {
+  if (error || !mangaData || !currentChapter) {
     return (
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
         <div className="text-center">
-          <h1 className="text-2xl font-bold text-gray-800 mb-4">找不到漫畫</h1>
+          <h1 className="text-2xl font-bold text-gray-800 mb-4">{error || "找不到漫畫喔！"}</h1>
           <button
             onClick={handleBackToList}
             className="bg-orange-500 text-white px-6 py-2 rounded-lg hover:bg-orange-600 transition-colors"
@@ -96,11 +148,15 @@ export default function ReadPage() {
           </div>
 
           <div className="flex flex-wrap gap-2 mb-4">
-            {mangaData.genre.map((genre, index) => (
-              <span key={index} className="bg-orange-100 text-orange-800 px-2 py-1 rounded text-xs">
-                {genre}
-              </span>
-            ))}
+            {mangaData.genre &&
+              mangaData.genre.map((genre, index) => (
+                <span
+                  key={index}
+                  className="bg-orange-100 text-orange-800 px-2 py-1 rounded text-xs"
+                >
+                  {genre}
+                </span>
+              ))}
           </div>
 
           <p className="text-gray-700 text-sm">{mangaData.description}</p>
