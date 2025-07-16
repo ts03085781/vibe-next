@@ -10,7 +10,6 @@ export interface MangaChapter {
 export interface MangaDetail {
   id: string;
   title: string;
-  author: string;
   totalChapters: number;
   currentChapter: number;
   rating: number;
@@ -24,7 +23,6 @@ export const mockMangaData: Record<string, MangaDetail> = {
   "1": {
     id: "1",
     title: "良太殺死了弟弟",
-    author: "山田太郎",
     totalChapters: 5,
     currentChapter: 1,
     rating: 8.0,
@@ -208,7 +206,6 @@ export const mockMangaData: Record<string, MangaDetail> = {
   "2": {
     id: "2",
     title: "魔法學院的秘密",
-    author: "魔法師艾莉",
     totalChapters: 3,
     currentChapter: 1,
     rating: 9.2,

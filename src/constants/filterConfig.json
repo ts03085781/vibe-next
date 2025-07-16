@@ -4,44 +4,31 @@
     "key": "genre",
     "options": [
       { "label": "全部", "value": "all" },
-      { "label": "熱血", "value": "hot" },
-      { "label": "冒險", "value": "adventure" },
-      { "label": "魔幻", "value": "fantasy" },
-      { "label": "神鬼", "value": "ghost" },
-      { "label": "搞笑", "value": "comedy" },
-      { "label": "萌系", "value": "moe" },
-      { "label": "愛情", "value": "romance" },
-      { "label": "科幻", "value": "sci-fi" },
-      { "label": "魔法", "value": "magic" },
-      { "label": "格鬥", "value": "fight" },
-      { "label": "武俠", "value": "martial" },
-      { "label": "機戰", "value": "mecha" },
-      { "label": "戰爭", "value": "war" },
-      { "label": "競技", "value": "competition" },
-      { "label": "體育", "value": "sports" },
-      { "label": "校園", "value": "school" },
-      { "label": "生活", "value": "life" },
-      { "label": "勵志", "value": "inspire" },
-      { "label": "歷史", "value": "history" },
-      { "label": "偽娘", "value": "otokonoko" },
-      { "label": "宅男", "value": "otaku" },
-      { "label": "腐女", "value": "fujoshi" },
-      { "label": "耽美", "value": "danmei" },
-      { "label": "百合", "value": "yuri" },
-      { "label": "後宮", "value": "harem" },
-      { "label": "治癒", "value": "healing" },
-      { "label": "美食", "value": "gourmet" },
-      { "label": "推理", "value": "detective" },
-      { "label": "懸疑", "value": "suspense" },
-      { "label": "恐怖", "value": "horror" },
-      { "label": "四格", "value": "yonkoma" },
-      { "label": "職場", "value": "workplace" },
-      { "label": "偵探", "value": "investigation" },
-      { "label": "社會", "value": "society" },
-      { "label": "音樂", "value": "music" },
-      { "label": "舞蹈", "value": "dance" },
-      { "label": "雜誌", "value": "magazine" },
-      { "label": "黑道", "value": "yakuza" }
+      { "label": "熱血", "value": "熱血" },
+      { "label": "冒險", "value": "冒險" },
+      { "label": "推理", "value": "推理" },
+      { "label": "懸疑", "value": "懸疑" },
+      { "label": "恐怖", "value": "恐怖" },
+      { "label": "神鬼", "value": "神鬼" },
+      { "label": "搞笑", "value": "搞笑" },
+      { "label": "愛情", "value": "愛情" },
+      { "label": "科幻", "value": "科幻" },
+      { "label": "魔法", "value": "魔法" },
+      { "label": "格鬥", "value": "格鬥" },
+      { "label": "武俠", "value": "武俠" },
+      { "label": "戰爭", "value": "戰爭" },
+      { "label": "競技", "value": "競技" },
+      { "label": "體育", "value": "體育" },
+      { "label": "校園", "value": "校園" },
+      { "label": "生活", "value": "生活" },
+      { "label": "勵志", "value": "勵志" },
+      { "label": "歷史", "value": "歷史" },
+      { "label": "宅男", "value": "宅男" },
+      { "label": "腐女", "value": "腐女" },
+      { "label": "治癒", "value": "治癒" },
+      { "label": "美食", "value": "美食" },
+      { "label": "社會", "value": "社會" },
+      { "label": "音樂", "value": "音樂" }
     ]
   },
   {
@@ -49,11 +36,11 @@
     "key": "audience",
     "options": [
       { "label": "全部", "value": "all" },
-      { "label": "少女", "value": "girl" },
-      { "label": "少年", "value": "boy" },
-      { "label": "青年", "value": "youth" },
-      { "label": "兒童", "value": "child" },
-      { "label": "通用", "value": "general" }
+      { "label": "少女", "value": "少女" },
+      { "label": "少年", "value": "少年" },
+      { "label": "青年", "value": "青年" },
+      { "label": "兒童", "value": "兒童" },
+      { "label": "成人", "value": "成人" }
     ]
   },
   {
@@ -61,26 +48,7 @@
     "key": "year",
     "options": [
       { "label": "全部", "value": "all" },
-      { "label": "2025年", "value": "2025" },
-      { "label": "2024年", "value": "2024" },
-      { "label": "2023年", "value": "2023" },
-      { "label": "2022年", "value": "2022" },
-      { "label": "2021年", "value": "2021" },
-      { "label": "2020年", "value": "2020" },
-      { "label": "2019年", "value": "2019" },
-      { "label": "2018年", "value": "2018" },
-      { "label": "2017年", "value": "2017" },
-      { "label": "2016年", "value": "2016" },
-      { "label": "2015年", "value": "2015" },
-      { "label": "2014年", "value": "2014" },
-      { "label": "2013年", "value": "2013" },
-      { "label": "2012年", "value": "2012" },
-      { "label": "2011年", "value": "2011" },
-      { "label": "2010年", "value": "2010" },
-      { "label": "00年代", "value": "2000s" },
-      { "label": "90年代", "value": "1990s" },
-      { "label": "80年代", "value": "1980s" },
-      { "label": "更早", "value": "earlier" }
+      { "label": "2025", "value": "2025" }
     ]
   },
   {
@@ -113,8 +81,7 @@
       { "label": "W", "value": "W" },
       { "label": "X", "value": "X" },
       { "label": "Y", "value": "Y" },
-      { "label": "Z", "value": "Z" },
-      { "label": "0-9", "value": "0-9" }
+      { "label": "Z", "value": "Z" }
     ]
   },
   {
@@ -122,8 +89,8 @@
     "key": "status",
     "options": [
       { "label": "全部", "value": "all" },
-      { "label": "連載", "value": "serial" },
-      { "label": "完結", "value": "end" }
+      { "label": "連載", "value": "連載" },
+      { "label": "完結", "value": "完結" }
     ]
   }
 ]

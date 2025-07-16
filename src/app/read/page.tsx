@@ -80,7 +80,6 @@ export default function ReadPage() {
           <div className="flex items-center justify-between mb-4">
             <div>
               <h1 className="text-2xl font-bold text-gray-800 mb-2">{mangaData.title}</h1>
-              <p className="text-gray-600">作者：{mangaData.author}</p>
             </div>
             <button
               onClick={handleBackToList}

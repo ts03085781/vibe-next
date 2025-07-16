@@ -7,21 +7,21 @@ export default function Header() {
         {/* Logo 與標題 */}
         <div className="flex items-center gap-2">
           <span className="text-2xl">📖</span>
-          <span className="text-white text-xl font-bold">漫畫館</span>
+          <span className="text-white text-xl font-bold">AI小說坊</span>
         </div>
         {/* 搜尋框 */}
         <div className="flex-1 mx-8 max-w-2xl">
           <form className="flex">
             <input
               type="text"
-              placeholder="輸入你要搜尋的漫畫名稱，可使用中文拼音"
+              placeholder="輸入你要搜尋的漫畫名稱"
               className="flex-1 rounded-l-lg px-4 py-2 text-gray-700 focus:outline-none bg-white"
             />
             <button
               type="submit"
               className="bg-orange-500 text-white px-6 py-2 rounded-r-lg font-bold hover:bg-orange-600 transition-colors"
             >
-              搜索
+              搜尋
             </button>
           </form>
         </div>
