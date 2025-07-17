@@ -8,7 +8,6 @@ import sortConfig from "@/constants/sortConfig.json";
 
 export default function Home() {
   const [selectedFilters, setSelectedFilters] = useState<Record<string, string>>({
-    region: "all",
     genre: "all",
     audience: "all",
     year: "all",
@@ -30,7 +29,6 @@ export default function Home() {
 
   const handleReset = () => {
     setSelectedFilters({
-      region: "all",
       genre: "all",
       audience: "all",
       year: "all",
@@ -78,16 +76,19 @@ export default function Home() {
     <div className="min-h-screen bg-gray-50">
       <div className="container mx-auto px-4 py-8">
         <div className="space-y-6">
-          <SortPanel
-            options={sortConfig as SortOption[]}
-            selected={selectedSort}
-            onSelect={handleSortSelect}
-          />
+          {/* 過濾器 */}
           <FilterPanel
             config={filterConfig as FilterConfig[]}
             selected={selectedFilters}
             onSelect={handleFilterSelect}
             onReset={handleReset}
+          />
+
+          {/* 排序 */}
+          <SortPanel
+            options={sortConfig as SortOption[]}
+            selected={selectedSort}
+            onSelect={handleSortSelect}
           />
 
           {/* 內容卡片列表 */}

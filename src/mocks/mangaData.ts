@@ -11,7 +11,6 @@ export interface MangaDetail {
   id: string;
   title: string;
   totalChapters: number;
-  currentChapter: number;
   rating: number;
   genre: string[];
   description: string;
@@ -24,7 +23,6 @@ export const mockMangaData: Record<string, MangaDetail> = {
     id: "1",
     title: "良太殺死了弟弟",
     totalChapters: 5,
-    currentChapter: 1,
     rating: 8.0,
     genre: ["懸疑", "心理", "家庭"],
     description: "一個關於家庭、背叛與救贖的深刻故事。良太在一個雨夜做出了改變一切的決定...",
@@ -207,7 +205,6 @@ export const mockMangaData: Record<string, MangaDetail> = {
     id: "2",
     title: "魔法學院的秘密",
     totalChapters: 3,
-    currentChapter: 1,
     rating: 9.2,
     genre: ["奇幻", "魔法", "校園"],
     description: "在神秘的魔法學院中，年輕的魔法師們發現了一個驚人的秘密...",

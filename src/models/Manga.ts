@@ -6,7 +6,6 @@ export interface IManga extends Document {
   coverImage?: string;
   rating: number;
   totalChapters: number;
-  currentChapter: number;
   genre: string[];
   audience?: string;
   status?: string;
@@ -41,11 +40,6 @@ const MangaSchema: Schema = new Schema(
       type: Number,
       default: 0,
       min: 0,
-    },
-    currentChapter: {
-      type: Number,
-      default: 1,
-      min: 1,
     },
     genre: {
       type: [String],
