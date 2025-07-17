@@ -6,9 +6,7 @@ export interface IChapter extends Document {
   title: string;
   content: string;
   wordCount: number;
-  publishDate?: Date;
-  createDate: Date;
-  updateDate: Date;
+  publishDate: Date;
 }
 
 const ChapterSchema: Schema = new Schema({
@@ -39,12 +37,6 @@ const ChapterSchema: Schema = new Schema({
   publishDate: {
     type: Date,
     default: Date.now,
-  },
-  createDate: {
-    type: Date,
-  },
-  updateDate: {
-    type: Date,
   },
 });
 

@@ -36,8 +36,8 @@
     "key": "audience",
     "options": [
       { "label": "全部", "value": "all" },
-      { "label": "少女", "value": "少女" },
       { "label": "少年", "value": "少年" },
+      { "label": "少女", "value": "少女" },
       { "label": "青年", "value": "青年" },
       { "label": "兒童", "value": "兒童" },
       { "label": "成人", "value": "成人" }

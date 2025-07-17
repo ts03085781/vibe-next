@@ -1,18 +1,18 @@
 import React from "react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
+import dayjs from "dayjs";
 
 export interface ContentCardProps {
   _id: string;
   title: string;
   coverImage?: string;
   rating: number;
-  updateStatus: string;
   updateDate: string;
+  createDate: string;
+  totalChapters: number;
   tag?: string;
-  tagColor?: string;
   description?: string;
-  onClick?: () => void;
 }
 
 export default function ContentCard({
@@ -20,22 +20,16 @@ export default function ContentCard({
   title,
   coverImage,
   rating,
-  updateStatus,
   updateDate,
+  createDate,
+  totalChapters,
   tag,
-  tagColor = "bg-orange-500",
   description,
-  onClick,
 }: ContentCardProps) {
   const router = useRouter();
 
   const handleClick = () => {
-    if (onClick) {
-      onClick();
-    } else {
-      // 預設跳轉到閱讀頁面
-      router.push(`/read?id=${_id}&chapter=1`);
-    }
+    router.push(`/read?id=${_id}&chapter=1`);
   };
 
   return (
@@ -48,7 +42,7 @@ export default function ContentCard({
         {/* 標籤 */}
         {tag && (
           <div
-            className={`absolute top-2 left-2 ${tagColor} text-white px-2 py-1 text-xs font-medium transform -rotate-12 rounded-sm`}
+            className={`absolute top-2 left-2 bg-orange-500 text-white px-2 py-1 text-xs font-medium transform -rotate-12 rounded-sm`}
           >
             {tag}
           </div>
@@ -59,7 +53,7 @@ export default function ContentCard({
           {coverImage ? (
             <Image src={coverImage} alt={title} fill className="object-cover" />
           ) : (
-            <div className="text-6xl font-bold text-blue-300">{_id}</div>
+            <div className="text-3xl font-bold text-blue-400">{title}</div>
           )}
         </div>
       </div>
@@ -75,14 +69,21 @@ export default function ContentCard({
             <span className="text-orange-500">★</span>
             <span className="text-orange-500 font-medium text-sm">{rating.toFixed(1)}</span>
           </div>
-          <span className="text-gray-500 text-xs">{updateStatus}</span>
+          <span className="text-gray-500 text-xs">{`更新至第 ${totalChapters} 章`}</span>
         </div>
 
         {/* 簡介 */}
         <div className="text-gray-500 text-xs line-clamp-3">{description}</div>
 
+        {/*發布日期 */}
+        <div className="text-gray-500 text-xs">
+          發布於：{dayjs(createDate).format("YYYY-MM-DD")}
+        </div>
+
         {/* 更新日期 */}
-        <div className="text-gray-500 text-xs">更新於：{updateDate}</div>
+        <div className="text-gray-500 text-xs">
+          更新於：{dayjs(updateDate).format("YYYY-MM-DD")}
+        </div>
       </div>
     </div>
   );

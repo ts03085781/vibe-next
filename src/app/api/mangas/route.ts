@@ -124,6 +124,12 @@ export async function GET(request: NextRequest) {
  * @param {string} body.status - 狀態
  * @param {number} body.year - 年份
  * @param {string} body.alpha - 字母篩選
+ * @param {string} body.coverImage - 封面圖片
+ * @param {number} body.totalChapters - 總章節數
+ * @param {string} body.audience - 受眾
+ * @param {Date} body.createDate - 發布日期
+ * @param {Date} body.updateDate - 更新日期
+ * @param {number} body.collectionsCount - 收藏數
  * @returns {Object} 創建的漫畫資料
  */
 export async function POST(request: NextRequest) {
@@ -132,8 +138,16 @@ export async function POST(request: NextRequest) {
 
     const body = await request.json();
 
+    // 自動補上當前時間
+    const now = new Date();
+    const mangaData = {
+      ...body,
+      createDate: now,
+      updateDate: now,
+    };
+
     // 建立新漫畫
-    const manga = new Manga(body);
+    const manga = new Manga(mangaData);
     await manga.save();
 
     return NextResponse.json(
