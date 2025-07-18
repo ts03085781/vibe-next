@@ -9,7 +9,7 @@ export default function Footer() {
           <div className="col-span-1 md:col-span-2">
             <div className="flex items-center gap-2 mb-4">
               <span className="text-2xl">📖</span>
-              <span className="text-xl font-bold">漫畫館</span>
+              <span className="text-xl font-bold">AI漫畫館</span>
             </div>
             <p className="text-gray-300 text-sm mb-4">
               提供最新、最熱門的短篇小說與漫畫內容，讓您隨時享受閱讀的樂趣。
@@ -85,7 +85,7 @@ export default function Footer() {
         {/* 版權資訊 */}
         <div className="border-t border-gray-700 mt-8 pt-6">
           <div className="flex flex-col md:flex-row justify-between items-center text-sm text-gray-400">
-            <p>© 2025 漫畫館. 保留所有權利.</p>
+            <p>© 2025 AI漫畫館. 保留所有權利.</p>
             <p className="mt-2 md:mt-0">本網站僅供學習與娛樂使用，所有內容版權歸原作者所有</p>
           </div>
         </div>

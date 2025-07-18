@@ -35,7 +35,6 @@ export default function ReadPage() {
   const router = useRouter();
 
   const [mangaData, setMangaData] = useState<MangaData | null>(null);
-  const [chapters, setChapters] = useState<ChapterData[]>([]);
   const [currentChapter, setCurrentChapter] = useState<ChapterData | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -51,12 +50,7 @@ export default function ReadPage() {
     const fetchData = async () => {
       try {
         // 取得漫畫資訊
-        const mangaRes = await fetch(
-          `/api/mangas?` +
-            new URLSearchParams({ _id: mangaId }).toString() +
-            "&chapter=" +
-            chapterNumber.toString()
-        );
+        const mangaRes = await fetch(`/api/mangas?_id=${mangaId}`);
         const mangaJson = await mangaRes.json();
 
         if (mangaJson.success && mangaJson.data.length > 0) {
@@ -67,15 +61,10 @@ export default function ReadPage() {
           return;
         }
         // 取得章節列表
-        const chaptersRes = await fetch(`/api/mangas/${mangaId}/chapters`);
-        const chaptersJson = await chaptersRes.json();
-        if (chaptersJson.success) {
-          setChapters(chaptersJson.data);
-          // 找到當前章節
-          const chapter =
-            chaptersJson.data.find((c: ChapterData) => c.chapterNumber === chapterNumber) ||
-            chaptersJson.data[0];
-          setCurrentChapter(chapter);
+        const chapterRes = await fetch(`/api/mangas/${mangaId}/${chapterNumber}`);
+        const chapterJson = await chapterRes.json();
+        if (chapterJson.success) {
+          setCurrentChapter(chapterJson.data);
         } else {
           setError("找不到章節");
         }
@@ -88,9 +77,7 @@ export default function ReadPage() {
   }, [mangaId, chapterNumber]);
 
   const handleChapterChange = (newChapter: number) => {
-    if (chapters.length > 0 && newChapter >= 1 && newChapter <= chapters.length) {
-      router.push(`/read?id=${mangaId}&chapter=${newChapter}`);
-    }
+    router.push(`/read?id=${mangaId}&chapter=${newChapter}`);
   };
 
   const handleBackToList = () => {

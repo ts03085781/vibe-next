@@ -38,7 +38,7 @@ export default function ContentCard({
       onClick={handleClick}
     >
       {/* 上方內容區 - 封面區域 */}
-      <div className="relative bg-gray-100 h-56">
+      <div className="relative bg-gray-100 h-86">
         {/* 標籤 */}
         {tag && (
           <div

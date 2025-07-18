@@ -20,8 +20,8 @@ export interface IManga extends Document {
 
 const MangaSchema: Schema = new Schema({
   _id: {
-    type: String,
-    default: () => new mongoose.Types.ObjectId().toString(),
+    type: mongoose.Types.ObjectId,
+    default: () => new mongoose.Types.ObjectId(),
   },
   title: {
     type: String,

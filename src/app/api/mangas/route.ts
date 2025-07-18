@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import dbConnect from "@/lib/mongodb";
 import Manga from "@/models/Manga";
+import mongoose from "mongoose";
 
 /**
  * 漫畫管理 API 端點
@@ -13,6 +14,7 @@ import Manga from "@/models/Manga";
  * 獲取漫畫列表
  *
  * @route GET /api/mangas
+ * @param {string} _id - 漫畫 ID
  * @param {string} page - 頁碼 (預設: 1)
  * @param {string} limit - 每頁數量 (預設: 20)
  * @param {string} sort - 排序方式 (latest_release|rating|title_asc|title_desc)
@@ -29,6 +31,7 @@ export async function GET(request: NextRequest) {
     const { searchParams } = new URL(request.url);
 
     // 獲取查詢參數
+    const _id = searchParams.get("_id");
     const page = parseInt(searchParams.get("page") || "1");
     const limit = parseInt(searchParams.get("limit") || "20");
     const sort = searchParams.get("sort") || "latest_release";
@@ -40,6 +43,10 @@ export async function GET(request: NextRequest) {
 
     // 建立查詢條件
     const query: Record<string, unknown> = {};
+
+    if (_id) {
+      query._id = new mongoose.Types.ObjectId(_id);
+    }
 
     if (genre && genre !== "all") {
       query.genre = { $in: [genre] };
