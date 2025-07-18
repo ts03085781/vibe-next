@@ -149,6 +149,8 @@ export async function POST(request: NextRequest) {
     const now = new Date();
     const mangaData = {
       ...body,
+      year: now.getFullYear(),
+      totalChapters: 0,
       createDate: now,
       updateDate: now,
     };

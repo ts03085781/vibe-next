@@ -2,6 +2,8 @@
 import React, { useState, useEffect } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import Image from "next/image";
+import { countWords } from "@/utils/common";
+import dayjs from "dayjs";
 
 interface MangaData {
   _id: string;
@@ -15,8 +17,8 @@ interface MangaData {
   audience?: string;
   status?: string;
   year?: number;
-  createdAt?: string;
-  updatedAt?: string;
+  createDate?: Date;
+  updateDate?: Date;
 }
 
 interface ChapterData {
@@ -25,10 +27,7 @@ interface ChapterData {
   chapterNumber: number;
   title: string;
   content: string;
-  wordCount: number;
-  publishDate: string;
-  createdAt?: string;
-  updatedAt?: string;
+  publishDate: Date;
 }
 
 export default function ReadPage() {
@@ -162,9 +161,9 @@ export default function ReadPage() {
             <h2 className="text-lg font-bold text-gray-800">
               第 {currentChapter.chapterNumber} 章：{currentChapter.title}
             </h2>
-            <div className="flex items-center gap-2 text-sm text-gray-600">
-              <span>字數：{currentChapter.wordCount}</span>
-              <span>發布：{currentChapter.publishDate}</span>
+            <div className="flex items-center gap-4 text-sm text-gray-600">
+              <span>本章字數: {countWords(currentChapter.content)}</span>
+              <span>發布於: {dayjs(currentChapter.publishDate).format("YYYY-MM-DD")}</span>
             </div>
           </div>
         </div>
