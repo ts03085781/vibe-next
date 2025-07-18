@@ -15,6 +15,7 @@ export interface IManga extends Document {
   createDate: Date;
   updateDate: Date;
   collectionsCount: number;
+  tag: string;
 }
 
 const MangaSchema: Schema = new Schema({
@@ -63,7 +64,6 @@ const MangaSchema: Schema = new Schema({
   },
   year: {
     type: Number,
-    min: 2025,
     max: new Date().getFullYear(),
     required: true,
   },
@@ -82,6 +82,11 @@ const MangaSchema: Schema = new Schema({
     type: Number,
     default: 0,
     min: 0,
+  },
+  tag: {
+    type: String,
+    trim: true,
+    required: false,
   },
 });
 

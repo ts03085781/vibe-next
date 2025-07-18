@@ -14,6 +14,7 @@ type Form = {
   year: number;
   alpha: string;
   collectionsCount: number;
+  tag: string;
 };
 
 const initialForm = {
@@ -28,6 +29,7 @@ const initialForm = {
   year: new Date().getFullYear(),
   alpha: "A",
   collectionsCount: 0,
+  tag: "",
 };
 
 export default function MangaAdminForm() {
@@ -269,6 +271,19 @@ export default function MangaAdminForm() {
               onChange={handleChange}
               placeholder="0"
               min={0}
+              className="border-1 border-gray-300 rounded-lg p-2 text-gray-700"
+            />
+          </div>
+          <div className="flex flex-col space-y-2">
+            <label htmlFor="tag" className="font-medium text-gray-700">
+              標籤
+            </label>
+            <input
+              name="tag"
+              id="tag"
+              value={form.tag}
+              onChange={handleChange}
+              placeholder="標籤"
               className="border-1 border-gray-300 rounded-lg p-2 text-gray-700"
             />
           </div>

@@ -34,7 +34,10 @@ export const audienceList = [
   { label: "成人", value: "成人" },
 ];
 
-export const yearList = [{ label: "2025", value: "2025" }];
+export const yearList = [
+  { label: "2024", value: "2024" },
+  { label: "2025", value: "2025" },
+];
 
 export const alphaList = [
   { label: "A", value: "A" },
