@@ -11,6 +11,10 @@ export interface IChapter extends Document {
 }
 
 const ChapterSchema: Schema = new Schema({
+  _id: {
+    type: String,
+    default: () => new mongoose.Types.ObjectId().toString(),
+  },
   mangaId: {
     type: Schema.Types.ObjectId,
     ref: "Manga",
