@@ -3,8 +3,9 @@ import React, { useState, useEffect } from "react";
 import FilterPanel, { FilterConfig } from "@/components/FilterPanel";
 import SortPanel, { SortOption } from "@/components/SortPanel";
 import ContentCard from "@/components/ContentCard";
-import filterConfig from "@/constants/filterConfig.json";
-import sortConfig from "@/constants/sortConfig.json";
+import { filterConfig } from "@/constants/filterConfig";
+import { sortConfig } from "@/constants/sortConfig";
+import { IManga } from "@/models/Manga";
 
 export default function Home() {
   const [selectedFilters, setSelectedFilters] = useState<Record<string, string>>({
@@ -16,7 +17,7 @@ export default function Home() {
   });
 
   const [selectedSort, setSelectedSort] = useState<string>("latest_release");
-  const [contentData, setContentData] = useState<any[]>([]);
+  const [contentData, setContentData] = useState<IManga[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -95,7 +96,7 @@ export default function Home() {
           {loading && <div>載入中...</div>}
           {error && <div className="text-red-500">{error}</div>}
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
-            {contentData.map(item => (
+            {contentData.map((item: IManga) => (
               <ContentCard key={item._id} {...item} />
             ))}
           </div>

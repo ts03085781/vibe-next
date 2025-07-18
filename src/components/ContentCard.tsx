@@ -8,8 +8,8 @@ export interface ContentCardProps {
   title: string;
   coverImage?: string;
   rating: number;
-  updateDate: string;
-  createDate: string;
+  updateDate: Date;
+  createDate: Date;
   totalChapters: number;
   tag?: string;
   description?: string;

@@ -1,6 +1,7 @@
 import mongoose, { Schema, Document } from "mongoose";
 
 export interface IManga extends Document {
+  _id: string;
   title: string;
   description: string;
   coverImage?: string;

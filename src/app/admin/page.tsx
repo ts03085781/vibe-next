@@ -1,5 +1,6 @@
 "use client";
 import React, { useState } from "react";
+import { genreList, audienceList, statusList, yearList, alphaList } from "@/constants/filterConfig";
 
 type Form = {
   title: string;
@@ -173,31 +174,11 @@ export default function MangaAdminForm() {
               required
               className="border-1 border-gray-300 rounded-lg p-2 text-gray-700"
             >
-              <option value="熱血">熱血</option>
-              <option value="冒險">冒險</option>
-              <option value="推理">推理</option>
-              <option value="懸疑">懸疑</option>
-              <option value="恐怖">恐怖</option>
-              <option value="神鬼">神鬼</option>
-              <option value="搞笑">搞笑</option>
-              <option value="愛情">愛情</option>
-              <option value="科幻">科幻</option>
-              <option value="魔法">魔法</option>
-              <option value="格鬥">格鬥</option>
-              <option value="武俠">武俠</option>
-              <option value="戰爭">戰爭</option>
-              <option value="競技">競技</option>
-              <option value="體育">體育</option>
-              <option value="校園">校園</option>
-              <option value="生活">生活</option>
-              <option value="勵志">勵志</option>
-              <option value="歷史">歷史</option>
-              <option value="宅男">宅男</option>
-              <option value="腐女">腐女</option>
-              <option value="治癒">治癒</option>
-              <option value="美食">美食</option>
-              <option value="社會">社會</option>
-              <option value="音樂">音樂</option>
+              {genreList.map((genre: { value: string; label: string }) => (
+                <option key={genre.value} value={genre.value}>
+                  {genre.label}
+                </option>
+              ))}
             </select>
           </div>
           <div className="flex flex-col space-y-2">
@@ -212,11 +193,11 @@ export default function MangaAdminForm() {
               required
               className="border-1 border-gray-300 rounded-lg p-2 text-gray-700"
             >
-              <option value="少年">少年</option>
-              <option value="少女">少女</option>
-              <option value="青年">青年</option>
-              <option value="兒童">兒童</option>
-              <option value="全部">成人</option>
+              {audienceList.map((audience: { value: string; label: string }) => (
+                <option key={audience.value} value={audience.value}>
+                  {audience.label}
+                </option>
+              ))}
             </select>
           </div>
           <div className="flex flex-col space-y-2">
@@ -231,25 +212,31 @@ export default function MangaAdminForm() {
               required
               className="border-1 border-gray-300 rounded-lg p-2 text-gray-700"
             >
-              <option value="連載中">連載</option>
-              <option value="已完結">完結</option>
+              {statusList.map((status: { value: string; label: string }) => (
+                <option key={status.value} value={status.value}>
+                  {status.label}
+                </option>
+              ))}
             </select>
           </div>
           <div className="flex flex-col space-y-2">
             <label htmlFor="year" className="font-medium text-gray-700">
               年份
             </label>
-            <input
+            <select
               name="year"
               id="year"
-              type="number"
               value={form.year}
               onChange={handleChange}
-              placeholder="年份"
-              min={1900}
-              max={new Date().getFullYear()}
+              required
               className="border-1 border-gray-300 rounded-lg p-2 text-gray-700"
-            />
+            >
+              {yearList.map((year: { value: string; label: string }) => (
+                <option key={year.value} value={year.value}>
+                  {year.label}
+                </option>
+              ))}
+            </select>
           </div>
           <div className="flex flex-col space-y-2">
             <label htmlFor="alpha" className="font-medium text-gray-700">
@@ -263,32 +250,11 @@ export default function MangaAdminForm() {
               required
               className="border-1 border-gray-300 rounded-lg p-2 text-gray-700"
             >
-              <option value="A">A</option>
-              <option value="B">B</option>
-              <option value="C">C</option>
-              <option value="D">D</option>
-              <option value="E">E</option>
-              <option value="F">F</option>
-              <option value="G">G</option>
-              <option value="H">H</option>
-              <option value="I">I</option>
-              <option value="J">J</option>
-              <option value="K">K</option>
-              <option value="L">L</option>
-              <option value="M">M</option>
-              <option value="N">N</option>
-              <option value="O">O</option>
-              <option value="P">P</option>
-              <option value="Q">Q</option>
-              <option value="R">R</option>
-              <option value="S">S</option>
-              <option value="T">T</option>
-              <option value="U">U</option>
-              <option value="V">V</option>
-              <option value="W">W</option>
-              <option value="X">X</option>
-              <option value="Y">Y</option>
-              <option value="Z">Z</option>
+              {alphaList.map((alpha: { value: string; label: string }) => (
+                <option key={alpha.value} value={alpha.value}>
+                  {alpha.label}
+                </option>
+              ))}
             </select>
           </div>
           <div className="flex flex-col space-y-2">
