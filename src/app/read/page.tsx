@@ -1,6 +1,7 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
+import Image from "next/image";
 
 interface MangaData {
   _id: string;
@@ -115,38 +116,44 @@ export default function ReadPage() {
     <div className="min-h-screen bg-gray-50">
       <div className="container mx-auto px-4 py-8">
         {/* 漫畫資訊區 */}
-        <div className="bg-white rounded-lg shadow-md p-6 mb-6">
-          <div className="flex items-center justify-between mb-4">
-            <div>
-              <h1 className="text-2xl font-bold text-gray-800 mb-2">{mangaData.title}</h1>
+        <div className="flex gap-4 bg-white rounded-lg shadow-md p-6 mb-6">
+          <Image
+            className="rounded-lg"
+            src={mangaData.coverImage || ""}
+            alt={mangaData.title}
+            width={180}
+            height={180}
+          />
+          <div className="w-full">
+            <div className="flex items-center justify-between mb-4">
+              <div>
+                <h1 className="text-2xl font-bold text-gray-800 mb-2">{mangaData.title}</h1>
+              </div>
+              <button
+                onClick={handleBackToList}
+                className="bg-gray-500 text-white px-4 py-2 rounded-lg hover:bg-gray-600 transition-colors"
+              >
+                返回列表
+              </button>
             </div>
-            <button
-              onClick={handleBackToList}
-              className="bg-gray-500 text-white px-4 py-2 rounded-lg hover:bg-gray-600 transition-colors"
-            >
-              返回列表
-            </button>
+            <div className="flex items-center gap-4 text-sm text-gray-600 mb-4">
+              <span>評分：{mangaData.rating} ★</span>
+              <span>總章節：{mangaData.totalChapters}</span>
+              <span>當前章節：{currentChapter.chapterNumber}</span>
+            </div>
+            <div className="flex flex-wrap gap-2 mb-4">
+              {mangaData.genre &&
+                mangaData.genre.map((genre, index) => (
+                  <span
+                    key={index}
+                    className="bg-orange-100 text-orange-800 px-2 py-1 rounded text-xs"
+                  >
+                    {genre}
+                  </span>
+                ))}
+            </div>
+            <p className="text-gray-700 text-sm">{mangaData.description}</p>
           </div>
-
-          <div className="flex items-center gap-4 text-sm text-gray-600 mb-4">
-            <span>評分：{mangaData.rating} ★</span>
-            <span>總章節：{mangaData.totalChapters}</span>
-            <span>當前章節：{currentChapter.chapterNumber}</span>
-          </div>
-
-          <div className="flex flex-wrap gap-2 mb-4">
-            {mangaData.genre &&
-              mangaData.genre.map((genre, index) => (
-                <span
-                  key={index}
-                  className="bg-orange-100 text-orange-800 px-2 py-1 rounded text-xs"
-                >
-                  {genre}
-                </span>
-              ))}
-          </div>
-
-          <p className="text-gray-700 text-sm">{mangaData.description}</p>
         </div>
 
         {/* 章節導航 */}
