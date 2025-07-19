@@ -17,6 +17,7 @@ interface MangaData {
   audience?: string;
   status?: string;
   year?: number;
+  alpha?: string;
   createDate?: Date;
   updateDate?: Date;
 }
@@ -124,7 +125,7 @@ export default function ReadPage() {
             height={180}
           />
           <div className="w-full">
-            <div className="flex items-center justify-between mb-4">
+            <div className="flex items-center justify-between mb-2">
               <div>
                 <h1 className="text-2xl font-bold text-gray-800 mb-2">{mangaData.title}</h1>
               </div>
@@ -135,12 +136,12 @@ export default function ReadPage() {
                 返回列表
               </button>
             </div>
-            <div className="flex items-center gap-4 text-sm text-gray-600 mb-4">
+            <div className="flex items-center gap-4 text-s text-gray-700 mb-3">
               <span>評分：{mangaData.rating} ★</span>
               <span>總章節：{mangaData.totalChapters}</span>
               <span>當前章節：{currentChapter.chapterNumber}</span>
             </div>
-            <div className="flex flex-wrap gap-2 mb-4">
+            <div className="flex flex-wrap gap-2 mb-3">
               {mangaData.genre &&
                 mangaData.genre.map((genre, index) => (
                   <span
@@ -151,7 +152,15 @@ export default function ReadPage() {
                   </span>
                 ))}
             </div>
-            <p className="text-gray-700 text-sm">{mangaData.description}</p>
+            <p className="text-gray-600 text-sm mb-2">
+              出品年份: {dayjs(mangaData.createDate).format("YYYY-MM-DD")}
+            </p>
+            <p className="text-gray-600 text-sm mb-2">
+              最新更新: {dayjs(mangaData.updateDate).format("YYYY-MM-DD")}
+            </p>
+            <p className="text-gray-600 text-sm mb-2">字母索引: {mangaData.alpha}</p>
+            <p className="text-gray-600 text-sm mb-4">目前狀態: {mangaData.status}</p>
+            <p className="text-gray-600 text-sm">故事描述: {mangaData.description}</p>
           </div>
         </div>
 
