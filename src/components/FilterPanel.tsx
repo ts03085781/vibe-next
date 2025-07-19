@@ -16,7 +16,7 @@ export interface FilterPanelProps {
 export default function FilterPanel({ config, selected, onSelect, onReset }: FilterPanelProps) {
   return (
     <div className="bg-white rounded-xl shadow p-6">
-      <h2 className="text-xl font-bold mb-4 text-orange-600">漫畫大全 - 分類篩選</h2>
+      <h2 className="text-xl font-bold mb-4 text-orange-600">小說大全-分類篩選</h2>
       <div className="space-y-4">
         {config.map(cat => (
           <div key={cat.key} className="flex items-center flex-wrap gap-2">

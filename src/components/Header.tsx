@@ -15,7 +15,7 @@ export default function Header() {
       <div className="flex items-center justify-between mb-2">
         {/* Logo 與標題 */}
         <div className="flex items-center gap-2 cursor-pointer" onClick={handleBackToList}>
-          <Image src="/images/logo.png" alt="logo" width={32} height={32} />
+          <Image src="/images/logo.png" alt="logo" width={52} height={52} />
           <span className="text-white text-xl font-bold">AI小說坊</span>
         </div>
         {/* 搜尋框 */}
