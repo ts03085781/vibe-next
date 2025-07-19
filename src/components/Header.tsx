@@ -1,6 +1,7 @@
 "use client";
 import React from "react";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
 
 export default function Header() {
   const router = useRouter();
@@ -10,11 +11,11 @@ export default function Header() {
   };
 
   return (
-    <header className="bg-gradient-to-b from-blue-400 to-blue-300 rounded-t-xl px-4 pt-4 pb-2">
+    <header className="bg-gray-800 px-4 pt-4 pb-2">
       <div className="flex items-center justify-between mb-2">
         {/* Logo 與標題 */}
         <div className="flex items-center gap-2 cursor-pointer" onClick={handleBackToList}>
-          <span className="text-2xl">📖</span>
+          <Image src="/images/logo.png" alt="logo" width={32} height={32} />
           <span className="text-white text-xl font-bold">AI小說坊</span>
         </div>
         {/* 搜尋框 */}
