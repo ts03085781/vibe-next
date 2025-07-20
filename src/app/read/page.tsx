@@ -164,6 +164,22 @@ export default function ReadPage() {
           </div>
         </div>
 
+        {/* 章節列表 */}
+        <div className="bg-white rounded-lg shadow-md p-4 mb-6">
+          <h2 className="text-xl font-bold text-gray-800 mb-4">章節列表</h2>
+          <div className="flex  gap-2">
+            {Array.from({ length: mangaData.totalChapters }, (_, index) => (
+              <div
+                key={index}
+                className="border border-gray-200 rounded-md cursor-pointer text-gray-600 pt-2 pb-2 px-4 hover:bg-gray-100 "
+                onClick={() => handleChapterChange(index + 1)}
+              >
+                <span>{`第${index + 1}章`}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+
         {/* 章節導航 */}
         <div className="bg-white rounded-lg shadow-md p-4 mb-6">
           <div className="flex items-center justify-between">
