@@ -27,18 +27,17 @@ const SearchResultPage = () => {
       setError(null);
 
       try {
-        // 使用模擬資料進行搜尋
-        const filteredResults = mockSearchResults.filter(
-          manga =>
-            manga.title.toLowerCase().includes(keyword.toLowerCase()) ||
-            manga.description.toLowerCase().includes(keyword.toLowerCase()) ||
-            manga.genre.some(g => g.toLowerCase().includes(keyword.toLowerCase()))
-        );
+        // 使用真實的搜尋 API
+        // const res = await fetch(`/api/mangas/search?q=${encodeURIComponent(keyword)}`);
+        const res = await fetch(`/api/mangas?search=${encodeURIComponent(keyword)}`);
 
-        // 模擬 API 延遲
-        await new Promise(resolve => setTimeout(resolve, 500));
+        const json = await res.json();
 
-        setSearchResults(filteredResults);
+        if (json.success) {
+          setSearchResults(json.data);
+        } else {
+          setError(json.error || "搜尋失敗");
+        }
       } catch (e) {
         setError("搜尋請求失敗");
       } finally {

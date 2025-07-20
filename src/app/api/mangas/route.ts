@@ -67,9 +67,10 @@ export async function GET(request: NextRequest) {
       query.alpha = alpha;
     }
 
-    // 搜尋功能
+    // 模糊搜尋功能
     if (search) {
-      query.$text = { $search: search };
+      // 使用正則表達式進行模糊搜尋，不區分大小寫
+      query.title = { $regex: search, $options: "i" };
     }
 
     // 計算跳過的數量
