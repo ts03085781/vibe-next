@@ -34,11 +34,11 @@ export default function ContentCard({
 
   return (
     <div
-      className="bg-white rounded-lg shadow-md overflow-hidden cursor-pointer hover:shadow-lg transition-shadow duration-200"
+      className="bg-white max-w-[200px] rounded-lg shadow-md overflow-hidden cursor-pointer hover:shadow-lg transition-shadow duration-200"
       onClick={handleClick}
     >
       {/* 上方內容區 - 封面區域 */}
-      <div className="relative bg-gray-100 h-86">
+      <div className="relative bg-gray-100 h-[300px] w-[200px]">
         {/* 封面圖片或佔位符 */}
         <div className="flex items-center justify-center h-full">
           {coverImage ? (

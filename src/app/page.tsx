@@ -40,16 +40,21 @@ export default function Home() {
 
   const handleSortSelect = (value: string) => {
     setSelectedSort(value);
-  };
-
-  // 組合 API 查詢參數
-  const buildQuery = () => {
-    const params = new URLSearchParams();
-    params.set("sort", selectedSort);
-    Object.entries(selectedFilters).forEach(([key, value]) => {
-      if (value && value !== "all") params.set(key, value);
+    const sortedContentData = contentData.sort((a: IManga, b: IManga) => {
+      switch (value) {
+        case "latest_release":
+          return new Date(b.createDate).getTime() - new Date(a.createDate).getTime();
+        case "latest_update":
+          return new Date(b.updateDate).getTime() - new Date(a.updateDate).getTime();
+        case "most_popular":
+          return b.collectionsCount - a.collectionsCount;
+        case "highest_rating":
+          return b.rating - a.rating;
+        default:
+          return 0;
+      }
     });
-    return params.toString();
+    setContentData(sortedContentData);
   };
 
   useEffect(() => {
@@ -57,7 +62,13 @@ export default function Home() {
       setLoading(true);
       setError(null);
       try {
-        const query = buildQuery();
+        // 組合 API 查詢參數
+        const params = new URLSearchParams();
+        Object.entries(selectedFilters).forEach(([key, value]) => {
+          if (value && value !== "all") params.set(key, value);
+        });
+        const query = params.toString();
+
         const res = await fetch(`/api/mangas?${query}`);
         const json = await res.json();
         if (json.success) {
@@ -71,7 +82,7 @@ export default function Home() {
       setLoading(false);
     };
     fetchData();
-  }, [selectedSort, selectedFilters]);
+  }, [selectedFilters]);
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -95,7 +106,7 @@ export default function Home() {
           {/* 內容卡片列表 */}
           {loading && <div>載入中...</div>}
           {error && <div className="text-red-500">{error}</div>}
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
+          <div className="flex flex-wrap gap-4">
             {contentData.map((item: IManga) => (
               <ContentCard key={item._id} {...item} />
             ))}
