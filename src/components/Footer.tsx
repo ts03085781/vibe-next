@@ -1,4 +1,5 @@
 import React from "react";
+import Image from "next/image";
 
 export default function Footer() {
   return (
@@ -8,7 +9,7 @@ export default function Footer() {
           {/* 網站資訊 */}
           <div className="col-span-1 md:col-span-2">
             <div className="flex items-center gap-2 mb-4">
-              <span className="text-2xl">📖</span>
+              <Image src="/images/logo.png" alt="logo" width={36} height={36} />
               <span className="text-xl font-bold">AI小說坊</span>
             </div>
             <p className="text-gray-300 text-sm mb-4">

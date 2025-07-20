@@ -61,7 +61,7 @@ export default function ContentCard({
       {/* 下方資訊區 */}
       <div className="p-4 flex flex-col gap-2">
         {/* 標題 */}
-        <h3 className="font-bold text-gray-900 text-sm  line-clamp-2">{title}</h3>
+        <h3 className="font-bold text-gray-900">{title}</h3>
 
         {/* 評分和更新狀態 */}
         <div className="flex items-center justify-between">
