@@ -17,7 +17,6 @@ import mongoose from "mongoose";
  * @param {string} _id - 漫畫 ID
  * @param {string} page - 頁碼 (預設: 1)
  * @param {string} limit - 每頁數量 (預設: 20)
- * @param {string} sort - 排序方式 (latest_release|rating|title_asc|title_desc)
  * @param {string} genre - 類型篩選
  * @param {string} audience - 受眾篩選
  * @param {string} year - 年份篩選
@@ -32,9 +31,9 @@ export async function GET(request: NextRequest) {
 
     // 獲取查詢參數
     const _id = searchParams.get("_id");
+    const search = searchParams.get("search");
     const page = parseInt(searchParams.get("page") || "1");
     const limit = parseInt(searchParams.get("limit") || "20");
-    const sort = searchParams.get("sort") || "latest_release";
     const genre = searchParams.get("genre");
     const audience = searchParams.get("audience");
     const year = searchParams.get("year");
@@ -68,23 +67,9 @@ export async function GET(request: NextRequest) {
       query.alpha = alpha;
     }
 
-    // 建立排序條件
-    let sortOption: Record<string, 1 | -1> = {};
-    switch (sort) {
-      case "latest_release":
-        sortOption = { createDate: -1 };
-        break;
-      case "latest_update":
-        sortOption = { updateDate: -1 };
-        break;
-      case "most_popular":
-        sortOption = { collectionsCount: -1 };
-        break;
-      case "highest_rated":
-        sortOption = { rating: -1 };
-        break;
-      default:
-        sortOption = { createDate: -1 };
+    // 搜尋功能
+    if (search) {
+      query.$text = { $search: search };
     }
 
     // 計算跳過的數量
@@ -92,7 +77,7 @@ export async function GET(request: NextRequest) {
 
     // 執行查詢
     const [mangas, total] = await Promise.all([
-      Manga.find(query).sort(sortOption).skip(skip).limit(limit).lean(),
+      Manga.find(query).skip(skip).limit(limit).lean(),
       Manga.countDocuments(query),
     ]);
 
