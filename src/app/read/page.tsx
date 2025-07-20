@@ -100,7 +100,7 @@ export default function ReadPage() {
     return (
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
         <div className="text-center">
-          <h1 className="text-2xl font-bold text-gray-800 mb-4">{error || "找不到漫畫喔！"}</h1>
+          <h1 className="text-2xl text-gray-800 mb-4">{error || "找不到小說喔！"}</h1>
           <button
             onClick={handleBackToList}
             className="bg-orange-500 text-white px-6 py-2 rounded-lg hover:bg-orange-600 transition-colors"
@@ -131,13 +131,13 @@ export default function ReadPage() {
               </div>
               <button
                 onClick={handleBackToList}
-                className="bg-gray-500 text-white px-4 py-2 rounded-lg hover:bg-gray-600 transition-colors"
+                className="bg-gray-500 text-white font-bold px-4 py-2 rounded-lg hover:bg-gray-600 transition-colors cursor-pointer"
               >
                 返回列表
               </button>
             </div>
             <div className="flex items-center gap-4 text-s text-gray-700 mb-3">
-              <span>評分：{mangaData.rating} ★</span>
+              <span className="text-orange-500">評分：{mangaData.rating} ★</span>
               <span>總章節：{mangaData.totalChapters}</span>
               <span>當前章節：{currentChapter.chapterNumber}</span>
             </div>
@@ -171,7 +171,7 @@ export default function ReadPage() {
             {Array.from({ length: mangaData.totalChapters }, (_, index) => (
               <div
                 key={index}
-                className="border border-gray-200 rounded-md cursor-pointer text-gray-600 pt-2 pb-2 px-4 hover:bg-gray-100 "
+                className="border border-gray-300 rounded-md cursor-pointer text-gray-700 pt-2 pb-2 px-4 hover:bg-orange-50"
                 onClick={() => handleChapterChange(index + 1)}
               >
                 <span>{`第${index + 1}章`}</span>

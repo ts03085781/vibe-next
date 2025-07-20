@@ -39,15 +39,6 @@ export default function ContentCard({
     >
       {/* 上方內容區 - 封面區域 */}
       <div className="relative bg-gray-100 h-86">
-        {/* 標籤 */}
-        {tag && (
-          <div
-            className={`absolute top-2 left-2 bg-orange-500 text-white px-2 py-1 text-xs font-medium transform -rotate-12 rounded-sm`}
-          >
-            {tag}
-          </div>
-        )}
-
         {/* 封面圖片或佔位符 */}
         <div className="flex items-center justify-center h-full">
           {coverImage ? (
@@ -56,6 +47,15 @@ export default function ContentCard({
             <div className="text-3xl font-bold text-blue-400">{title}</div>
           )}
         </div>
+
+        {/* 標籤 */}
+        {tag && (
+          <div
+            className={`absolute top-2 left-2 bg-orange-500 text-white px-2 py-1 text-sm font-medium transform -rotate-10 rounded-sm`}
+          >
+            {tag}
+          </div>
+        )}
       </div>
 
       {/* 下方資訊區 */}
