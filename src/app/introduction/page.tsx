@@ -100,8 +100,8 @@ export default function IntroductionPage() {
             className="rounded-lg"
             src={mangaData.coverImage || ""}
             alt={mangaData.title}
-            width={240}
-            height={240}
+            width={280}
+            height={280}
           />
           <div className="w-full">
             <div className="flex items-center justify-between mb-2">

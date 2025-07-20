@@ -72,7 +72,21 @@ export default function Home() {
         const res = await fetch(`/api/mangas?${query}`);
         const json = await res.json();
         if (json.success) {
-          setContentData(json.data);
+          const sortedData = json.data.sort((a: IManga, b: IManga) => {
+            switch (selectedSort) {
+              case "latest_release":
+                return new Date(b.createDate).getTime() - new Date(a.createDate).getTime();
+              case "latest_update":
+                return new Date(b.updateDate).getTime() - new Date(a.updateDate).getTime();
+              case "most_popular":
+                return b.collectionsCount - a.collectionsCount;
+              case "highest_rating":
+                return b.rating - a.rating;
+              default:
+                return 0;
+            }
+          });
+          setContentData(sortedData);
         } else {
           setError(json.error || "取得資料失敗");
         }
