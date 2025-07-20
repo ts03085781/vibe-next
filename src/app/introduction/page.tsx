@@ -20,7 +20,7 @@ interface MangaData {
   createDate?: Date;
   updateDate?: Date;
 }
-export default function ReadPage() {
+export default function IntroductionPage() {
   const searchParams = useSearchParams();
   const router = useRouter();
 
@@ -57,7 +57,7 @@ export default function ReadPage() {
   }, [mangaId]);
 
   const handleChapterChange = (newChapter: number) => {
-    router.push(`/read/chapter?id=${mangaId}&chapter=${newChapter}`);
+    router.push(`/introduction/chapter?id=${mangaId}&chapter=${newChapter}`);
   };
 
   const handleBackToList = () => {

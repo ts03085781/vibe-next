@@ -31,7 +31,7 @@ interface ChapterData {
   publishDate: Date;
 }
 
-export default function ReadPage() {
+export default function ChapterPage() {
   const searchParams = useSearchParams();
   const router = useRouter();
 
@@ -78,11 +78,11 @@ export default function ReadPage() {
   }, [mangaId, chapterNumber]);
 
   const handleChapterChange = (newChapter: number) => {
-    router.push(`/read/chapter?id=${mangaId}&chapter=${newChapter}`);
+    router.push(`/introduction/chapter?id=${mangaId}&chapter=${newChapter}`);
   };
 
   const handleBackToList = () => {
-    router.push(`/read?id=${mangaId}`);
+    router.push(`/introduction?id=${mangaId}`);
   };
 
   if (loading) {
