@@ -29,7 +29,7 @@ export default function ContentCard({
   const router = useRouter();
 
   const handleClick = () => {
-    router.push(`/read?id=${_id}&chapter=1`);
+    router.push(`/read?id=${_id}`);
   };
 
   return (
