@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from "react";
 import { genreList, audienceList, statusList, alphaList } from "@/constants/filterConfig";
 import { IManga } from "@/models/Manga";
+import CloudinaryUpload from "@/components/CloudinaryUpload";
 
 type Form = {
   title: string;
@@ -186,19 +187,6 @@ export default function MangaAdminForm() {
               />
             </div>
             <div className="flex flex-col space-y-2">
-              <label htmlFor="coverImage" className="font-medium text-gray-700">
-                封面圖片URL
-              </label>
-              <input
-                name="coverImage"
-                id="coverImage"
-                value={form.coverImage}
-                onChange={handleChange}
-                placeholder="Cloudinary 圖片網址"
-                className="border-1 border-gray-300 rounded-lg p-2 text-gray-700"
-              />
-            </div>
-            <div className="flex flex-col space-y-2">
               <label htmlFor="rating" className="font-medium text-gray-700">
                 評分
               </label>
@@ -319,6 +307,13 @@ export default function MangaAdminForm() {
                   </option>
                 ))}
               </select>
+            </div>
+            <div className="flex flex-col space-y-2">
+              <CloudinaryUpload
+                onUpload={url => setForm(prev => ({ ...prev, coverImage: url }))}
+                currentImageUrl={form.coverImage}
+                name="coverImage"
+              />
             </div>
           </div>
           <button
