@@ -15,7 +15,7 @@ export const genreList = [
   { label: "競技", value: "競技" },
   { label: "體育", value: "體育" },
   { label: "校園", value: "校園" },
-  { label: "生活", value: "生活" },
+  { label: "日常", value: "日常" },
   { label: "勵志", value: "勵志" },
   { label: "歷史", value: "歷史" },
   { label: "宅男", value: "宅男" },
@@ -24,6 +24,12 @@ export const genreList = [
   { label: "美食", value: "美食" },
   { label: "社會", value: "社會" },
   { label: "音樂", value: "音樂" },
+  { label: "宇宙", value: "宇宙" },
+  { label: "異能", value: "異能" },
+  { label: "末日", value: "末日" },
+  { label: "重生", value: "重生" },
+  { label: "穿越", value: "穿越" },
+  { label: "異世界", value: "異世界" },
 ];
 
 export const audienceList = [
