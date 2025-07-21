@@ -110,7 +110,7 @@ export default function IntroductionPage() {
               </div>
               <button
                 onClick={handleBackToList}
-                className="bg-gray-500 text-white font-bold px-4 py-2 rounded-lg hover:bg-gray-600 transition-colors cursor-pointer"
+                className="bg-gray-400 text-white font-bold px-4 py-2 rounded-lg hover:bg-gray-500 transition-colors cursor-pointer"
               >
                 返回首頁
               </button>

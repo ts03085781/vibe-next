@@ -31,6 +31,12 @@ interface ChapterData {
   publishDate: Date;
 }
 
+enum SpeakingStatus {
+  SPEAKING = "speaking",
+  PAUSED = "paused",
+  STOPPED = "stopped",
+}
+
 export default function ChapterPage() {
   const searchParams = useSearchParams();
   const router = useRouter();
@@ -39,15 +45,25 @@ export default function ChapterPage() {
   const [currentChapter, setCurrentChapter] = useState<ChapterData | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [speakingStatus, setSpeakingStatus] = useState<SpeakingStatus>(SpeakingStatus.STOPPED);
 
   const mangaId = searchParams.get("id");
   const chapterNumber = parseInt(searchParams.get("chapter") || "1");
+
+  const resetSpeakingStatus = () => {
+    if (window.speechSynthesis) {
+      window.speechSynthesis.cancel();
+      setSpeakingStatus(SpeakingStatus.STOPPED);
+    }
+  };
 
   // 取得漫畫資訊與章節列表
   useEffect(() => {
     if (!mangaId) return;
     setLoading(true);
     setError(null);
+    resetSpeakingStatus();
+
     const fetchData = async () => {
       try {
         // 取得漫畫資訊
@@ -126,7 +142,7 @@ export default function ChapterPage() {
               <span>發布於: {dayjs(currentChapter.publishDate).format("YYYY-MM-DD")}</span>
               <button
                 onClick={handleBackToList}
-                className="text-base font-bold bg-gray-500 text-white px-4 py-2 rounded-lg hover:bg-gray-600 transition-colors cursor-pointer"
+                className="text-base font-bold bg-gray-400 text-white px-4 py-2 rounded-lg hover:bg-gray-500 transition-colors cursor-pointer"
               >
                 返回章節列表
               </button>
@@ -135,11 +151,58 @@ export default function ChapterPage() {
         </div>
 
         {/* 章節內容 */}
-        <div className="bg-white rounded-lg shadow-md p-8 mb-6">
-          <div className="prose max-w-none">
-            <div className="whitespace-pre-line text-gray-800 leading-relaxed">
-              {currentChapter.content}
-            </div>
+        <div className="flex flex-col gap-4 items-center bg-white rounded-lg shadow-md p-8 mb-6">
+          <div className="whitespace-pre-line text-gray-800 leading-relaxed prose max-w-none">
+            {currentChapter.content}
+          </div>
+          <div className="flex gap-4">
+            {speakingStatus === SpeakingStatus.STOPPED && (
+              <button
+                className="bg-gray-400 text-white px-6 py-2 rounded-lg hover:bg-gray-500 transition-colors cursor-pointer"
+                onClick={() => {
+                  const utter = new window.SpeechSynthesisUtterance(currentChapter.content);
+                  utter.lang = "zh-TW";
+                  window.speechSynthesis.speak(utter);
+                  setSpeakingStatus(SpeakingStatus.SPEAKING);
+                }}
+              >
+                開始朗讀
+              </button>
+            )}
+            {speakingStatus === SpeakingStatus.SPEAKING && (
+              <button
+                className="bg-gray-400 text-white px-6 py-2 rounded-lg hover:bg-gray-500 transition-colors cursor-pointer"
+                onClick={() => {
+                  window.speechSynthesis.pause();
+                  setSpeakingStatus(SpeakingStatus.PAUSED);
+                }}
+              >
+                暫停朗讀
+              </button>
+            )}
+            {speakingStatus === SpeakingStatus.PAUSED && (
+              <button
+                className="bg-gray-400 text-white px-6 py-2 rounded-lg hover:bg-gray-500 transition-colors cursor-pointer"
+                onClick={() => {
+                  window.speechSynthesis.resume();
+                  setSpeakingStatus(SpeakingStatus.SPEAKING);
+                }}
+              >
+                繼續朗讀
+              </button>
+            )}
+            {(speakingStatus === SpeakingStatus.SPEAKING ||
+              speakingStatus === SpeakingStatus.PAUSED) && (
+              <button
+                className="bg-red-400 text-white px-6 py-2 rounded-lg hover:bg-red-500 transition-colors cursor-pointer"
+                onClick={() => {
+                  window.speechSynthesis.cancel();
+                  setSpeakingStatus(SpeakingStatus.STOPPED);
+                }}
+              >
+                停止朗讀
+              </button>
+            )}
           </div>
         </div>
 
