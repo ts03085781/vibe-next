@@ -25,8 +25,21 @@ export default function Header() {
     }
   };
 
+  const handleDownloadShortcut = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    e.preventDefault(); // 阻止預設行為
+    const url = window.location.origin; // 獲取當前頁面的 URL
+    const shortcutContent = `[InternetShortcut]\nURL=${url}\n`; // 創建快捷方式的內容
+    const blob = new Blob([shortcutContent], { type: "text/plain" }); // 創建一個 Blob 對象
+    const a = document.createElement("a"); // 創建一個 a 元素
+    a.href = URL.createObjectURL(blob); // 設置 a 元素的 href 屬性
+    a.download = "AI小說坊.url"; // 設置 a 元素的 download 屬性
+    document.body.appendChild(a); // 將 a 元素添加到 body 中
+    a.click(); // 觸發 a 元素的 click 事件
+    document.body.removeChild(a); // 將 a 元素從 body 中移除
+  };
+
   return (
-    <header className="bg-gray-800 px-4 pt-4 pb-2">
+    <header className="bg-gray-800 px-5 pt-4 pb-2">
       <div className="flex items-center justify-between mb-2">
         {/* Logo 與標題 */}
         <div className="flex items-center gap-2 cursor-pointer" onClick={handleBackToList}>
@@ -52,45 +65,11 @@ export default function Header() {
         </div>
         {/* 右側功能連結 */}
         <div className="flex gap-8 text-white text-base font-medium">
-          <a href="#" className="hover:underline">
+          <a href="#" onClick={handleDownloadShortcut}>
             設為桌面圖標
-          </a>
-          <a href="#" className="hover:underline">
-            收藏看漫畫
           </a>
         </div>
       </div>
-      {/* 主選單 */}
-      {/* <nav className="flex items-center gap-2 mt-2">
-        <button className="text-2xl text-white px-2">☰</button>
-        <a href="#" className="text-white px-3 py-2 font-medium">
-          漫畫大全導航
-        </a>
-        <a href="#" className="text-white px-3 py-2 font-medium">
-          首頁
-        </a>
-        <a href="#" className="text-white px-3 py-2 font-medium">
-          最新更新
-        </a>
-        <a href="#" className="text-white px-3 py-2 font-medium">
-          排行榜
-        </a>
-        <a href="#" className="text-white px-3 py-2 font-medium">
-          連載漫畫
-        </a>
-        <a href="#" className="text-white px-3 py-2 font-medium">
-          完結漫畫
-        </a>
-        <a href="#" className="text-white px-3 py-2 font-medium">
-          漫畫大全
-        </a>
-        <a href="#" className="text-white px-3 py-2 font-medium">
-          漫畫家
-        </a>
-        <a href="#" className="bg-orange-500 text-white px-3 py-2 font-medium rounded">
-          漫畫隨心看
-        </a>
-      </nav> */}
     </header>
   );
 }
