@@ -169,6 +169,7 @@ export default function ChapterPage() {
                 onClick={() => {
                   const utter = new window.SpeechSynthesisUtterance(currentChapter.content);
                   utter.lang = "zh-TW";
+                  utter.pitch = 0.5;
                   window.speechSynthesis.speak(utter);
                   setSpeakingStatus(SpeakingStatus.SPEAKING);
                 }}
