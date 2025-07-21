@@ -93,6 +93,13 @@ export default function ChapterPage() {
     fetchData();
   }, [mangaId, chapterNumber]);
 
+  // 離開頁面時重置朗讀狀態
+  useEffect(() => {
+    return () => {
+      resetSpeakingStatus();
+    };
+  }, []);
+
   const handleChapterChange = (newChapter: number) => {
     router.push(`/introduction/chapter?id=${mangaId}&chapter=${newChapter}`);
   };
@@ -151,11 +158,11 @@ export default function ChapterPage() {
         </div>
 
         {/* 章節內容 */}
-        <div className="flex flex-col gap-4 items-center bg-white rounded-lg shadow-md p-8 mb-6">
-          <div className="whitespace-pre-line text-gray-800 leading-relaxed prose max-w-none">
+        <div className="bg-white rounded-lg shadow-md p-8 mb-6">
+          <div className="whitespace-pre-line text-gray-800 leading-relaxed prose max-w-none mb-6">
             {currentChapter.content}
           </div>
-          <div className="flex gap-4">
+          <div className="flex gap-4 justify-center">
             {speakingStatus === SpeakingStatus.STOPPED && (
               <button
                 className="bg-gray-400 text-white px-6 py-2 rounded-lg hover:bg-gray-500 transition-colors cursor-pointer"
