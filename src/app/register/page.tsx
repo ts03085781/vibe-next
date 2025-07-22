@@ -8,6 +8,7 @@ interface FormData {
   email: string;
   password: string;
   nickname: string;
+  confirmPassword: string;
 }
 
 const initialFormData: FormData = {
@@ -15,6 +16,7 @@ const initialFormData: FormData = {
   email: "",
   password: "",
   nickname: "",
+  confirmPassword: "",
 };
 
 export default function RegisterPage() {
@@ -34,11 +36,23 @@ export default function RegisterPage() {
     setLoading(true);
     setError("");
 
+    // 密碼重複驗證
+    if (form.password !== form.confirmPassword) {
+      setError("輸入的密碼不一致，請再次確認密碼");
+      setLoading(false);
+      return;
+    }
+
     try {
       const res = await fetch("/api/auth/register", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(form),
+        body: JSON.stringify({
+          username: form.username,
+          email: form.email,
+          password: form.password,
+          nickname: form.nickname,
+        }),
       });
       const data = await res.json();
       if (data.success) {
@@ -95,6 +109,15 @@ export default function RegisterPage() {
           className="w-full border text-gray-500 border-gray-300 rounded-lg p-2 mb-2"
           required
         />
+        <input
+          name="confirmPassword"
+          type="password"
+          value={form.confirmPassword}
+          onChange={handleChange}
+          placeholder="再次輸入密碼"
+          className="w-full border text-gray-500 border-gray-300 rounded-lg p-2 mb-2"
+          required
+        />
         <button
           type="submit"
           className="w-full py-3 rounded-lg bg-orange-500 hover:bg-orange-600 text-white font-bold text-lg transition-all duration-150"
@@ -102,7 +125,7 @@ export default function RegisterPage() {
         >
           {loading ? "註冊中..." : "註冊"}
         </button>
-        {error && <div className="text-red-400 text-center">{error}</div>}
+        {error && <div className="text-red-400 text-center font-bold">{error}</div>}
         <div className="text-center text-gray-400 mt-2">
           已有帳號？{" "}
           <a href="/login" className="text-orange-600 hover:underline font-bold">
