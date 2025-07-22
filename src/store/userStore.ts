@@ -4,10 +4,12 @@ export interface User {
   _id: string;
   username: string;
   email: string;
-  nickname: string;
-  avatar?: string;
   role: string;
-  favorites: string[];
+  nickname: string;
+  avatar: string;
+  createdDate: Date;
+  updatedDate: Date;
+  favorites?: string[];
 }
 
 interface UserState {
