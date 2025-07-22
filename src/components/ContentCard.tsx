@@ -42,7 +42,7 @@ export default function ContentCard({
       {/* 上方內容區 - 封面區域 */}
       <div className="relative bg-gray-100 h-[300px] w-[200px]">
         {/* 封面圖片或佔位符 */}
-        <div className="flex items-center justify-center h-full">
+        <div className="flex items-center justify-center h-full relative">
           {coverImage ? (
             isVideo ? (
               <video
@@ -54,7 +54,13 @@ export default function ContentCard({
                 playsInline
               />
             ) : (
-              <Image src={coverImage} alt={title} fill className="object-cover" />
+              <Image
+                src={coverImage}
+                alt={title}
+                fill
+                sizes="width:200px"
+                className="object-cover"
+              />
             )
           ) : (
             <div className="text-3xl font-bold text-blue-400">{title}</div>
