@@ -43,7 +43,7 @@ export default function CloudinaryUpload({
           options={{
             maxFiles: 1,
             resourceType: "image",
-            clientAllowedFormats: ["jpg", "jpeg", "png", "gif", "webp"],
+            clientAllowedFormats: ["jpg", "jpeg", "png", "gif", "webp", "mp4"],
             maxFileSize: 10000000, // 10MB
             // folder: "manga-covers", // 可選：指定上傳資料夾
           }}

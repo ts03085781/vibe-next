@@ -64,6 +64,8 @@ export default function IntroductionPage() {
     router.push("/");
   };
 
+  const isVideo = mangaData?.coverImage?.includes(".mp4");
+
   if (loading) {
     return (
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
@@ -96,13 +98,28 @@ export default function IntroductionPage() {
       <div className="container mx-auto px-4 py-8">
         {/* 漫畫資訊區 */}
         <div className="flex gap-4 bg-white rounded-lg shadow-md p-6 mb-6">
-          <Image
-            className="rounded-lg"
-            src={mangaData.coverImage || ""}
-            alt={mangaData.title}
-            width={280}
-            height={280}
-          />
+          {mangaData.coverImage ? (
+            isVideo ? (
+              <video
+                src={mangaData.coverImage}
+                className="object-cover w-[280px] rounded-lg "
+                autoPlay
+                loop
+                muted
+                playsInline
+              />
+            ) : (
+              <Image
+                src={mangaData.coverImage}
+                alt={mangaData.title}
+                width={280}
+                height={280}
+                className="object-cover rounded-lg"
+              />
+            )
+          ) : (
+            <div className="text-3xl font-bold text-blue-400">{mangaData.title}</div>
+          )}
           <div className="w-full">
             <div className="flex items-center justify-between mb-2">
               <div>

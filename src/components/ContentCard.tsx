@@ -32,6 +32,8 @@ export default function ContentCard({
     router.push(`/introduction?id=${_id}`);
   };
 
+  const isVideo = coverImage?.includes(".mp4");
+
   return (
     <div
       className="bg-white max-w-[200px] rounded-lg shadow-md overflow-hidden cursor-pointer hover:shadow-lg transition-shadow duration-200"
@@ -42,7 +44,18 @@ export default function ContentCard({
         {/* 封面圖片或佔位符 */}
         <div className="flex items-center justify-center h-full">
           {coverImage ? (
-            <Image src={coverImage} alt={title} fill className="object-cover" />
+            isVideo ? (
+              <video
+                src={coverImage}
+                className="object-cover w-full h-full"
+                autoPlay
+                loop
+                muted
+                playsInline
+              />
+            ) : (
+              <Image src={coverImage} alt={title} fill className="object-cover" />
+            )
           ) : (
             <div className="text-3xl font-bold text-blue-400">{title}</div>
           )}
