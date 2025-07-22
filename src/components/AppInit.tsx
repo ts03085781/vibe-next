@@ -25,7 +25,6 @@ export default function AppInit() {
     const interval = setInterval(() => {
       const token = localStorage.getItem("token");
       const user = localStorage.getItem("user");
-      console.log("user:", user);
       if (user !== preUserRef.current || token !== preTokenRef.current) {
         preUserRef.current = user;
         preTokenRef.current = token;
