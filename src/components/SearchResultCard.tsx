@@ -43,6 +43,8 @@ export default function SearchResultCard({
     router.push(`/introduction?id=${_id}`);
   };
 
+  const isVideo = coverImage?.includes(".mp4");
+
   return (
     <div
       className="bg-white rounded-lg shadow-md overflow-hidden cursor-pointer hover:shadow-lg transition-shadow duration-200 mb-4"
@@ -50,9 +52,20 @@ export default function SearchResultCard({
     >
       <div className="flex">
         {/* 左側 - 封面圖片 */}
-        <div className="relative bg-gray-100">
+        <div className="relative bg-gray-100 w-[180px]">
           {coverImage ? (
-            <Image src={coverImage} width={180} height={180} alt={title} className="object-cover" />
+            isVideo ? (
+              <video
+                src={coverImage}
+                className="object-cover w-full h-full"
+                autoPlay
+                loop
+                muted
+                playsInline
+              />
+            ) : (
+              <Image src={coverImage} alt={title} fill className="object-cover" />
+            )
           ) : (
             <div className="flex items-center justify-center h-full text-2xl font-bold text-blue-400">
               {title}
