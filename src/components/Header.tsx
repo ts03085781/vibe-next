@@ -80,19 +80,25 @@ export default function Header() {
         {/* 右側功能連結 */}
         <div className="flex gap-8 text-white text-base font-medium">
           {isLogin ? (
-            <span className="cursor-pointer" onClick={handleLogout}>
-              登出
-            </span>
+            <>
+              {" "}
+              <span>{`Hi ${user?.nickname}`}</span>
+              <span className="cursor-pointer" onClick={handleLogout}>
+                登出
+              </span>
+            </>
           ) : (
             <>
               <Link href="/login">登入</Link>
               <Link href="/register">註冊</Link>
             </>
           )}
-
+          <Link href="/login">留言板</Link>
+          <Link href="/login">收藏庫</Link>
           <span className="cursor-pointer" onClick={handleDownloadShortcut}>
             設為桌面圖標
           </span>
+          {isLogin && <span className="cursor-pointer">設定</span>}
         </div>
       </div>
     </header>
