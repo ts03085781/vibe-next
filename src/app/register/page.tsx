@@ -1,6 +1,7 @@
 "use client";
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
+import { useUserStore } from "@/store/userStore";
 
 interface FormData {
   username: string;
@@ -21,6 +22,7 @@ export default function RegisterPage() {
   const [error, setError] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
   const router = useRouter();
+  const { login } = useUserStore();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -40,7 +42,7 @@ export default function RegisterPage() {
       });
       const data = await res.json();
       if (data.success) {
-        localStorage.setItem("token", data.token);
+        login(data.token, data.user);
         alert("註冊成功，將跳轉至首頁");
         router.push("/");
       } else {

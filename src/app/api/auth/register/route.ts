@@ -36,7 +36,7 @@ export async function POST(request: NextRequest) {
     const token = jwt.sign(
       { userId: user._id, username: user.username, role: user.role },
       JWT_SECRET,
-      { expiresIn: "7d" }
+      { expiresIn: "1d" }
     );
 
     // 回傳使用者資訊

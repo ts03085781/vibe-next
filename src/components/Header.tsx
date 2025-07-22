@@ -1,16 +1,23 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
+import Link from "next/link";
+import { useUserStore } from "@/store/userStore";
+import { useIsLogin } from "@/hooks/commons";
 
 export default function Header() {
   const router = useRouter();
   const [searchValue, setSearchValue] = useState("");
+  const { user, token, logout } = useUserStore();
+  const isLogin = useIsLogin();
 
+  // 返回列表
   const handleBackToList = () => {
     router.push("/");
   };
 
+  // 搜尋小說標題
   const handleSearch = () => {
     if (searchValue === "") {
       alert("請輸入要搜尋的小說名稱唷！");
@@ -19,12 +26,14 @@ export default function Header() {
     router.push(`/searchResult?keyword=${searchValue}`);
   };
 
+  // 按下 Enter 鍵觸發搜尋
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") {
       handleSearch();
     }
   };
 
+  // 設為桌面圖標
   const handleDownloadShortcut = (e: React.MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault(); // 阻止預設行為
     const url = window.location.origin; // 獲取當前頁面的 URL
@@ -36,6 +45,11 @@ export default function Header() {
     document.body.appendChild(a); // 將 a 元素添加到 body 中
     a.click(); // 觸發 a 元素的 click 事件
     document.body.removeChild(a); // 將 a 元素從 body 中移除
+  };
+
+  // 登出
+  const handleLogout = () => {
+    logout();
   };
 
   return (
@@ -65,9 +79,20 @@ export default function Header() {
         </div>
         {/* 右側功能連結 */}
         <div className="flex gap-8 text-white text-base font-medium">
-          <a href="#" onClick={handleDownloadShortcut}>
+          {isLogin ? (
+            <span className="cursor-pointer" onClick={handleLogout}>
+              登出
+            </span>
+          ) : (
+            <>
+              <Link href="/login">登入</Link>
+              <Link href="/register">註冊</Link>
+            </>
+          )}
+
+          <span className="cursor-pointer" onClick={handleDownloadShortcut}>
             設為桌面圖標
-          </a>
+          </span>
         </div>
       </div>
     </header>

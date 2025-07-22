@@ -1,12 +1,14 @@
 "use client";
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
+import { useUserStore } from "@/store/userStore";
 
 export default function LoginPage() {
   const [form, setForm] = useState({ username: "", email: "", password: "" });
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const router = useRouter();
+  const { login } = useUserStore();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -26,7 +28,7 @@ export default function LoginPage() {
       });
       const data = await res.json();
       if (data.success) {
-        localStorage.setItem("token", data.token);
+        login(data.token, data.user);
         router.push("/");
       } else {
         setError(data.error || "登入失敗");
