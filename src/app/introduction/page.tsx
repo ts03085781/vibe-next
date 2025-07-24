@@ -101,20 +101,15 @@ export default function IntroductionPage() {
         setFavorites([...favorites, mangaData]);
       }
     } else {
-      alert("請先登入");
+      alert("請先登入會用唷！");
       router.push("/login");
     }
   };
 
   const handleRemoveFromFavorites = () => {
-    if (isLogin) {
-      if (mangaData?._id) {
-        removeFromFavorites(mangaData._id);
-        setFavorites(favorites.filter(favorite => favorite._id !== mangaData._id));
-      }
-    } else {
-      alert("請先登入");
-      router.push("/login");
+    if (mangaData?._id) {
+      removeFromFavorites(mangaData._id);
+      setFavorites(favorites.filter(favorite => favorite._id !== mangaData._id));
     }
   };
 
