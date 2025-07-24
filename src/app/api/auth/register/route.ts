@@ -4,10 +4,15 @@ import User from "@/models/User";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 
-const JWT_SECRET = process.env.JWT_SECRET || "secret";
+const JWT_SECRET = process.env.JWT_SECRET;
 
 export async function POST(request: NextRequest) {
   try {
+    // 檢查 JWT_SECRET 是否設定
+    if (!JWT_SECRET) {
+      return NextResponse.json({ success: false, error: "JWT_SECRET 未設定" }, { status: 500 });
+    }
+
     // 連線資料庫
     await dbConnect();
 
@@ -30,7 +35,14 @@ export async function POST(request: NextRequest) {
 
     // 密碼加密
     const hashed = await bcrypt.hash(password, 10);
-    const user = await User.create({ username, email, password: hashed, nickname });
+    const user = await User.create({
+      username,
+      email,
+      password: hashed,
+      nickname,
+      createdDate: new Date(),
+      updatedDate: new Date(),
+    });
 
     // 產生 JWT
     const token = jwt.sign(
@@ -52,7 +64,6 @@ export async function POST(request: NextRequest) {
         avatar: user.avatar,
         createdDate: user.createdDate,
         updatedDate: user.updatedDate,
-        favorites: user.favorites,
       },
     });
   } catch (error) {

@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
@@ -9,7 +9,7 @@ import { useIsLogin } from "@/hooks/commons";
 export default function Header() {
   const router = useRouter();
   const [searchValue, setSearchValue] = useState("");
-  const { user, token, logout } = useUserStore();
+  const { user, logout } = useUserStore();
   const isLogin = useIsLogin();
 
   // 返回列表
@@ -50,6 +50,15 @@ export default function Header() {
   // 登出
   const handleLogout = () => {
     logout();
+  };
+
+  // 檢查是否登入
+  const preCheckLogin = (path: string) => {
+    if (isLogin) {
+      router.push(path);
+    } else {
+      router.push("/login");
+    }
   };
 
   return (
@@ -93,8 +102,12 @@ export default function Header() {
               <Link href="/register">註冊</Link>
             </>
           )}
-          <Link href="/login">留言板</Link>
-          <Link href="/login">收藏庫</Link>
+          <span className="cursor-pointer" onClick={() => preCheckLogin("/")}>
+            留言板
+          </span>
+          <span className="cursor-pointer" onClick={() => preCheckLogin("/favorite")}>
+            收藏庫
+          </span>
           <span className="cursor-pointer" onClick={handleDownloadShortcut}>
             設為桌面圖標
           </span>
