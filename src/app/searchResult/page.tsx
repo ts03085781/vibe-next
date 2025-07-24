@@ -3,7 +3,6 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import SearchResultCard from "@/components/SearchResultCard";
 import { SearchResultCardProps } from "@/components/SearchResultCard";
-import { mockSearchResults } from "@/mocks/searchResultData";
 import SortPanel from "@/components/SortPanel";
 import { sortConfig } from "@/constants/sortConfig";
 
@@ -75,7 +74,7 @@ const SearchResultPage = () => {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <div className="container mx-auto px-4 py-8">
+      <div className="container mx-auto px-4 py-8 flex flex-col gap-4">
         {/* 搜尋結果標題 */}
         <div className="flex items-center justify-between mb-6 bg-white rounded-lg shadow-md p-4">
           <div>
@@ -106,29 +105,28 @@ const SearchResultPage = () => {
             <div className="text-red-600">{error}</div>
           </div>
         )}
+
+        {!keyword && !loading && (
+          <div className="text-center py-12">
+            <div className="text-gray-500 text-lg">請輸入搜尋關鍵字</div>
+          </div>
+        )}
+
+        {!loading && !error && searchResults.length === 0 && keyword && (
+          <div className="text-center py-12">
+            <div className="text-gray-500 text-lg mb-2">沒有找到相關結果</div>
+            <div className="text-gray-400">請嘗試其他關鍵字</div>
+          </div>
+        )}
+
         {/* 搜尋結果列表 */}
-        <div className="space-y-4">
-          {!loading && !error && searchResults.length === 0 && keyword && (
-            <div className="text-center py-12">
-              <div className="text-gray-500 text-lg mb-2">沒有找到相關結果</div>
-              <div className="text-gray-400">請嘗試其他關鍵字</div>
-            </div>
-          )}
-
-          {!loading && !error && searchResults.length > 0 && (
-            <div className="mt-4">
-              {searchResults.map(manga => (
-                <SearchResultCard key={manga._id} {...manga} />
-              ))}
-            </div>
-          )}
-
-          {!keyword && !loading && (
-            <div className="text-center py-12">
-              <div className="text-gray-500 text-lg">請輸入搜尋關鍵字</div>
-            </div>
-          )}
-        </div>
+        {!loading && !error && searchResults.length > 0 && (
+          <div>
+            {searchResults.map(manga => (
+              <SearchResultCard key={manga._id} {...manga} />
+            ))}
+          </div>
+        )}
       </div>
     </div>
   );

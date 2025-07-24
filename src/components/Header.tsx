@@ -49,7 +49,9 @@ export default function Header() {
 
   // 登出
   const handleLogout = () => {
-    logout();
+    if (confirm("是否確認要登出？")) {
+      logout();
+    }
   };
 
   // 檢查是否登入
@@ -57,6 +59,7 @@ export default function Header() {
     if (isLogin) {
       router.push(path);
     } else {
+      alert("請先登入會員唷！");
       router.push("/login");
     }
   };

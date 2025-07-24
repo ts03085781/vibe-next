@@ -2,8 +2,9 @@
 import React, { useState, useEffect } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import Image from "next/image";
-import { countWords } from "@/utils/common";
 import dayjs from "dayjs";
+import { useIsLogin } from "@/hooks/commons";
+import { addToFavorites, removeFromFavorites } from "@/utils/favorite";
 
 interface MangaData {
   _id: string;
@@ -27,8 +28,11 @@ export default function IntroductionPage() {
   const [mangaData, setMangaData] = useState<MangaData | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [favorites, setFavorites] = useState<MangaData[]>([]);
+  const isLogin = useIsLogin();
 
   const mangaId = searchParams.get("id");
+  const isVideo = mangaData?.coverImage?.includes(".mp4");
 
   // 取得漫畫資訊與章節列表
   useEffect(() => {
@@ -53,8 +57,34 @@ export default function IntroductionPage() {
       }
       setLoading(false);
     };
+
+    const fetchFavorites = async () => {
+      if (!isLogin) return;
+      setLoading(true);
+      setError("");
+      try {
+        const res = await fetch("/api/favorites", {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+            "Content-Type": "application/json",
+          },
+        });
+        const data = await res.json();
+        if (data.success) {
+          setFavorites(data.data || []);
+        } else {
+          setError(data.error || "載入失敗");
+        }
+      } catch (e) {
+        setError("載入失敗");
+      }
+      setLoading(false);
+    };
+
     fetchData();
-  }, [mangaId]);
+    fetchFavorites();
+  }, [mangaId, isLogin]);
 
   const handleChapterChange = (newChapter: number) => {
     router.push(`/introduction/chapter?id=${mangaId}&chapter=${newChapter}`);
@@ -64,7 +94,37 @@ export default function IntroductionPage() {
     router.push("/");
   };
 
-  const isVideo = mangaData?.coverImage?.includes(".mp4");
+  const handleAddToFavorites = () => {
+    if (isLogin) {
+      if (mangaData?._id) {
+        addToFavorites(mangaData._id);
+        setFavorites([...favorites, mangaData]);
+      }
+    } else {
+      alert("請先登入");
+      router.push("/login");
+    }
+  };
+
+  const handleRemoveFromFavorites = () => {
+    if (isLogin) {
+      if (mangaData?._id) {
+        removeFromFavorites(mangaData._id);
+        setFavorites(favorites.filter(favorite => favorite._id !== mangaData._id));
+      }
+    } else {
+      alert("請先登入");
+      router.push("/login");
+    }
+  };
+
+  const isAlreadyInFavorites = () => {
+    return favorites.some(favorite => favorite._id === mangaData?._id);
+  };
+
+  const showRemoveFromFavorites = () => {
+    return isLogin && isAlreadyInFavorites();
+  };
 
   if (loading) {
     return (
@@ -125,12 +185,30 @@ export default function IntroductionPage() {
               <div>
                 <h1 className="text-2xl font-bold text-gray-800 mb-2">{mangaData.title}</h1>
               </div>
-              <button
-                onClick={handleBackToList}
-                className="bg-gray-400 text-white font-bold px-4 py-2 rounded-lg hover:bg-gray-500 transition-colors cursor-pointer"
-              >
-                返回首頁
-              </button>
+              <div className="flex gap-2">
+                {showRemoveFromFavorites() ? (
+                  <button
+                    onClick={handleRemoveFromFavorites}
+                    className="bg-gray-400 text-white font-bold px-4 py-2 rounded-lg hover:bg-gray-500 transition-colors cursor-pointer"
+                  >
+                    取消收藏
+                  </button>
+                ) : (
+                  <button
+                    onClick={handleAddToFavorites}
+                    className="bg-orange-500 text-white font-bold px-4 py-2 rounded-lg hover:bg-orange-600 transition-colors cursor-pointer"
+                  >
+                    加入收藏
+                  </button>
+                )}
+
+                <button
+                  onClick={handleBackToList}
+                  className="bg-gray-400 text-white font-bold px-4 py-2 rounded-lg hover:bg-gray-500 transition-colors cursor-pointer"
+                >
+                  返回首頁
+                </button>
+              </div>
             </div>
             <div className="flex items-center gap-4 text-s text-gray-700 mb-3">
               <span className="text-orange-500">評分：{mangaData.rating} ★</span>

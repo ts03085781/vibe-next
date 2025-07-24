@@ -2,13 +2,14 @@
 "use client";
 import { useEffect, useRef } from "react";
 import { useUserStore } from "@/store/userStore";
+import { useRouter } from "next/navigation";
 
 // APP 初始化時專用的組,不會渲染任何東西
 export default function AppInit() {
   const { login, logout } = useUserStore();
   const preUserRef = useRef<string | null>(null);
   const preTokenRef = useRef<string | null>(null);
-
+  const router = useRouter();
   useEffect(() => {
     // 畫面初始化觸發一次
     const token = localStorage.getItem("token");
@@ -31,13 +32,17 @@ export default function AppInit() {
         if (user && token) {
           login(token, JSON.parse(user));
         } else {
+          const memberPages = ["/favorite"];
+          if (memberPages.includes(window.location.pathname)) {
+            router.push("/login");
+          }
           logout();
         }
       }
     }, 1000);
 
     return () => clearInterval(interval);
-  }, [login, logout]);
+  }, [login, logout, router]);
 
   return null;
 }
