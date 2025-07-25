@@ -5,6 +5,7 @@ import Image from "next/image";
 import dayjs from "dayjs";
 import { useIsLogin } from "@/hooks/commons";
 import { addToFavorites, removeFromFavorites } from "@/utils/favorite";
+import CommentBoard from "@/components/CommentBoard";
 
 interface MangaData {
   _id: string;
@@ -132,7 +133,7 @@ export default function IntroductionPage() {
     );
   }
 
-  if (error || !mangaData) {
+  if (error || !mangaData || !mangaId) {
     return (
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
         <div className="text-center">
@@ -235,11 +236,11 @@ export default function IntroductionPage() {
         {/* 章節列表 */}
         <div className="bg-white rounded-lg shadow-md p-4 mb-6">
           <h2 className="text-xl font-bold text-gray-800 mb-4">章節列表</h2>
-          <div className="flex  gap-2">
+          <div className="flex flex-wrap gap-2">
             {Array.from({ length: mangaData.totalChapters }, (_, index) => (
               <div
                 key={index}
-                className="border border-gray-300 rounded-md cursor-pointer text-gray-700 pt-2 pb-2 px-4 hover:bg-orange-50"
+                className="w-[84px] text-center border border-gray-300 rounded-md cursor-pointer text-gray-700 pt-2 pb-2 hover:bg-orange-50"
                 onClick={() => handleChapterChange(index + 1)}
               >
                 <span>{`第${index + 1}章`}</span>
@@ -247,6 +248,16 @@ export default function IntroductionPage() {
             ))}
           </div>
         </div>
+
+        {/* 留言板 */}
+        <CommentBoard
+          mangaId={mangaId}
+          currentUser={
+            isLogin
+              ? { userId: "dummy_user_id", username: "Guest", role: "user", token: "dummy_token" }
+              : undefined
+          }
+        />
       </div>
     </div>
   );
