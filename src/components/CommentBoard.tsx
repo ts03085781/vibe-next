@@ -1,11 +1,21 @@
 import React, { useEffect, useState } from "react";
 import { IComment } from "@/models/Comment";
+import { useIsLogin } from "@/hooks/commons";
+import { useRouter } from "next/navigation";
+import { FiThumbsUp } from "react-icons/fi";
+import { FiEdit } from "react-icons/fi";
+import { RiDeleteBin2Line } from "react-icons/ri";
+import { MdOutlineCancel } from "react-icons/md";
+import { IoIosSend } from "react-icons/io";
+
+import dayjs from "dayjs";
 
 interface CommentBoardProps {
   mangaId: string;
   currentUser?: {
     userId: string;
     username: string;
+    avatar?: string;
     nickname: string;
     role: string;
     token: string;
@@ -25,6 +35,8 @@ const CommentBoard: React.FC<CommentBoardProps> = ({ mangaId, currentUser }) => 
   const [editingId, setEditingId] = useState<string | null>(null);
   const [editContent, setEditContent] = useState("");
   const [deletingId, setDeletingId] = useState<string | null>(null);
+  const isLogin = useIsLogin();
+  const router = useRouter();
 
   // 取得留言
   const fetchComments = async (reset = false) => {
@@ -47,12 +59,14 @@ const CommentBoard: React.FC<CommentBoardProps> = ({ mangaId, currentUser }) => 
     setLoading(false);
   };
 
+  // 載入初始留言
   useEffect(() => {
     setPage(1);
     fetchComments(true);
     // eslint-disable-next-line
   }, [mangaId]);
 
+  // 載入更多留言
   useEffect(() => {
     if (page === 1) return;
     fetchComments();
@@ -61,14 +75,19 @@ const CommentBoard: React.FC<CommentBoardProps> = ({ mangaId, currentUser }) => 
 
   // 新增留言
   const handleSubmit = async (e: React.FormEvent) => {
+    // 阻止預設行為
     e.preventDefault();
+
+    // 如果留言內容為空，則不提交
     if (!newContent.trim()) return;
+
+    // 提交留言
     setSubmitting(true);
     try {
       const res = await fetch("/api/comments", {
         method: "POST",
         headers: {
-          Authorization: `Bearer ${currentUser?.token}`,
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
@@ -101,6 +120,7 @@ const CommentBoard: React.FC<CommentBoardProps> = ({ mangaId, currentUser }) => 
 
   // 按讚/取消讚
   const handleLike = async (commentId: string) => {
+    preCheckLogIn();
     if (!currentUser) return;
     try {
       const res = await fetch(`/api/comments/${commentId}/like`, {
@@ -192,29 +212,41 @@ const CommentBoard: React.FC<CommentBoardProps> = ({ mangaId, currentUser }) => 
     setDeletingId(null);
   };
 
+  const preCheckLogIn = () => {
+    // 如果未登入，則跳轉到登入頁面
+    if (!isLogin) {
+      alert("請先登入才能留言或按讚");
+      router.push("/login");
+    }
+  };
+
   return (
     <div className="bg-white rounded-lg shadow p-4 mt-8">
       <h2 className="text-xl font-bold mb-4 text-orange-600">留言板</h2>
-      {currentUser ? (
-        <form onSubmit={handleSubmit} className="mb-4 flex gap-2">
-          <textarea
-            className="flex-1 border rounded px-2 py-1 text-gray-700"
-            value={newContent}
-            onChange={e => setNewContent(e.target.value)}
-            placeholder="發表你的留言..."
-            disabled={submitting}
-          />
-          <button
-            type="submit"
-            className="bg-orange-500 text-white px-4 py-1 rounded disabled:opacity-50"
-            disabled={submitting || !newContent.trim()}
-          >
-            留言
-          </button>
-        </form>
-      ) : (
-        <div className="mb-4 text-gray-400">請先登入才能留言</div>
-      )}
+      <form onSubmit={handleSubmit} className="mb-4 flex gap-2 relative">
+        <textarea
+          id="newContent"
+          name="newContent"
+          className="flex-1 border border-gray-300 rounded px-2 py-1 text-gray-700 px-4 py-3 h-[140px]"
+          value={newContent}
+          onChange={e => setNewContent(e.target.value)}
+          onFocus={preCheckLogIn}
+          placeholder={isLogin ? "發表你的留言..." : "登入留下留言"}
+          disabled={submitting}
+          maxLength={1000}
+        />
+        <span className="text-base text-gray-400 absolute right-22 bottom-3">
+          {newContent.length}/1000
+        </span>
+        <button
+          type="submit"
+          className="text-xl bg-orange-500 text-white px-4 py-1.5 rounded disabled:opacity-50 absolute right-4 bottom-3 flex items-center gap-1 cursor-pointer"
+          disabled={submitting || !newContent.trim()}
+        >
+          <IoIosSend />
+        </button>
+      </form>
+
       {error && <div className="text-red-500 mb-2">{error}</div>}
       <div className="space-y-4">
         {comments.map(comment => {
@@ -223,66 +255,72 @@ const CommentBoard: React.FC<CommentBoardProps> = ({ mangaId, currentUser }) => 
             currentUser && (comment.userId === currentUser.userId || currentUser.role === "admin");
           return (
             <div key={String(comment._id)} className="border-b pb-2">
-              <div className="flex items-center gap-2">
-                <span className="font-semibold text-sm text-gray-700">{comment.nickname}</span>
-                <span className="text-xs text-gray-400">{`(${comment.username})`}</span>
+              <div className="flex flex-col gap-1">
+                <div className="flex gap-2 items-center">
+                  <span className="font-semibold text-base text-gray-700">{comment.nickname}</span>
+                  <span className="text-xs text-gray-400">{`(${comment.username})`}</span>
+                </div>
                 <span className="text-xs text-gray-400">
-                  {new Date(comment.createdDate).toLocaleString()}
+                  {dayjs(comment.createdDate).format("YYYY年M月D日")}
                 </span>
               </div>
               {editingId === String(comment._id) ? (
-                <div className="flex gap-2 mt-1 mb-1">
-                  <input
-                    className="flex-1 border rounded px-2 py-1"
+                <div className="flex gap-2 mt-1 mb-1 relative">
+                  <textarea
+                    className="flex-1 border border-gray-300 rounded px-2 py-1 text-gray-700 px-4 py-3 h-[140px]"
                     value={editContent}
                     onChange={e => setEditContent(e.target.value)}
                     disabled={deletingId === String(comment._id)}
+                    rows={3}
+                    maxLength={1000}
                   />
+                  <span className="text-base text-gray-400 absolute right-38 bottom-3">
+                    {editContent.length}/1000
+                  </span>
                   <button
-                    className="bg-orange-500 text-white px-3 py-1 rounded disabled:opacity-50"
+                    className="text-xl bg-orange-500 text-white px-4 py-1.5 rounded disabled:opacity-50 absolute right-20 bottom-3 cursor-pointer"
                     onClick={() => handleEditSubmit(String(comment._id))}
                     disabled={!editContent.trim() || deletingId === String(comment._id)}
                   >
-                    儲存
+                    <IoIosSend />
                   </button>
                   <button
-                    className="bg-gray-300 text-gray-700 px-3 py-1 rounded"
+                    className="text-xl bg-gray-400 text-white px-4 py-1.5 rounded disabled:opacity-50 absolute right-4 bottom-3 cursor-pointer"
                     onClick={handleEditCancel}
                     disabled={deletingId === String(comment._id)}
                   >
-                    取消
+                    <MdOutlineCancel />
                   </button>
                 </div>
               ) : (
-                <div className="text-gray-800 mt-1 mb-1">{comment.content}</div>
+                <div className="text-gray-800 mt-3 mb-3">{comment.content}</div>
               )}
-              <div className="flex items-center gap-4 text-xs text-gray-500">
+              <div className="flex items-center gap-4 justify-between text-xs text-gray-500">
                 <button
-                  className={`flex items-center gap-1 px-2 py-0.5 rounded transition-colors ${liked ? "bg-orange-100 text-orange-600" : "hover:bg-gray-100"}`}
-                  disabled={!currentUser}
+                  className={`flex items-center gap-1 px-2.5 py-1.5 rounded transition-colors cursor-pointer ${liked ? "bg-orange-100 text-orange-600" : "hover:bg-gray-100"}`}
                   onClick={() => handleLike(String(comment._id))}
                   title={currentUser ? (liked ? "取消讚" : "按讚") : "請先登入"}
                 >
-                  <span>{liked ? "👍" : "👍🏻"}</span>
+                  <span className="text-base">{liked ? <FiThumbsUp /> : <FiThumbsUp />}</span>
                   <span>{comment.likes.length}</span>
                 </button>
                 {canEditOrDelete && editingId !== String(comment._id) && (
-                  <>
+                  <div className="flex items-center gap-2">
                     <button
-                      className="text-blue-500 hover:underline px-2"
+                      className="text-sm text-gray-500 px-2 cursor-pointer border border-gray-300 rounded-md hover:bg-gray-100 px-3 py-2"
                       onClick={() => handleEdit(String(comment._id), comment.content)}
                       disabled={deletingId === String(comment._id)}
                     >
-                      編輯
+                      <FiEdit className="text-base" />
                     </button>
                     <button
-                      className="text-red-500 hover:underline px-2"
+                      className="text-sm text-gray-500 px-2 cursor-pointer border border-gray-300 rounded-md hover:bg-gray-100 px-3 py-2"
                       onClick={() => handleDelete(String(comment._id))}
                       disabled={deletingId === String(comment._id)}
                     >
-                      {deletingId === String(comment._id) ? "刪除中..." : "刪除"}
+                      <RiDeleteBin2Line className="text-base" />
                     </button>
-                  </>
+                  </div>
                 )}
               </div>
             </div>

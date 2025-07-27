@@ -1,5 +1,4 @@
 import { NextRequest, NextResponse } from "next/server";
-import mongoose from "mongoose";
 import dbConnect from "@/lib/mongodb";
 import Comment from "@/models/Comment";
 import { getUserIdFromToken } from "@/utils/auth";
@@ -44,6 +43,7 @@ export async function POST(req: NextRequest) {
       mangaId,
       userId,
       username,
+      nickname,
       content,
       createdDate: new Date(),
       updatedDate: new Date(),
