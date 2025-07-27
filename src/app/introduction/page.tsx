@@ -6,6 +6,7 @@ import dayjs from "dayjs";
 import { useIsLogin } from "@/hooks/commons";
 import { addToFavorites, removeFromFavorites } from "@/utils/favorite";
 import CommentBoard from "@/components/CommentBoard";
+import { useUserStore } from "@/store/userStore";
 
 interface MangaData {
   _id: string;
@@ -31,6 +32,7 @@ export default function IntroductionPage() {
   const [error, setError] = useState<string | null>(null);
   const [favorites, setFavorites] = useState<MangaData[]>([]);
   const isLogin = useIsLogin();
+  const { user, token } = useUserStore();
 
   const mangaId = searchParams.get("id");
   const isVideo = mangaData?.coverImage?.includes(".mp4");
@@ -253,8 +255,14 @@ export default function IntroductionPage() {
         <CommentBoard
           mangaId={mangaId}
           currentUser={
-            isLogin
-              ? { userId: "dummy_user_id", username: "Guest", role: "user", token: "dummy_token" }
+            isLogin && user && token
+              ? {
+                  userId: user._id,
+                  username: user.username,
+                  nickname: user.nickname,
+                  role: user.role,
+                  token,
+                }
               : undefined
           }
         />

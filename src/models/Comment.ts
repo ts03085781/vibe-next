@@ -5,6 +5,7 @@ export interface IComment extends Document {
   mangaId: string; // 對應作品 ID
   userId: string; // 留言者 ID
   username: string; // 留言者名稱
+  nickname: string; // 留言者暱稱
   content: string; // 留言內容
   createdDate: Date; // 建立時間
   updatedDate: Date; // 更新時間
@@ -16,6 +17,7 @@ const CommentSchema = new Schema<IComment>({
   mangaId: { type: String, required: true, index: true }, // 作品 ID
   userId: { type: String, required: true }, // 用戶 ID
   username: { type: String, required: true }, // 用戶名稱
+  nickname: { type: String, required: true }, // 用戶暱稱
   content: { type: String, required: true }, // 內容
   createdDate: { type: Date, default: Date.now }, // 建立時間
   updatedDate: { type: Date, default: Date.now }, // 更新時間

@@ -36,8 +36,8 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ success: false, error: "未登入或 token 無效" }, { status: 401 });
     }
     const body = await req.json();
-    const { mangaId, content, username } = body;
-    if (!mangaId || !content || !username) {
+    const { mangaId, content, username, nickname } = body;
+    if (!mangaId || !content || !username || !nickname) {
       return NextResponse.json({ success: false, error: "缺少必要欄位" }, { status: 400 });
     }
     const newComment = await Comment.create({
