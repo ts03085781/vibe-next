@@ -3,20 +3,22 @@ import dbConnect from "@/lib/mongodb";
 import Comment from "@/models/Comment";
 import { getUserIdFromToken } from "@/utils/auth";
 
-// GET /api/comments?mangaId=xxx&page=1&pageSize=10
+// GET /api/comments?mangaId=xxx&page=1&pageSize=10&sort=latest
 export async function GET(req: NextRequest) {
   await dbConnect();
   const { searchParams } = new URL(req.url);
   const mangaId = searchParams.get("mangaId");
   const page = parseInt(searchParams.get("page") || "1", 10);
   const pageSize = parseInt(searchParams.get("pageSize") || "10", 10);
+  const sort = searchParams.get("sort") || "latest";
   if (!mangaId) {
     return NextResponse.json({ success: false, error: "缺少 mangaId" }, { status: 400 });
   }
   try {
     const total = await Comment.countDocuments({ mangaId });
     const comments = await Comment.find({ mangaId })
-      .sort({ createdDate: -1 })
+      .sort({ createdDate: sort === "latest" ? -1 : 1 }) // 最新留言排序
+      .sort({ likes: sort === "popular" ? -1 : 1 }) // 熱門留言排序
       .skip((page - 1) * pageSize)
       .limit(pageSize)
       .lean();

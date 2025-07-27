@@ -236,7 +236,7 @@ export default function IntroductionPage() {
         </div>
 
         {/* 章節列表 */}
-        <div className="bg-white rounded-lg shadow-md p-4 mb-6">
+        <div className="bg-white rounded-lg shadow-md p-6 mb-6">
           <h2 className="text-xl font-bold text-gray-800 mb-4">章節列表</h2>
           <div className="flex flex-wrap gap-2">
             {Array.from({ length: mangaData.totalChapters }, (_, index) => (
