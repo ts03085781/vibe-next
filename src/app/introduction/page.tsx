@@ -66,7 +66,7 @@ export default function IntroductionPage() {
     const fetchFavorites = async () => {
       if (!isLogin) return;
       setLoading(true);
-      setError("");
+      setError(null);
       try {
         const res = await apiGet("/api/favorites");
         const data = await res.json();

@@ -16,6 +16,7 @@ export function getUserIdFromToken(req: NextRequest): string | null {
     // 兼容 payload 可能是 userId 或 id
     return payload.userId || payload.id || null;
   } catch (e) {
+    // Token 過期或其他錯誤，返回 null
     console.error("getUserIdFromToken error", e);
     return null;
   }

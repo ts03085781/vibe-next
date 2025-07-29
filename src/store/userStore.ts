@@ -45,7 +45,11 @@ export const useUserStore = create<UserState>(set => ({
 
   refreshAccessToken: async () => {
     try {
-      const response = await apiPost("/api/auth/refresh", {});
+      // 使用原生 fetch 避免無限遞迴
+      const response = await fetch("/api/auth/refresh", {
+        method: "POST",
+        credentials: "include", // 包含 cookies
+      });
 
       if (response.ok) {
         const data = await response.json();

@@ -14,7 +14,11 @@ export async function GET(request: NextRequest) {
     const userId = getUserIdFromToken(request);
 
     // 如果 userId 不存在，則返回 401
-    if (!userId) return NextResponse.json({ success: false, error: "未登入" });
+    if (!userId)
+      return NextResponse.json(
+        { success: false, error: "帳號未登入或token已過期" },
+        { status: 401 }
+      );
 
     // 取得資料庫中指定 userId 的收藏資料
     const favorite = await Favorite.findOne({ userId });
@@ -48,7 +52,11 @@ export async function POST(request: NextRequest) {
     const userId = getUserIdFromToken(request);
 
     // 如果 userId 不存在，則返回 401
-    if (!userId) return NextResponse.json({ success: false, error: "未登入" });
+    if (!userId)
+      return NextResponse.json(
+        { success: false, error: "帳號未登入或token已過期" },
+        { status: 401 }
+      );
 
     // 取得漫畫 ID
     const { mangaId } = await request.json();
@@ -77,7 +85,11 @@ export async function DELETE(request: NextRequest) {
     const userId = getUserIdFromToken(request);
 
     // 如果 userId 不存在，則返回 401
-    if (!userId) return NextResponse.json({ success: false, error: "未登入" });
+    if (!userId)
+      return NextResponse.json(
+        { success: false, error: "帳號未登入或token已過期" },
+        { status: 401 }
+      );
 
     // 取得漫畫 ID
     const { searchParams } = new URL(request.url);
