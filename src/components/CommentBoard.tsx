@@ -59,7 +59,8 @@ const CommentBoard: React.FC<CommentBoardProps> = ({ mangaId, currentUser }) => 
       } else {
         setError(data.error || "載入失敗");
       }
-    } catch (e) {
+    } catch (err) {
+      console.error("載入失敗:", err);
       setError("載入失敗");
     }
     setLoading(false);
@@ -104,7 +105,8 @@ const CommentBoard: React.FC<CommentBoardProps> = ({ mangaId, currentUser }) => 
       } else {
         setError(data.error || "留言失敗");
       }
-    } catch (e) {
+    } catch (err) {
+      console.error("留言失敗:", err);
       setError("留言失敗");
     }
     setSubmitting(false);
@@ -140,8 +142,8 @@ const CommentBoard: React.FC<CommentBoardProps> = ({ mangaId, currentUser }) => 
           )
         );
       }
-    } catch (e) {
-      // 可加上錯誤提示
+    } catch (err) {
+      console.error("按讚失敗:", err);
     }
   };
 
@@ -185,7 +187,9 @@ const CommentBoard: React.FC<CommentBoardProps> = ({ mangaId, currentUser }) => 
         setEditingId(null);
         setEditContent("");
       }
-    } catch (e) {}
+    } catch (err) {
+      console.error("編輯留言失敗:", err);
+    }
   };
 
   // 刪除留言
@@ -198,7 +202,9 @@ const CommentBoard: React.FC<CommentBoardProps> = ({ mangaId, currentUser }) => 
       if (data.success) {
         setComments(comments => comments.filter(c => c._id !== commentId));
       }
-    } catch (e) {}
+    } catch (err) {
+      console.error("刪除留言失敗:", err);
+    }
     setDeletingId(null);
   };
 
@@ -262,6 +268,8 @@ const CommentBoard: React.FC<CommentBoardProps> = ({ mangaId, currentUser }) => 
       </div>
 
       {error && <div className="text-red-500 mb-2">{error}</div>}
+
+      {/* 留言列表 */}
       <div className="space-y-4">
         {comments.map(comment => {
           const liked = currentUser && comment.likes.includes(currentUser.userId);
@@ -352,7 +360,11 @@ const CommentBoard: React.FC<CommentBoardProps> = ({ mangaId, currentUser }) => 
           );
         })}
       </div>
+
+      {/* 載入更多 */}
       {loading && <div className="text-center text-gray-400 mt-4">載入中...</div>}
+
+      {/* 載入更多 */}
       {!loading && comments.length < total && (
         <button
           className="mt-4 w-full bg-gray-100 hover:bg-gray-200 text-gray-600 py-2 rounded"
@@ -361,6 +373,8 @@ const CommentBoard: React.FC<CommentBoardProps> = ({ mangaId, currentUser }) => 
           載入更多
         </button>
       )}
+
+      {/* 沒有留言 */}
       {!loading && comments.length === 0 && (
         <div className="text-center text-gray-400 mt-4">目前沒有留言</div>
       )}

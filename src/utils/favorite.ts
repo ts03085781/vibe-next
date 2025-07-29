@@ -11,6 +11,7 @@ export const addToFavorites = (mangaId: string) => {
       }
     })
     .catch(err => {
+      console.error("加入收藏失敗:", err);
       alert("加入收藏失敗");
     });
 };
@@ -26,6 +27,7 @@ export const removeFromFavorites = (mangaId: string) => {
       }
     })
     .catch(err => {
+      console.error("移除收藏失敗:", err);
       alert("移除收藏失敗");
     });
 };

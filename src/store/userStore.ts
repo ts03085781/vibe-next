@@ -22,7 +22,7 @@ interface UserState {
   refreshAccessToken: () => Promise<boolean>;
 }
 
-export const useUserStore = create<UserState>((set, get) => ({
+export const useUserStore = create<UserState>(set => ({
   user: null,
   accessToken: null,
 

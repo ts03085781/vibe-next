@@ -1,4 +1,4 @@
-import mongoose, { Schema, Document, model, models } from "mongoose";
+import { Schema, Document, model, models } from "mongoose";
 
 // 用戶的 TypeScript 介面
 export interface IUser extends Document {
