@@ -9,6 +9,7 @@ import { MdOutlineCancel } from "react-icons/md";
 import { IoIosSend } from "react-icons/io";
 
 import dayjs from "dayjs";
+import { apiDelete, apiGet, apiPost, apiPut } from "@/utils/api";
 
 interface CommentBoardProps {
   mangaId: string;
@@ -18,7 +19,6 @@ interface CommentBoardProps {
     avatar?: string;
     nickname: string;
     role: string;
-    token: string;
   };
 }
 
@@ -49,7 +49,7 @@ const CommentBoard: React.FC<CommentBoardProps> = ({ mangaId, currentUser }) => 
     setLoading(true);
     setError("");
     try {
-      const res = await fetch(
+      const res = await apiGet(
         `/api/comments?mangaId=${mangaId}&page=${page}&pageSize=${PAGE_SIZE}&sort=${sort}`
       );
       const data = await res.json();
@@ -90,18 +90,11 @@ const CommentBoard: React.FC<CommentBoardProps> = ({ mangaId, currentUser }) => 
     // 提交留言
     setSubmitting(true);
     try {
-      const res = await fetch("/api/comments", {
-        method: "POST",
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          mangaId,
-          content: newContent,
-          username: currentUser?.username,
-          nickname: currentUser?.nickname,
-        }),
+      const res = await apiPost("/api/comments", {
+        mangaId,
+        content: newContent,
+        username: currentUser?.username,
+        nickname: currentUser?.nickname,
       });
       const data = await res.json();
       if (data.success) {
@@ -129,11 +122,8 @@ const CommentBoard: React.FC<CommentBoardProps> = ({ mangaId, currentUser }) => 
     preCheckLogIn();
     if (!currentUser) return;
     try {
-      const res = await fetch(`/api/comments/${commentId}/like`, {
-        method: "POST",
-        headers: {
-          Authorization: `Bearer ${currentUser.token}`,
-        },
+      const res = await apiPost(`/api/comments/${commentId}/like`, {
+        commentId,
       });
       const data = await res.json();
       if (data.success) {
@@ -171,13 +161,8 @@ const CommentBoard: React.FC<CommentBoardProps> = ({ mangaId, currentUser }) => 
   const handleEditSubmit = async (commentId: string) => {
     if (!editContent.trim()) return;
     try {
-      const res = await fetch(`/api/comments/${commentId}`, {
-        method: "PUT",
-        headers: {
-          Authorization: `Bearer ${currentUser?.token}`,
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ content: editContent }),
+      const res = await apiPut(`/api/comments/${commentId}`, {
+        content: editContent,
       });
       const data = await res.json();
       if (data.success) {
@@ -208,12 +193,7 @@ const CommentBoard: React.FC<CommentBoardProps> = ({ mangaId, currentUser }) => 
     if (!window.confirm("確定要刪除這則留言嗎？")) return;
     setDeletingId(commentId);
     try {
-      const res = await fetch(`/api/comments/${commentId}`, {
-        method: "DELETE",
-        headers: {
-          Authorization: `Bearer ${currentUser?.token}`,
-        },
-      });
+      const res = await apiDelete(`/api/comments/${commentId}`);
       const data = await res.json();
       if (data.success) {
         setComments(comments => comments.filter(c => c._id !== commentId));

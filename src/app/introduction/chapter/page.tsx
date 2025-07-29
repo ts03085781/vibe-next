@@ -4,6 +4,7 @@ import { useSearchParams, useRouter } from "next/navigation";
 import Image from "next/image";
 import { countWords } from "@/utils/common";
 import dayjs from "dayjs";
+import { apiGet } from "@/utils/api";
 
 interface MangaData {
   _id: string;
@@ -67,7 +68,7 @@ export default function ChapterPage() {
     const fetchData = async () => {
       try {
         // 取得漫畫資訊
-        const mangaRes = await fetch(`/api/mangas?_id=${mangaId}`);
+        const mangaRes = await apiGet(`/api/mangas?_id=${mangaId}`);
         const mangaJson = await mangaRes.json();
 
         if (mangaJson.success && mangaJson.data.length > 0) {
@@ -78,7 +79,7 @@ export default function ChapterPage() {
           return;
         }
         // 取得章節列表
-        const chapterRes = await fetch(`/api/mangas/${mangaId}/${chapterNumber}`);
+        const chapterRes = await apiGet(`/api/mangas/${mangaId}/${chapterNumber}`);
         const chapterJson = await chapterRes.json();
         if (chapterJson.success) {
           setCurrentChapter(chapterJson.data);

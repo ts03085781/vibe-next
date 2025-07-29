@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import { genreList, audienceList, statusList, alphaList } from "@/constants/filterConfig";
 import { IManga } from "@/models/Manga";
 import CloudinaryUpload from "@/components/CloudinaryUpload";
+import { apiGet, apiPost } from "@/utils/api";
 
 type Form = {
   title: string;
@@ -77,11 +78,7 @@ export default function MangaAdminForm() {
   const handleSubmitManga = async (e: React.FormEvent) => {
     e.preventDefault();
     const payload = { ...form };
-    const res = await fetch("/api/mangas", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(payload),
-    });
+    const res = await apiPost("/api/mangas", payload);
 
     const data = await res.json();
     if (data.success) {
@@ -114,11 +111,7 @@ export default function MangaAdminForm() {
   const handleSubmitChapter = async (e: React.FormEvent) => {
     e.preventDefault();
     const payload = { ...formChapter };
-    const res = await fetch("/api/chapters", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(payload),
-    });
+    const res = await apiPost("/api/chapters", payload);
 
     const data = await res.json();
     if (data.success) {
@@ -134,7 +127,7 @@ export default function MangaAdminForm() {
   useEffect(() => {
     // 獲取所有漫畫主題資料
     const fetchMangas = async () => {
-      const res = await fetch("/api/mangas");
+      const res = await apiGet("/api/mangas");
       const data = await res.json();
       setAllMangas(data.data);
       setFormChapter(prev => ({

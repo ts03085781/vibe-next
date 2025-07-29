@@ -5,6 +5,7 @@ import SearchResultCard from "@/components/SearchResultCard";
 import { SearchResultCardProps } from "@/components/SearchResultCard";
 import SortPanel from "@/components/SortPanel";
 import { sortConfig } from "@/constants/sortConfig";
+import { apiGet } from "@/utils/api";
 
 const SearchResultPage = () => {
   const searchParams = useSearchParams();
@@ -27,8 +28,7 @@ const SearchResultPage = () => {
 
       try {
         // 使用真實的搜尋 API
-        // const res = await fetch(`/api/mangas/search?q=${encodeURIComponent(keyword)}`);
-        const res = await fetch(`/api/mangas?search=${encodeURIComponent(keyword)}`);
+        const res = await apiGet(`/api/mangas?search=${encodeURIComponent(keyword)}`);
 
         const json = await res.json();
 

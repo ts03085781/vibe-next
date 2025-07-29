@@ -1,54 +1,34 @@
-import { Schema, Document, model, models } from "mongoose";
+import mongoose, { Schema, Document, model, models } from "mongoose";
 
+// 用戶的 TypeScript 介面
 export interface IUser extends Document {
   username: string;
-  nickname: string;
   email: string;
-  password: string; // 加密後密碼
-  avatar?: string;
-  role: "user" | "admin";
+  password: string;
+  role: string;
+  nickname: string;
+  avatar: string;
   createdDate: Date;
   updatedDate: Date;
+  refreshToken?: string; // 新增：Refresh Token
+  lastActivityAt?: Date; // 新增：最後活動時間
+  sessionStartedAt?: Date; // 新增：會話開始時間
 }
 
+// User 的 Mongoose Schema
 const UserSchema = new Schema<IUser>({
-  username: {
-    type: String,
-    required: true,
-    unique: true,
-    trim: true,
-    minlength: 3,
-    maxlength: 32,
-  },
-  nickname: {
-    type: String,
-    required: true,
-    unique: true,
-    trim: true,
-  },
-  email: {
-    type: String,
-    required: true,
-    unique: true,
-    trim: true,
-    match: /.+@.+\..+/, // 基本 email 格式驗證
-  },
-  password: {
-    type: String,
-    required: true,
-    minlength: 6,
-  },
-  avatar: {
-    type: String,
-  },
-  role: {
-    type: String,
-    enum: ["user", "admin"],
-    default: "user",
-  },
+  username: { type: String, required: true, unique: true },
+  email: { type: String, required: true, unique: true },
+  password: { type: String, required: true },
+  role: { type: String, default: "user" },
+  nickname: { type: String, default: "" },
+  avatar: { type: String, default: "" },
+  createdDate: { type: Date, default: Date.now },
+  updatedDate: { type: Date, default: Date.now },
+  refreshToken: { type: String, default: null }, // 新增：Refresh Token
+  lastActivityAt: { type: Date, default: Date.now }, // 新增：最後活動時間
+  sessionStartedAt: { type: Date, default: Date.now }, // 新增：會話開始時間
 });
 
-UserSchema.index({ username: 1 });
-UserSchema.index({ email: 1 });
-
+// 避免重複註冊 model
 export default models.User || model<IUser>("User", UserSchema);

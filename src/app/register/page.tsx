@@ -2,6 +2,7 @@
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useUserStore } from "@/store/userStore";
+import { apiPost } from "@/utils/api";
 
 interface FormData {
   username: string;
@@ -44,19 +45,15 @@ export default function RegisterPage() {
     }
 
     try {
-      const res = await fetch("/api/auth/register", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          username: form.username,
-          email: form.email,
-          password: form.password,
-          nickname: form.nickname,
-        }),
+      const res = await apiPost("/api/auth/register", {
+        username: form.username,
+        email: form.email,
+        password: form.password,
+        nickname: form.nickname,
       });
       const data = await res.json();
       if (data.success) {
-        login(data.token, data.user);
+        login(data.data.accessToken, data.data.user);
         alert("註冊成功，將跳轉至首頁");
         router.push("/");
       } else {

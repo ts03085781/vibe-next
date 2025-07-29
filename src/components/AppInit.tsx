@@ -12,7 +12,7 @@ export default function AppInit() {
   const router = useRouter();
   useEffect(() => {
     // 畫面初始化觸發一次
-    const token = localStorage.getItem("token");
+    const token = localStorage.getItem("accessToken");
     const user = localStorage.getItem("user");
     preUserRef.current = user;
     preTokenRef.current = token;
@@ -24,7 +24,7 @@ export default function AppInit() {
 
     // 每秒用interval監測 localStorage,再依據 user 和 token 狀態判斷要觸發登入還是登出
     const interval = setInterval(() => {
-      const token = localStorage.getItem("token");
+      const token = localStorage.getItem("accessToken");
       const user = localStorage.getItem("user");
       if (user !== preUserRef.current || token !== preTokenRef.current) {
         preUserRef.current = user;

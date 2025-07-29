@@ -6,6 +6,7 @@ import { useIsLogin } from "@/hooks/commons";
 import { useRouter } from "next/navigation";
 import SortPanel from "@/components/SortPanel";
 import { sortConfig } from "@/constants/sortConfig";
+import { apiGet } from "@/utils/api";
 
 export default function FavoritePage() {
   const [favorites, setFavorites] = useState<IManga[]>([]);
@@ -21,13 +22,7 @@ export default function FavoritePage() {
       setLoading(true);
       setError("");
       try {
-        const res = await fetch("/api/favorites", {
-          method: "GET",
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-            "Content-Type": "application/json",
-          },
-        });
+        const res = await apiGet("/api/favorites");
         const data = await res.json();
         if (data.success) {
           setFavorites(data.data || []);

@@ -7,6 +7,7 @@ import { useIsLogin } from "@/hooks/commons";
 import { addToFavorites, removeFromFavorites } from "@/utils/favorite";
 import CommentBoard from "@/components/CommentBoard";
 import { useUserStore } from "@/store/userStore";
+import { apiGet } from "@/utils/api";
 
 interface MangaData {
   _id: string;
@@ -32,7 +33,7 @@ export default function IntroductionPage() {
   const [error, setError] = useState<string | null>(null);
   const [favorites, setFavorites] = useState<MangaData[]>([]);
   const isLogin = useIsLogin();
-  const { user, token } = useUserStore();
+  const { user, accessToken } = useUserStore();
 
   const mangaId = searchParams.get("id");
   const isVideo = mangaData?.coverImage?.includes(".mp4");
@@ -45,7 +46,7 @@ export default function IntroductionPage() {
     const fetchData = async () => {
       try {
         // 取得漫畫資訊
-        const mangaRes = await fetch(`/api/mangas?_id=${mangaId}`);
+        const mangaRes = await apiGet(`/api/mangas?_id=${mangaId}`);
         const mangaJson = await mangaRes.json();
 
         if (mangaJson.success && mangaJson.data.length > 0) {
@@ -66,13 +67,7 @@ export default function IntroductionPage() {
       setLoading(true);
       setError("");
       try {
-        const res = await fetch("/api/favorites", {
-          method: "GET",
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-            "Content-Type": "application/json",
-          },
-        });
+        const res = await apiGet("/api/favorites");
         const data = await res.json();
         if (data.success) {
           setFavorites(data.data || []);
@@ -255,13 +250,12 @@ export default function IntroductionPage() {
         <CommentBoard
           mangaId={mangaId}
           currentUser={
-            isLogin && user && token
+            isLogin && user
               ? {
                   userId: user._id,
                   username: user.username,
                   nickname: user.nickname,
                   role: user.role,
-                  token,
                 }
               : undefined
           }

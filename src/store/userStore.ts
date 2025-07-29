@@ -1,4 +1,5 @@
 import { create } from "zustand";
+import { apiPost } from "@/utils/api";
 
 export interface User {
   _id: string;
@@ -14,24 +15,50 @@ export interface User {
 
 interface UserState {
   user: User | null;
-  token: string | null;
-  login: (token: string, user: User) => void;
+  accessToken: string | null;
+  login: (accessToken: string, user: User) => void;
   logout: () => void;
   setUser: (user: User | null) => void;
+  refreshAccessToken: () => Promise<boolean>;
 }
 
-export const useUserStore = create<UserState>(set => ({
+export const useUserStore = create<UserState>((set, get) => ({
   user: null,
-  token: null,
-  login: (token, user) => {
-    set({ token, user });
-    localStorage.setItem("token", token);
+  accessToken: null,
+
+  login: (accessToken, user) => {
+    set({ accessToken, user });
+    localStorage.setItem("accessToken", accessToken);
     localStorage.setItem("user", JSON.stringify(user));
   },
+
   logout: () => {
-    set({ token: null, user: null });
-    localStorage.removeItem("token");
+    set({ accessToken: null, user: null });
+    localStorage.removeItem("accessToken");
     localStorage.removeItem("user");
+
+    // 呼叫後端登出 API
+    fetch("/api/auth/logout", { method: "POST" });
   },
+
   setUser: user => set({ user }),
+
+  refreshAccessToken: async () => {
+    try {
+      const response = await apiPost("/api/auth/refresh", {});
+
+      if (response.ok) {
+        const data = await response.json();
+        if (data.success) {
+          set({ accessToken: data.data.accessToken });
+          localStorage.setItem("accessToken", data.data.accessToken);
+          return true;
+        }
+      }
+      return false;
+    } catch (error) {
+      console.error("refreshAccessToken error", error);
+      return false;
+    }
+  },
 }));

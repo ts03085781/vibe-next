@@ -6,6 +6,7 @@ import ContentCard from "@/components/ContentCard";
 import { filterConfig } from "@/constants/filterConfig";
 import { sortConfig } from "@/constants/sortConfig";
 import { IManga } from "@/models/Manga";
+import { apiGet } from "@/utils/api";
 
 export default function Home() {
   const [selectedFilters, setSelectedFilters] = useState<Record<string, string>>({
@@ -69,7 +70,7 @@ export default function Home() {
         });
         const query = params.toString();
 
-        const res = await fetch(`/api/mangas?${query}`);
+        const res = await apiGet(`/api/mangas?${query}`);
         const json = await res.json();
         if (json.success) {
           const sortedData = json.data.sort((a: IManga, b: IManga) => {

@@ -2,6 +2,7 @@
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useUserStore } from "@/store/userStore";
+import { apiPost } from "@/utils/api";
 
 export default function LoginPage() {
   const [form, setForm] = useState({ username: "", email: "", password: "" });
@@ -21,14 +22,14 @@ export default function LoginPage() {
     setError("");
 
     try {
-      const res = await fetch("/api/auth/login", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(form),
+      const res = await apiPost("/api/auth/login", {
+        username: form.username,
+        email: form.email,
+        password: form.password,
       });
       const data = await res.json();
       if (data.success) {
-        login(data.token, data.user);
+        login(data.data.accessToken, data.data.user);
         router.push("/");
       } else {
         setError(data.error || "登入失敗");

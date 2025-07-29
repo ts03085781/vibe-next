@@ -5,12 +5,16 @@ import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 
 const JWT_SECRET = process.env.JWT_SECRET;
+const REFRESH_SECRET = process.env.REFRESH_SECRET;
 
 export async function POST(request: NextRequest) {
   try {
     // 檢查 JWT_SECRET 是否設定
-    if (!JWT_SECRET) {
-      return NextResponse.json({ success: false, error: "JWT_SECRET 未設定" }, { status: 500 });
+    if (!JWT_SECRET || !REFRESH_SECRET) {
+      return NextResponse.json(
+        { success: false, error: "JWT_SECRET 或 REFRESH_SECRET 未設定" },
+        { status: 500 }
+      );
     }
 
     // 連線資料庫
@@ -36,30 +40,56 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ success: false, error: "密碼錯誤" }, { status: 401 });
     }
 
-    // 產生 JWT
-    const token = jwt.sign(
+    // 產生Access Token 15分鐘過期
+    const accessToken = jwt.sign(
       { userId: user._id, username: user.username, role: user.role },
       JWT_SECRET,
-      { expiresIn: "1d" }
+      { expiresIn: "15m" } // Access Token 15分鐘過期
     );
 
+    // 產生Refresh Token 7天過期
+    const refreshToken = jwt.sign(
+      { userId: user._id },
+      REFRESH_SECRET,
+      { expiresIn: "7d" } // Refresh Token 7天過期
+    );
+
+    // 更新用戶資料（滑動過期），設定 refreshToken、sessionStartedAt、lastActivityAt
+    await User.findByIdAndUpdate(user._id, {
+      refreshToken,
+      sessionStartedAt: new Date(),
+      lastActivityAt: new Date(),
+    });
+
     // 回傳使用者資訊
-    return NextResponse.json({
+    const response = NextResponse.json({
       success: true,
-      token,
-      user: {
-        _id: user._id,
-        username: user.username,
-        email: user.email,
-        role: user.role,
-        nickname: user.nickname,
-        avatar: user.avatar,
-        createdDate: user.createdDate,
-        updatedDate: user.updatedDate,
+      data: {
+        accessToken,
+        user: {
+          _id: user._id,
+          username: user.username,
+          email: user.email,
+          role: user.role,
+          nickname: user.nickname,
+          avatar: user.avatar,
+          createdDate: user.createdDate,
+          updatedDate: user.updatedDate,
+        },
       },
     });
-  } catch (error) {
-    console.error("登入失敗:", error);
+
+    // 設定 Refresh Token Cookie
+    response.cookies.set("refreshToken", refreshToken, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "strict",
+      maxAge: 7 * 24 * 60 * 60 * 1000, // 7天
+    });
+
+    return response;
+  } catch (e) {
+    console.error("登入失敗:", e);
     return NextResponse.json({ success: false, error: "伺服器錯誤" }, { status: 500 });
   }
 }

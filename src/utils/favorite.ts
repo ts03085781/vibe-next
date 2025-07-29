@@ -1,12 +1,7 @@
+import { apiDelete, apiPost } from "@/utils/api";
+
 export const addToFavorites = (mangaId: string) => {
-  fetch(`/api/favorites`, {
-    method: "POST",
-    headers: {
-      Authorization: `Bearer ${localStorage.getItem("token")}`,
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({ mangaId }),
-  })
+  apiPost(`/api/favorites`, { mangaId })
     .then(res => res.json())
     .then(data => {
       if (data.success) {
@@ -21,14 +16,7 @@ export const addToFavorites = (mangaId: string) => {
 };
 
 export const removeFromFavorites = (mangaId: string) => {
-  fetch(`/api/favorites`, {
-    method: "DELETE",
-    headers: {
-      Authorization: `Bearer ${localStorage.getItem("token")}`,
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({ mangaId }),
-  })
+  apiDelete(`/api/favorites?mangaId=${mangaId}`)
     .then(res => res.json())
     .then(data => {
       if (data.success) {

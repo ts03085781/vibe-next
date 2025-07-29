@@ -23,13 +23,16 @@ import mongoose from "mongoose";
  * @param {string} status - 狀態篩選
  * @returns {Object} 漫畫列表和分頁資訊
  */
+// GET /api/mangas 獲取漫畫列表
 export async function GET(request: NextRequest) {
-  try {
-    await dbConnect();
+  // 連接資料庫
+  await dbConnect();
 
+  try {
+    // 取得 query 參數
     const { searchParams } = new URL(request.url);
 
-    // 獲取查詢參數
+    // 獲取查詢參數，如果沒有則使用預設值
     const _id = searchParams.get("_id");
     const search = searchParams.get("search");
     const page = parseInt(searchParams.get("page") || "1");
@@ -40,7 +43,6 @@ export async function GET(request: NextRequest) {
     const status = searchParams.get("status");
     const alpha = searchParams.get("alpha");
 
-    // 建立查詢條件
     const query: Record<string, unknown> = {};
 
     if (_id) {
@@ -87,6 +89,7 @@ export async function GET(request: NextRequest) {
     const hasNextPage = page < totalPages;
     const hasPrevPage = page > 1;
 
+    // 回傳結果
     return NextResponse.json({
       success: true,
       data: mangas,
@@ -99,8 +102,8 @@ export async function GET(request: NextRequest) {
         hasPrevPage,
       },
     });
-  } catch (error) {
-    console.error("Error fetching mangas:", error);
+  } catch (e) {
+    console.error("獲取漫畫列表失敗:", e);
     return NextResponse.json({ success: false, error: "Internal server error" }, { status: 500 });
   }
 }
@@ -125,10 +128,13 @@ export async function GET(request: NextRequest) {
  * @param {number} body.collectionsCount - 收藏數
  * @returns {Object} 創建的漫畫資料
  */
+// POST /api/mangas 創建新漫畫
 export async function POST(request: NextRequest) {
   try {
+    // 連接資料庫
     await dbConnect();
 
+    // 取得漫畫資料
     const body = await request.json();
 
     // 自動補上當前時間
@@ -145,6 +151,7 @@ export async function POST(request: NextRequest) {
     const manga = new Manga(mangaData);
     await manga.save();
 
+    // 回傳結果
     return NextResponse.json(
       {
         success: true,
@@ -152,8 +159,8 @@ export async function POST(request: NextRequest) {
       },
       { status: 201 }
     );
-  } catch (error) {
-    console.error("Error creating manga:", error);
+  } catch (e) {
+    console.error("創建漫畫失敗:", e);
     return NextResponse.json({ success: false, error: "Internal server error" }, { status: 500 });
   }
 }
