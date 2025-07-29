@@ -33,7 +33,7 @@ export default function IntroductionPage() {
   const [error, setError] = useState<string | null>(null);
   const [favorites, setFavorites] = useState<MangaData[]>([]);
   const isLogin = useIsLogin();
-  const { user, accessToken } = useUserStore();
+  const { user } = useUserStore();
 
   const mangaId = searchParams.get("id");
   const isVideo = mangaData?.coverImage?.includes(".mp4");
@@ -56,7 +56,8 @@ export default function IntroductionPage() {
           setLoading(false);
           return;
         }
-      } catch (e) {
+      } catch (err) {
+        console.error("載入漫畫資訊失敗:", err);
         setError("API 請求失敗");
       }
       setLoading(false);
@@ -74,7 +75,8 @@ export default function IntroductionPage() {
         } else {
           setError(data.error || "載入失敗");
         }
-      } catch (e) {
+      } catch (err) {
+        console.error("載入收藏漫畫失敗:", err);
         setError("載入失敗");
       }
       setLoading(false);

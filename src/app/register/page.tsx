@@ -59,7 +59,8 @@ export default function RegisterPage() {
       } else {
         setError(data.error || "註冊失敗");
       }
-    } catch (e) {
+    } catch (err) {
+      console.error("註冊失敗:", err);
       setError("API 請求失敗");
     }
 
