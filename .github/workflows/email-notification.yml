@@ -12,13 +12,13 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Install dependencies
-        run: npm install
+      - name: Install sendgrid/mail
+        run: npm install @sendgrid/mail
 
       - name: Send email with SendGrid
         run: node .github/email-sending-script.js
         env:
-          SENDGRID_API_KEY: ${{ secrets.SENDGRID_API_KEY }}
+          API_KEY_FOR_VIBE_NEXT: ${{ secrets.API_KEY_FOR_VIBE_NEXT }}
           GITHUB_REPOSITORY: ${{ github.repository }}
           GITHUB_ACTOR: ${{ github.actor }}
           GITHUB_SHA: ${{ github.sha }}
