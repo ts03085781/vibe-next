@@ -13,12 +13,12 @@ export interface SortPanelProps {
 
 export default function SortPanel({ options, selected, onSelect }: SortPanelProps) {
   return (
-    <div className="flex bg-white rounded-lg shadow-sm overflow-hidden w-fit">
+    <div className="flex flex-wrap bg-white rounded-lg shadow-sm overflow-hidden w-full sm:w-fit">
       {options.map((option, index) => (
         <button
           key={option.value}
           className={`
-            w-30 py-2 px-3 text-center text-sm font-medium
+            py-2 px-3 text-center text-sm font-medium w-full sm:w-30
             ${
               selected === option.value
                 ? "bg-orange-500 text-white"

@@ -154,7 +154,7 @@ export default function IntroductionPage() {
     <div className="min-h-screen bg-gray-50">
       <div className="container mx-auto px-4 py-8">
         {/* 漫畫資訊區 */}
-        <div className="flex gap-4 bg-white rounded-lg shadow-md p-6 mb-6">
+        <div className="flex flex-col items-center sm:items-start sm:flex-row gap-4 bg-white rounded-lg shadow-md p-6 mb-6">
           {mangaData.coverImage ? (
             isVideo ? (
               <video

@@ -67,6 +67,9 @@ export async function POST(request: NextRequest) {
     // 將漫畫 ID 加入收藏資料庫
     await Favorite.updateOne({ userId }, { $addToSet: { favorites: mangaId } }, { upsert: true });
 
+    // 更新漫畫的收藏人數
+    await Manga.updateOne({ _id: mangaId }, { $inc: { collectionsCount: +1 } });
+
     // 回傳結果
     return NextResponse.json({ success: true });
   } catch (e) {
@@ -100,6 +103,9 @@ export async function DELETE(request: NextRequest) {
 
     // 將漫畫 ID 從收藏資料庫中移除
     await Favorite.updateOne({ userId }, { $pull: { favorites: mangaId } });
+
+    // 更新漫畫的收藏人數
+    await Manga.updateOne({ _id: mangaId }, { $inc: { collectionsCount: -1 } });
 
     // 回傳結果
     return NextResponse.json({ success: true });

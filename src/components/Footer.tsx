@@ -8,9 +8,9 @@ export default function Footer() {
   return (
     <footer className="bg-gray-800 text-white">
       <div className="container mx-auto px-4 py-8">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+        <div className="flex flex-col md:flex-wrap md:flex-row md:justify-between gap-8">
           {/* 網站資訊 */}
-          <div className="col-span-1 md:col-span-2">
+          <div className="flex flex-col items-center md:items-start">
             <div className="flex items-center gap-2 mb-4">
               <Image src="/images/logo.png" alt="logo" width={36} height={36} />
               <span className="text-xl font-bold">AI小說坊</span>
@@ -18,7 +18,7 @@ export default function Footer() {
             <p className="text-gray-300 text-sm mb-4">
               提供最新、最熱門的短篇小說與漫畫內容，讓您隨時享受閱讀的樂趣。
             </p>
-            <div className="flex flex-col gap-4">
+            <div className="flex flex-col gap-4 items-center md:items-start">
               <a
                 href="mailto:ts03085781@gmail.com"
                 target="_blank"
@@ -48,59 +48,60 @@ export default function Footer() {
               </a>
             </div>
           </div>
+          <div className="flex justify-center md:justify-around gap-8 flex-grow">
+            {/* 快速連結 */}
+            <div>
+              <h3 className="font-bold text-lg mb-4">快速連結</h3>
+              <ul className="space-y-2 text-sm">
+                <li>
+                  <a href="#" className="text-gray-300 hover:text-white transition-colors">
+                    最新更新
+                  </a>
+                </li>
+                <li>
+                  <a href="#" className="text-gray-300 hover:text-white transition-colors">
+                    排行榜
+                  </a>
+                </li>
+                <li>
+                  <a href="#" className="text-gray-300 hover:text-white transition-colors">
+                    完結作品
+                  </a>
+                </li>
+                <li>
+                  <a href="#" className="text-gray-300 hover:text-white transition-colors">
+                    漫畫家
+                  </a>
+                </li>
+              </ul>
+            </div>
 
-          {/* 快速連結 */}
-          <div>
-            <h3 className="font-bold text-lg mb-4">快速連結</h3>
-            <ul className="space-y-2 text-sm">
-              <li>
-                <a href="#" className="text-gray-300 hover:text-white transition-colors">
-                  最新更新
-                </a>
-              </li>
-              <li>
-                <a href="#" className="text-gray-300 hover:text-white transition-colors">
-                  排行榜
-                </a>
-              </li>
-              <li>
-                <a href="#" className="text-gray-300 hover:text-white transition-colors">
-                  完結作品
-                </a>
-              </li>
-              <li>
-                <a href="#" className="text-gray-300 hover:text-white transition-colors">
-                  漫畫家
-                </a>
-              </li>
-            </ul>
-          </div>
-
-          {/* 支援與幫助 */}
-          <div>
-            <h3 className="font-bold text-lg mb-4">支援與幫助</h3>
-            <ul className="space-y-2 text-sm">
-              <li>
-                <a href="#" className="text-gray-300 hover:text-white transition-colors">
-                  使用條款
-                </a>
-              </li>
-              <li>
-                <a href="#" className="text-gray-300 hover:text-white transition-colors">
-                  隱私政策
-                </a>
-              </li>
-              <li>
-                <a href="#" className="text-gray-300 hover:text-white transition-colors">
-                  意見回饋
-                </a>
-              </li>
-              <li>
-                <a href="#" className="text-gray-300 hover:text-white transition-colors">
-                  聯絡我們
-                </a>
-              </li>
-            </ul>
+            {/* 支援與幫助 */}
+            <div>
+              <h3 className="font-bold text-lg mb-4">支援與幫助</h3>
+              <ul className="space-y-2 text-sm">
+                <li>
+                  <a href="#" className="text-gray-300 hover:text-white transition-colors">
+                    使用條款
+                  </a>
+                </li>
+                <li>
+                  <a href="#" className="text-gray-300 hover:text-white transition-colors">
+                    隱私政策
+                  </a>
+                </li>
+                <li>
+                  <a href="#" className="text-gray-300 hover:text-white transition-colors">
+                    意見回饋
+                  </a>
+                </li>
+                <li>
+                  <a href="#" className="text-gray-300 hover:text-white transition-colors">
+                    聯絡我們
+                  </a>
+                </li>
+              </ul>
+            </div>
           </div>
         </div>
 

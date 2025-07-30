@@ -144,7 +144,7 @@ export default function ChapterPage() {
       <div className="container mx-auto px-4 py-8">
         {/* 章節導航 */}
         <div className="bg-white rounded-lg shadow-md p-4 mb-6">
-          <div className="flex items-center justify-between">
+          <div className="flex flex-wrap items-center justify-between">
             <h2 className="text-lg font-bold text-gray-800">
               第 {currentChapter.chapterNumber} 章：{currentChapter.title}
             </h2>

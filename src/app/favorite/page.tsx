@@ -92,7 +92,7 @@ export default function FavoritePage() {
           <div className="text-gray-400 text-center">目前沒有收藏任何漫畫</div>
         )}
         {/* 收藏列表 */}
-        <div className="flex gap-4">
+        <div className="flex flex-wrap sm:flex-row gap-4">
           {favorites.map((item: IManga) => (
             <ContentCard key={String(item._id)} {...item} />
           ))}

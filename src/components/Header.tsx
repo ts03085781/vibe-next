@@ -67,9 +67,9 @@ export default function Header() {
 
   return (
     <header className="bg-gray-800 px-5 pt-4 pb-2">
-      <div className="flex items-center justify-between mb-2">
+      <div className="flex flex-col lg:flex-row gap-4 items-center justify-between mb-2">
         {/* Logo 與標題 */}
-        <div className="flex items-center gap-2 cursor-pointer" onClick={handleBackToList}>
+        <div className="flex items-center gap-3 cursor-pointer" onClick={handleBackToList}>
           <Image src="/images/logo.png" alt="logo" width={52} height={52} />
           <span className="text-white text-xl font-bold">AI小說坊</span>
         </div>
@@ -91,11 +91,10 @@ export default function Header() {
           </button>
         </div>
         {/* 右側功能連結 */}
-        <div className="flex gap-8 text-white text-base font-medium">
+        <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-8 text-white text-base font-medium">
           {isLogin ? (
             <>
-              {" "}
-              <span>{`Hi ${user?.nickname}`}</span>
+              <span>{user?.nickname}</span>
               <span className="cursor-pointer" onClick={handleLogout}>
                 登出
               </span>
