@@ -31,7 +31,7 @@ export const apiCall = async (url: string, options: RequestInit = {}) => {
       } else {
         // 刷新失敗，登出
         logout();
-        window.location.href = "/login";
+        // window.location.href = "/login";
         throw new Error("Authentication failed");
       }
     }
