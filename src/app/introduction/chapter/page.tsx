@@ -5,6 +5,9 @@ import Image from "next/image";
 import { countWords } from "@/utils/common";
 import dayjs from "dayjs";
 import { apiGet } from "@/utils/api";
+import { TbPlayerPlayFilled, TbPlayerPauseFilled, TbPlayerStopFilled } from "react-icons/tb";
+import { FaChevronRight, FaChevronLeft } from "react-icons/fa6";
+import { TbArrowBackUp } from "react-icons/tb";
 
 interface MangaData {
   _id: string;
@@ -129,7 +132,7 @@ export default function ChapterPage() {
             onClick={handleBackToList}
             className="bg-orange-500 text-white px-6 py-2 rounded-lg hover:bg-orange-600 transition-colors"
           >
-            返回章節列表
+            <TbArrowBackUp />
           </button>
         </div>
       </div>
@@ -150,9 +153,9 @@ export default function ChapterPage() {
               <span>發布於: {dayjs(currentChapter.publishDate).format("YYYY-MM-DD")}</span>
               <button
                 onClick={handleBackToList}
-                className="text-base font-bold bg-gray-400 text-white px-4 py-2 rounded-lg hover:bg-gray-500 transition-colors cursor-pointer"
+                className="text-2xl font-bold bg-gray-400 text-white px-5 py-2 rounded-lg hover:bg-gray-500 transition-colors cursor-pointer"
               >
-                返回章節列表
+                <TbArrowBackUp />
               </button>
             </div>
           </div>
@@ -166,7 +169,7 @@ export default function ChapterPage() {
           <div className="flex gap-4 justify-center">
             {speakingStatus === SpeakingStatus.STOPPED && (
               <button
-                className="bg-gray-400 text-white px-6 py-2 rounded-lg hover:bg-gray-500 transition-colors cursor-pointer"
+                className="bg-orange-500 text-white px-6 py-2 rounded-lg hover:bg-orange-600 transition-colors cursor-pointer"
                 onClick={() => {
                   const utter = new window.SpeechSynthesisUtterance(currentChapter.content);
                   utter.lang = "zh-TW";
@@ -175,7 +178,7 @@ export default function ChapterPage() {
                   setSpeakingStatus(SpeakingStatus.SPEAKING);
                 }}
               >
-                開始朗讀
+                <TbPlayerPlayFilled />
               </button>
             )}
             {speakingStatus === SpeakingStatus.SPEAKING && (
@@ -186,7 +189,7 @@ export default function ChapterPage() {
                   setSpeakingStatus(SpeakingStatus.PAUSED);
                 }}
               >
-                暫停朗讀
+                <TbPlayerPauseFilled />
               </button>
             )}
             {speakingStatus === SpeakingStatus.PAUSED && (
@@ -197,7 +200,7 @@ export default function ChapterPage() {
                   setSpeakingStatus(SpeakingStatus.SPEAKING);
                 }}
               >
-                繼續朗讀
+                <TbPlayerPlayFilled />
               </button>
             )}
             {(speakingStatus === SpeakingStatus.SPEAKING ||
@@ -209,7 +212,7 @@ export default function ChapterPage() {
                   setSpeakingStatus(SpeakingStatus.STOPPED);
                 }}
               >
-                停止朗讀
+                <TbPlayerStopFilled />
               </button>
             )}
           </div>
@@ -226,7 +229,7 @@ export default function ChapterPage() {
                 : "bg-orange-500 text-white hover:bg-orange-600"
             }`}
           >
-            上一章
+            <FaChevronLeft />
           </button>
 
           <div className="text-center">
@@ -244,7 +247,7 @@ export default function ChapterPage() {
                 : "bg-orange-500 text-white hover:bg-orange-600"
             }`}
           >
-            下一章
+            <FaChevronRight />
           </button>
         </div>
       </div>

@@ -5,6 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useUserStore } from "@/store/userStore";
 import { useIsLogin } from "@/hooks/commons";
+import { IoSearch } from "react-icons/io5";
 
 export default function Header() {
   const router = useRouter();
@@ -86,7 +87,7 @@ export default function Header() {
             onClick={handleSearch}
             className="bg-orange-500 text-white px-6 py-2 rounded-r-lg font-bold hover:bg-orange-600 transition-colors"
           >
-            搜尋
+            <IoSearch />
           </button>
         </div>
         {/* 右側功能連結 */}
@@ -105,9 +106,6 @@ export default function Header() {
               <Link href="/register">註冊</Link>
             </>
           )}
-          <span className="cursor-pointer" onClick={() => preCheckLogin("/")}>
-            留言板
-          </span>
           <span className="cursor-pointer" onClick={() => preCheckLogin("/favorite")}>
             收藏庫
           </span>

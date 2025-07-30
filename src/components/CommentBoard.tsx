@@ -3,9 +3,7 @@ import { IComment } from "@/models/Comment";
 import { useIsLogin } from "@/hooks/commons";
 import { useRouter } from "next/navigation";
 import { FiThumbsUp } from "react-icons/fi";
-import { FiEdit } from "react-icons/fi";
-import { RiDeleteBin2Line } from "react-icons/ri";
-import { MdOutlineCancel } from "react-icons/md";
+import { MdDelete, MdEdit, MdCancel } from "react-icons/md";
 import { IoIosSend } from "react-icons/io";
 
 import dayjs from "dayjs";
@@ -315,7 +313,7 @@ const CommentBoard: React.FC<CommentBoardProps> = ({ mangaId, currentUser }) => 
                     onClick={handleEditCancel}
                     disabled={deletingId === String(comment._id)}
                   >
-                    <MdOutlineCancel />
+                    <MdCancel />
                   </button>
                 </div>
               ) : (
@@ -343,7 +341,7 @@ const CommentBoard: React.FC<CommentBoardProps> = ({ mangaId, currentUser }) => 
                       onClick={() => handleEdit(String(comment._id), comment.content)}
                       disabled={deletingId === String(comment._id)}
                     >
-                      <FiEdit className="text-base" />
+                      <MdEdit className="text-base" />
                     </button>
                     {/* 刪除留言 */}
                     <button
@@ -351,7 +349,7 @@ const CommentBoard: React.FC<CommentBoardProps> = ({ mangaId, currentUser }) => 
                       onClick={() => handleDelete(String(comment._id))}
                       disabled={deletingId === String(comment._id)}
                     >
-                      <RiDeleteBin2Line className="text-base" />
+                      <MdDelete className="text-base" />
                     </button>
                   </div>
                 )}

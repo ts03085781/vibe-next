@@ -1,5 +1,8 @@
 import React from "react";
 import Image from "next/image";
+import { MdOutlinePhoneIphone } from "react-icons/md";
+import { MdEmail } from "react-icons/md";
+import { FaAddressCard } from "react-icons/fa";
 
 export default function Footer() {
   return (
@@ -15,15 +18,33 @@ export default function Footer() {
             <p className="text-gray-300 text-sm mb-4">
               提供最新、最熱門的短篇小說與漫畫內容，讓您隨時享受閱讀的樂趣。
             </p>
-            <div className="flex gap-4">
-              <a href="#" className="text-gray-300 hover:text-white transition-colors">
-                <span className="text-lg">📱</span>
+            <div className="flex flex-col gap-4">
+              <a
+                href="mailto:ts03085781@gmail.com"
+                target="_blank"
+                className="text-gray-300 hover:text-white transition-colors"
+              >
+                <span className="text-sm flex items-center gap-2">
+                  <MdEmail />: ts03085781@gmail.com
+                </span>
               </a>
-              <a href="#" className="text-gray-300 hover:text-white transition-colors">
-                <span className="text-lg">💬</span>
+              <a
+                href="tel:0960081103"
+                target="_blank"
+                className="text-gray-300 hover:text-white transition-colors"
+              >
+                <span className="text-sm flex items-center gap-2">
+                  <MdOutlinePhoneIphone />: 0960-081-103
+                </span>
               </a>
-              <a href="#" className="text-gray-300 hover:text-white transition-colors">
-                <span className="text-lg">📧</span>
+              <a
+                href="https://www.cake.me/s--7Ip1sbsZIlXtVtr7AJABzw--/ts03085781"
+                target="_blank"
+                className="text-gray-300 hover:text-white transition-colors"
+              >
+                <span className="text-sm flex items-center gap-2">
+                  <FaAddressCard />: https://www.cake.me/s--7Ip1sbsZIlXtVtr7AJABzw--/ts03085781
+                </span>
               </a>
             </div>
           </div>

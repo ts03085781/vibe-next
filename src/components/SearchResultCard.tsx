@@ -36,6 +36,7 @@ export default function SearchResultCard({
   status,
   year,
   alpha,
+  collectionsCount,
 }: SearchResultCardProps) {
   const router = useRouter();
 
@@ -109,6 +110,7 @@ export default function SearchResultCard({
             <div>出品年份: {year}</div>
             <div>最新更新: {dayjs(updateDate).format("YYYY-MM-DD")}</div>
             <div>字母索引: {alpha}</div>
+            <div>收藏人數: {collectionsCount}</div>
             <div>目前狀態: {status}</div>
           </div>
 

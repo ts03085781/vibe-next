@@ -8,6 +8,7 @@ import { addToFavorites, removeFromFavorites } from "@/utils/favorite";
 import CommentBoard from "@/components/CommentBoard";
 import { useUserStore } from "@/store/userStore";
 import { apiGet } from "@/utils/api";
+import { MdFavoriteBorder, MdFavorite, MdHome } from "react-icons/md";
 
 interface MangaData {
   _id: string;
@@ -16,6 +17,7 @@ interface MangaData {
   coverImage?: string;
   rating: number;
   totalChapters: number;
+  collectionsCount: number;
   genre: string[];
   audience?: string;
   status?: string;
@@ -184,24 +186,24 @@ export default function IntroductionPage() {
                 {showRemoveFromFavorites() ? (
                   <button
                     onClick={handleRemoveFromFavorites}
-                    className="bg-gray-400 text-white font-bold px-4 py-2 rounded-lg hover:bg-gray-500 transition-colors cursor-pointer"
+                    className="text-2xl bg-orange-500 text-white font-bold px-4 py-2 rounded-lg hover:bg-orange-600 transition-colors cursor-pointer"
                   >
-                    取消收藏
+                    <MdFavorite />
                   </button>
                 ) : (
                   <button
                     onClick={handleAddToFavorites}
-                    className="bg-orange-500 text-white font-bold px-4 py-2 rounded-lg hover:bg-orange-600 transition-colors cursor-pointer"
+                    className="text-2xl bg-gray-400 text-white font-bold px-4 py-2 rounded-lg hover:bg-gray-500 transition-colors cursor-pointer"
                   >
-                    加入收藏
+                    <MdFavoriteBorder />
                   </button>
                 )}
 
                 <button
                   onClick={handleBackToList}
-                  className="bg-gray-400 text-white font-bold px-4 py-2 rounded-lg hover:bg-gray-500 transition-colors cursor-pointer"
+                  className="text-2xl bg-gray-400 text-white font-bold px-4 py-2 rounded-lg hover:bg-gray-500 transition-colors cursor-pointer"
                 >
-                  返回首頁
+                  <MdHome />
                 </button>
               </div>
             </div>
@@ -227,6 +229,7 @@ export default function IntroductionPage() {
               最新更新: {dayjs(mangaData.updateDate).format("YYYY-MM-DD")}
             </p>
             <p className="text-gray-600 text-sm mb-2">字母索引: {mangaData.alpha}</p>
+            <p className="text-gray-600 text-sm mb-2">收藏人數: {mangaData.collectionsCount}</p>
             <p className="text-gray-600 text-sm mb-4">目前狀態: {mangaData.status}</p>
             <p className="text-gray-600 text-sm">故事描述: {mangaData.description}</p>
           </div>
