@@ -8,6 +8,7 @@ export const genreList = [
   { label: "搞笑", value: "搞笑" },
   { label: "愛情", value: "愛情" },
   { label: "科幻", value: "科幻" },
+  { label: "奇幻", value: "奇幻" },
   { label: "魔法", value: "魔法" },
   { label: "格鬥", value: "格鬥" },
   { label: "武俠", value: "武俠" },

@@ -111,7 +111,7 @@ export default function Header() {
           <span className="cursor-pointer" onClick={handleDownloadShortcut}>
             設為桌面圖標
           </span>
-          {isLogin && <span className="cursor-pointer">設定</span>}
+          {/* {isLogin && <span className="cursor-pointer">設定</span>} */}
         </div>
       </div>
     </header>
