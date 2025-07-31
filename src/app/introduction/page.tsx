@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, Suspense } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import Image from "next/image";
 import dayjs from "dayjs";
@@ -27,7 +27,7 @@ interface MangaData {
   createDate?: Date;
   updateDate?: Date;
 }
-export default function IntroductionPage() {
+function IntroductionContent() {
   const searchParams = useSearchParams();
   const router = useRouter();
 
@@ -280,5 +280,13 @@ export default function IntroductionPage() {
         />
       </div>
     </div>
+  );
+}
+
+export default function IntroductionPage() {
+  return (
+    <Suspense fallback={<div className="text-center py-12">載入中...</div>}>
+      <IntroductionContent />
+    </Suspense>
   );
 }

@@ -1,7 +1,6 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, Suspense } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
-import Image from "next/image";
 import { countWords } from "@/utils/common";
 import dayjs from "dayjs";
 import { apiGet } from "@/utils/api";
@@ -41,7 +40,7 @@ enum SpeakingStatus {
   STOPPED = "stopped",
 }
 
-export default function ChapterPage() {
+function ChapterContent() {
   const searchParams = useSearchParams();
   const router = useRouter();
 
@@ -252,5 +251,13 @@ export default function ChapterPage() {
         </div>
       </div>
     </div>
+  );
+}
+
+export default function ChapterPage() {
+  return (
+    <Suspense fallback={<div className="text-center py-12">載入中...</div>}>
+      <ChapterContent />
+    </Suspense>
   );
 }

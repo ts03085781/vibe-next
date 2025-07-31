@@ -1,6 +1,6 @@
 "use client";
 import { useRouter, useSearchParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useState, Suspense } from "react";
 import SearchResultCard from "@/components/SearchResultCard";
 import { SearchResultCardProps } from "@/components/SearchResultCard";
 import SortPanel from "@/components/SortPanel";
@@ -8,7 +8,7 @@ import { sortConfig } from "@/constants/sortConfig";
 import { apiGet } from "@/utils/api";
 import { MdHome } from "react-icons/md";
 
-const SearchResultPage = () => {
+const SearchResultContent = () => {
   const searchParams = useSearchParams();
   const keyword = searchParams.get("keyword");
   const router = useRouter();
@@ -130,6 +130,14 @@ const SearchResultPage = () => {
         )}
       </div>
     </div>
+  );
+};
+
+const SearchResultPage = () => {
+  return (
+    <Suspense fallback={<div className="text-center py-12">載入中...</div>}>
+      <SearchResultContent />
+    </Suspense>
   );
 };
 
