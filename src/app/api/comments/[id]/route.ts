@@ -5,13 +5,13 @@ import User from "@/models/User";
 import { getUserIdFromToken } from "@/utils/auth";
 
 // PUT /api/comments/:id 編輯留言
-export async function PUT(request: NextRequest, { params }: { params: { id: string } }) {
+export async function PUT(request: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   try {
     // 連接資料庫
     await dbConnect();
 
     // 取得 commentId
-    const commentId = params.id;
+    const { id: commentId } = await params;
 
     // 取得當前用戶的 userId
     const userId = getUserIdFromToken(request);
@@ -66,13 +66,16 @@ export async function PUT(request: NextRequest, { params }: { params: { id: stri
 }
 
 // DELETE /api/comments/:id 刪除留言
-export async function DELETE(request: NextRequest, { params }: { params: { id: string } }) {
+export async function DELETE(
+  request: NextRequest,
+  { params }: { params: Promise<{ id: string }> }
+) {
   try {
     // 連接資料庫
     await dbConnect();
 
     // 取得 commentId
-    const commentId = params.id;
+    const { id: commentId } = await params;
 
     // 取得當前用戶的 userId
     const userId = getUserIdFromToken(request);

@@ -4,13 +4,13 @@ import Comment from "@/models/Comment";
 import { getUserIdFromToken } from "@/utils/auth";
 
 // POST /api/comments/:id/like
-export async function POST(request: NextRequest, { params }: { params: { id: string } }) {
+export async function POST(request: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   try {
     // 連接資料庫
     await dbConnect();
 
     // 取得 commentId
-    const commentId = params.id;
+    const { id: commentId } = await params;
 
     // 取得當前用戶的 userId
     const userId = getUserIdFromToken(request);
