@@ -6,6 +6,7 @@ import dayjs from "dayjs";
 import { useIsLogin } from "@/hooks/commons";
 import { addToFavorites, removeFromFavorites } from "@/utils/favorite";
 import CommentBoard from "@/components/CommentBoard";
+import RatingBlock from "@/components/RatingBlock";
 import { useUserStore } from "@/store/userStore";
 import { apiGet } from "@/utils/api";
 import { MdFavoriteBorder, MdFavorite, MdHome } from "react-icons/md";
@@ -103,7 +104,7 @@ export default function IntroductionPage() {
         setFavorites([...favorites, mangaData]);
       }
     } else {
-      alert("請先登入會用唷！");
+      alert("請先登入會員才能收藏唷！");
       router.push("/login");
     }
   };
@@ -121,6 +122,11 @@ export default function IntroductionPage() {
 
   const showRemoveFromFavorites = () => {
     return isLogin && isAlreadyInFavorites();
+  };
+
+  // 評分改變時更新漫畫資訊
+  const handleRatingChange = (newRating: number) => {
+    setMangaData(prev => (prev ? { ...prev, rating: newRating } : null));
   };
 
   if (loading) {
@@ -207,11 +213,8 @@ export default function IntroductionPage() {
                 </button>
               </div>
             </div>
-            <div className="flex items-center gap-4 text-s text-gray-700 mb-3">
-              <span className="text-orange-500">評分：{mangaData.rating} ★</span>
-              <span>總章節：{mangaData.totalChapters}</span>
-            </div>
-            <div className="flex flex-wrap gap-2 mb-3">
+            {/* 類型標籤 */}
+            <div className="flex flex-wrap gap-2 mb-4">
               {mangaData.genre &&
                 mangaData.genre.map((genre, index) => (
                   <span
@@ -222,15 +225,25 @@ export default function IntroductionPage() {
                   </span>
                 ))}
             </div>
-            <p className="text-gray-600 text-sm mb-2">
+            {/* 評分系統 */}
+            <div className="mb-4">
+              <RatingBlock
+                mangaId={mangaId}
+                currentRating={mangaData.rating}
+                onRatingChange={handleRatingChange}
+              />
+            </div>
+
+            <p className="text-gray-600 text-sm mb-1.5">總章節：{mangaData.totalChapters}</p>
+            <p className="text-gray-600 text-sm mb-1.5">字母索引: {mangaData.alpha}</p>
+            <p className="text-gray-600 text-sm mb-1.5">收藏人數: {mangaData.collectionsCount}</p>
+            <p className="text-gray-600 text-sm mb-1.5">目前狀態: {mangaData.status}</p>
+            <p className="text-gray-600 text-sm mb-1.5">
               出品年份: {dayjs(mangaData.createDate).format("YYYY-MM-DD")}
             </p>
-            <p className="text-gray-600 text-sm mb-2">
+            <p className="text-gray-600 text-sm mb-4">
               最新更新: {dayjs(mangaData.updateDate).format("YYYY-MM-DD")}
             </p>
-            <p className="text-gray-600 text-sm mb-2">字母索引: {mangaData.alpha}</p>
-            <p className="text-gray-600 text-sm mb-2">收藏人數: {mangaData.collectionsCount}</p>
-            <p className="text-gray-600 text-sm mb-4">目前狀態: {mangaData.status}</p>
             <p className="text-gray-600 text-sm">故事描述: {mangaData.description}</p>
           </div>
         </div>
