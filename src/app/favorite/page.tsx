@@ -7,6 +7,7 @@ import { useRouter } from "next/navigation";
 import SortPanel from "@/components/SortPanel";
 import { sortConfig } from "@/constants/sortConfig";
 import { apiGet } from "@/utils/api";
+import { MdHome } from "react-icons/md";
 
 export default function FavoritePage() {
   const [favorites, setFavorites] = useState<IManga[]>([]);
@@ -72,9 +73,9 @@ export default function FavoritePage() {
 
           <button
             onClick={handleBackToList}
-            className="text-base font-bold bg-gray-500 text-white px-4 py-2 rounded-lg hover:bg-gray-600 transition-colors cursor-pointer"
+            className="text-2xl font-bold bg-gray-500 text-white px-4 py-2 rounded-lg hover:bg-gray-600 transition-colors cursor-pointer"
           >
-            返回首頁
+            <MdHome />
           </button>
         </div>
 
