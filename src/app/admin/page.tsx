@@ -9,13 +9,13 @@ type Form = {
   title: string;
   description: string;
   coverImage: string;
-  rating: number;
+  // rating: number;
   genre: string[];
   audience: string;
   status: string;
-  year: number;
+  // year: number;
   alpha: string;
-  collectionsCount: number;
+  // collectionsCount: number;
   tag: string;
 };
 
@@ -23,13 +23,13 @@ const initialForm = {
   title: "",
   description: "",
   coverImage: "",
-  rating: 0,
+  // rating: 0,
   genre: [],
   audience: "少年",
   status: "連載",
-  year: new Date().getFullYear(),
+  // year: new Date().getFullYear(),
   alpha: "A",
-  collectionsCount: 0,
+  // collectionsCount: 0,
   tag: "",
 };
 
@@ -69,7 +69,7 @@ export default function MangaAdminForm() {
     } else {
       setForm(prev => ({
         ...prev,
-        [name]: ["rating", "year", "collectionsCount"].includes(name) ? Number(value) : value,
+        [name]: value,
       }));
     }
   };
@@ -179,7 +179,7 @@ export default function MangaAdminForm() {
                 className="border-1 border-gray-300 rounded-lg p-2 text-gray-700 min-h-[60px]"
               />
             </div>
-            <div className="flex flex-col space-y-2">
+            {/* <div className="flex flex-col space-y-2">
               <label htmlFor="rating" className="font-medium text-gray-700">
                 評分
               </label>
@@ -195,7 +195,7 @@ export default function MangaAdminForm() {
                 step={0.1}
                 className="border-1 border-gray-300 rounded-lg p-2 text-gray-700"
               />
-            </div>
+            </div> */}
             <div className="flex flex-col space-y-2">
               <label htmlFor="audience" className="font-medium text-gray-700">
                 受眾<span className="text-red-500">*</span>
@@ -253,7 +253,7 @@ export default function MangaAdminForm() {
                 ))}
               </select>
             </div>
-            <div className="flex flex-col space-y-2">
+            {/* <div className="flex flex-col space-y-2">
               <label htmlFor="collectionsCount" className="font-medium text-gray-700">
                 收藏數
               </label>
@@ -267,7 +267,7 @@ export default function MangaAdminForm() {
                 min={0}
                 className="border-1 border-gray-300 rounded-lg p-2 text-gray-700"
               />
-            </div>
+            </div> */}
             <div className="flex flex-col space-y-2">
               <label htmlFor="tag" className="font-medium text-gray-700">
                 標籤
