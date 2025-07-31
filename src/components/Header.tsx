@@ -42,7 +42,7 @@ export default function Header() {
     const blob = new Blob([shortcutContent], { type: "text/plain" }); // 創建一個 Blob 對象
     const a = document.createElement("a"); // 創建一個 a 元素
     a.href = URL.createObjectURL(blob); // 設置 a 元素的 href 屬性
-    a.download = "AI小說坊.url"; // 設置 a 元素的 download 屬性
+    a.download = "VoiceToon.url"; // 設置 a 元素的 download 屬性
     document.body.appendChild(a); // 將 a 元素添加到 body 中
     a.click(); // 觸發 a 元素的 click 事件
     document.body.removeChild(a); // 將 a 元素從 body 中移除
@@ -70,8 +70,8 @@ export default function Header() {
       <div className="flex flex-col lg:flex-row gap-4 items-center justify-between mb-2">
         {/* Logo 與標題 */}
         <div className="flex items-center gap-3 cursor-pointer" onClick={handleBackToList}>
-          <Image src="/images/logo.png" alt="logo" width={52} height={52} />
-          <span className="text-white text-xl font-bold">AI小說坊</span>
+          <Image src="/images/logo.png" alt="logo" width={40} height={40} />
+          <span className="text-white text-2xl font-bold">VoiceToon</span>
         </div>
         {/* 搜尋框 */}
         <div className="flex w-full max-w-[500px]">

@@ -13,10 +13,10 @@ export default function Footer() {
           <div className="flex flex-col items-center md:items-start">
             <div className="flex items-center gap-2 mb-4">
               <Image src="/images/logo.png" alt="logo" width={36} height={36} />
-              <span className="text-xl font-bold">AI小說坊</span>
+              <span className="text-xl font-bold">VoiceToon</span>
             </div>
             <p className="text-gray-300 text-sm mb-4">
-              提供最新、最熱門的短篇小說與漫畫內容，讓您隨時享受閱讀的樂趣。
+              提供最新、最熱門的有聲短篇小說與漫畫內容，讓您隨時享受有聲閱讀的樂趣。
             </p>
             <div className="flex flex-col gap-4 items-center md:items-start">
               <a
@@ -108,7 +108,7 @@ export default function Footer() {
         {/* 版權資訊 */}
         <div className="border-t border-gray-700 mt-8 pt-6">
           <div className="flex flex-col md:flex-row justify-between items-center text-sm text-gray-400">
-            <p>© 2025 AI小說坊. 保留所有權利.</p>
+            <p>© 2025 VoiceToon. 保留所有權利.</p>
             <p className="mt-2 md:mt-0">本網站僅供學習與娛樂使用，所有內容版權歸原作者所有</p>
           </div>
         </div>

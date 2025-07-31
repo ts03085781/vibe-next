@@ -16,8 +16,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "AI小說坊",
-  description: "AI小說坊 一個AI小說閱讀平台,小說內容皆由AI定時自動生成生成",
+  title: "VoiceToon",
+  description: "VoiceToon 一個AI小說有聲平台,小說內容皆由AI自動生成",
 };
 
 export default function RootLayout({
