@@ -18,10 +18,7 @@ export async function GET(request: NextRequest) {
     const status = searchParams.get("status");
 
     // 建立查詢條件
-    const query: any = { authorId: user._id };
-    if (status && status !== "all") {
-      query.status = status;
-    }
+    const query = { authorId: user._id, status: status || "all" };
 
     const skip = (page - 1) * limit;
 
