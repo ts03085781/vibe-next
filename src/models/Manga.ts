@@ -16,6 +16,9 @@ export interface IManga extends Document {
   updateDate: Date;
   collectionsCount: number;
   tag: string;
+  authorId: string; // 新增作者欄位
+  authorNickname: string; // 新增作者暱稱
+  authorUsername: string; // 新增作者用戶名
 }
 
 const MangaSchema: Schema = new Schema({
@@ -31,7 +34,6 @@ const MangaSchema: Schema = new Schema({
   description: {
     type: String,
     required: true,
-
     trim: true,
   },
   coverImage: {
@@ -88,6 +90,21 @@ const MangaSchema: Schema = new Schema({
     trim: true,
     required: false,
   },
+  authorId: {
+    type: Schema.Types.ObjectId,
+    ref: "User",
+    required: true,
+  },
+  authorNickname: {
+    type: String,
+    trim: true,
+    required: false,
+  },
+  authorUsername: {
+    type: String,
+    trim: true,
+    required: false,
+  },
 });
 
 // 建立索引以提升查詢效能
@@ -95,5 +112,7 @@ MangaSchema.index({ title: "text", description: "text" });
 MangaSchema.index({ genre: 1 });
 MangaSchema.index({ rating: -1 });
 MangaSchema.index({ createDate: -1 });
+MangaSchema.index({ authorId: 1 }); // 新增作者索引
+MangaSchema.index({ authorUsername: 1 }); // 新增作者用戶名索引
 
 export default mongoose.models.Manga || mongoose.model<IManga>("Manga", MangaSchema);

@@ -70,9 +70,12 @@ export default function CloudinaryUpload({
                   />
                 </svg>
                 <span className="text-gray-600">點擊上傳圖片</span>
-                <span className="text-red-400 text-sm">建議格式: 高360px 寬240px</span>
-
-                <span className="text-xs text-gray-400">支援 JPG, PNG, GIF, WebP (最大 10MB)</span>
+                <span className="text-red-400 text-sm">
+                  建議格式: 寬240px 高360px (寬高比例: 2:3)
+                </span>
+                <span className="text-xs text-gray-400">
+                  支援 JPG, PNG, GIF, WebP ,MP4 (最大 10MB)
+                </span>
               </div>
             </button>
           )}
@@ -95,6 +98,7 @@ export default function CloudinaryUpload({
         id={name}
         defaultValue={currentImageUrl}
         required
+        readOnly
       />
 
       {/* 清除按鈕 */}
@@ -102,7 +106,7 @@ export default function CloudinaryUpload({
         <button
           type="button"
           onClick={() => onUpload("")}
-          className="w-full py-2 px-4 bg-red-500 text-white rounded-lg hover:bg-red-600 transition-colors focus:outline-none focus:ring-2 focus:ring-red-300"
+          className="cursor-pointer font-medium w-full py-2 px-4 bg-red-500 text-white rounded-lg hover:bg-red-600 transition-colors focus:outline-none focus:ring-2 focus:ring-red-300"
         >
           清除圖片
         </button>

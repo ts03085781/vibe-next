@@ -108,6 +108,9 @@ export default function Header() {
           <span className="cursor-pointer" onClick={() => preCheckLogin("/favorite")}>
             收藏庫
           </span>
+          <span className="cursor-pointer" onClick={() => preCheckLogin("/creation")}>
+            創作專區
+          </span>
           <span className="cursor-pointer" onClick={handleDownloadShortcut}>
             設為桌面圖標
           </span>

@@ -32,7 +32,7 @@ export default function AppInit() {
         if (user && token) {
           login(token, JSON.parse(user));
         } else {
-          const memberPages = ["/favorite"];
+          const memberPages = ["/favorite", "/creation"];
           if (memberPages.includes(window.location.pathname)) {
             router.push("/login");
           }

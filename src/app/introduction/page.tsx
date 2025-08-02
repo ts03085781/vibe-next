@@ -26,6 +26,8 @@ interface MangaData {
   alpha?: string;
   createDate?: Date;
   updateDate?: Date;
+  authorNickname?: string;
+  authorUsername?: string;
 }
 function IntroductionContent() {
   const searchParams = useSearchParams();
@@ -238,6 +240,9 @@ function IntroductionContent() {
             <p className="text-gray-600 text-sm mb-1.5">字母索引: {mangaData.alpha}</p>
             <p className="text-gray-600 text-sm mb-1.5">收藏人數: {mangaData.collectionsCount}</p>
             <p className="text-gray-600 text-sm mb-1.5">目前狀態: {mangaData.status}</p>
+            <p className="text-gray-600 text-sm mb-1.5">
+              作者: {mangaData.authorNickname} ({mangaData.authorUsername})
+            </p>
             <p className="text-gray-600 text-sm mb-1.5">
               出品年份: {dayjs(mangaData.createDate).format("YYYY-MM-DD")}
             </p>
