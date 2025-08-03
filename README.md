@@ -1,35 +1,110 @@
 # VoiceToon
 
-VoiceToon是一個現代化的短篇小說/漫畫閱讀與管理平台，支援漫畫/小說上傳、分類、閱讀、語音朗讀、PWA 安裝等功能。前端採用 Next.js + React + Tailwind CSS，後端串接 Node.js 與 MongoDB Atlas，並可整合 ChatGPT API 生成內容。
+VoiceToon 是一個革命性的 AI 驅動有聲小說平台，致力於為用戶提供沉浸式的閱讀體驗。平台結合了現代化的網頁技術與 AI 內容生成能力，讓用戶不僅能閱讀精彩的小說內容，還能享受語音朗讀功能，打造全新的數位閱讀體驗。
+
+在當今快節奏的數位時代，VoiceToon 重新定義了閱讀的意義。我們相信，閱讀不應該只是視覺的享受，更應該是全方位的感官體驗。透過先進的 AI 技術，我們能夠自動生成原創的小說內容，為創作者提供無限的靈感來源；同時，運用 Web Speech API 技術，我們為每一段文字注入了生命，讓故事能夠被「聽見」，讓閱讀變得更加生動有趣。
+
+VoiceToon 不僅是一個閱讀平台，更是一個創作的搖籃。我們為作者提供了完整的創作工具，從作品上傳、章節管理到社群互動，每一個環節都經過精心設計。讀者可以在這裡發現新世界，作者可以在這裡分享故事，而 AI 則在這裡扮演著靈感夥伴的角色，共同創造出屬於這個時代的文學作品。
+
+無論你是忙碌的上班族想要在通勤時享受有聲閱讀，還是創作者尋找靈感與發表平台，VoiceToon 都能為你提供最佳的數位閱讀體驗。讓我們一起探索文字與聲音的完美結合，開啟閱讀的新紀元。
+
+## 🎯 品牌特色
+
+- **AI 內容生成**：整合 ChatGPT API，自動生成原創小說內容
+- **語音朗讀技術**：運用 Web Speech API，提供自然流暢的語音朗讀
+- **現代化設計**：採用響應式設計，支援 PWA 安裝
+- **社群互動**：支援留言、評分、收藏等社交功能
 
 ---
 
-## 技術棧
+## 🛠️ 技術架構
 
-- **前端**：Next.js 13+ (App Router)、React 18、Tailwind CSS
-- **後端 API**：Next.js API Route (Node.js)
-- **資料庫**：MongoDB Atlas (雲端)
-- **ORM**：Mongoose
-- **圖片儲存**：Cloudinary（僅存 URL 於 DB）
-- **語音朗讀**：Web Speech API (SpeechSynthesis)
-- **其他**：TypeScript、ESLint、Prettier
+### 前端技術棧
+
+- **Next.js 15.4.1**：採用 App Router 架構，提供 SSR/SSG 優化
+- **React 19.1.0**：使用最新的 React 版本，支援並發特性
+- **TypeScript 5**：完整的型別安全，提升開發效率
+- **Tailwind CSS 4**：現代化的 CSS 框架，快速構建響應式 UI
+- **Zustand 5.0.6**：輕量級狀態管理
+
+### 後端技術棧
+
+- **Next.js API Routes**：無需額外後端服務器，全棧開發
+- **MongoDB Atlas**：雲端 NoSQL 資料庫，高可用性
+- **Mongoose 8.16.3**：MongoDB ODM，提供 Schema 驗證
+- **JWT + bcryptjs**：安全的身份驗證與密碼加密
+
+### 第三方服務整合
+
+- **Cloudinary**：雲端圖片儲存與 CDN 服務
+- **Web Speech API**：瀏覽器原生語音合成技術
+- **React Icons**：豐富的圖標庫
 
 ---
 
-## 主要功能
+## 🚀 核心功能
 
-- 📚 首頁漫畫/小說列表（支援篩選、排序、分頁）
-- 🔍 進階搜尋與分類
-- 🖼️ 圖片上傳（Cloudinary 圖床）
-- 📝 管理員後台（新增/編輯漫畫/小說/章節）
-- 📖 閱讀頁（支援章節切換、語音朗讀）
-- 🗣️ 一鍵語音朗讀章節內容
-- 🗂️ MongoDB Atlas 雲端資料庫
-- 🛡️ Schema 驗證與型別安全
+### 內容管理系統
+
+- **作品上傳**：支援封面圖片上傳、分類標籤、內容描述
+- **章節管理**：多章節結構，支援章節編輯與排序
+- **分類系統**：多維度分類（類型、受眾、年份、狀態）
+- **搜尋功能**：全文搜尋與進階篩選
+
+### 用戶體驗功能
+
+- **語音朗讀**：一鍵朗讀章節內容，支援暫停/繼續/停止
+- **收藏系統**：個人收藏庫，快速存取喜愛作品
+- **評分系統**：0-10 分評分機制，幫助用戶發現優質內容
+- **留言互動**：作品留言功能，支援按讚互動
+
+### 創作平台
+
+- **創作專區**：作者專屬創作空間
+- **作品管理**：個人作品編輯、刪除、更新
+- **章節編輯**：線上章節編輯器
+- **權限控制**：作品所有權驗證
+
+### 用戶系統
+
+- **註冊/登入**：JWT 身份驗證
+- **個人資料**：暱稱、用戶名管理
+- **收藏管理**：個人收藏作品管理
+- **創作歷史**：個人創作作品追蹤
 
 ---
 
-## 專案結構
+## 📊 資料模型設計
+
+### 核心實體
+
+- **User**：用戶資料與身份驗證
+- **Manga**：作品主體，包含標題、描述、封面、評分等
+- **Chapter**：章節內容，支援文字與影片格式
+- **Comment**：留言系統，支援按讚功能
+- **Rating**：評分系統，確保每用戶每作品唯一評分
+- **Favorite**：收藏系統，用戶個人收藏列表
+
+---
+
+## 🎨 用戶介面設計
+
+### 響應式設計
+
+- **桌面版**：完整功能展示，多欄位佈局
+- **平板版**：適中佈局，保持功能完整性
+- **手機版**：單欄佈局，觸控友善設計
+
+### 設計系統
+
+- **色彩方案**：深色主題，專業視覺效果
+- **字體系統**：系統字體堆疊，確保跨平台一致性
+- **組件庫**：可重用的 UI 組件
+- **動畫效果**：流暢的過渡動畫
+
+---
+
+## 🏗️ 專案結構
 
 ```
 vibe-next/
@@ -37,78 +112,124 @@ vibe-next/
 ├── src/
 │   ├── app/               # Next.js App Router 入口與頁面
 │   │   ├── page.tsx       # 首頁
-│   │   ├── admin/         # 管理員後台
-│   │   ├── read/          # 閱讀頁
+│   │   ├── creation/      # 創作專區
+│   │   ├── introduction/  # 作品介紹
+│   │   ├── favorite/      # 收藏頁面
 │   │   ├── api/           # API Route
 │   ├── components/        # React UI 元件
 │   ├── models/            # Mongoose Schema/Model
-│   ├── lib/               # 共用函式庫（如 dbConnect）
+│   ├── lib/               # 共用函式庫
 │   ├── utils/             # 工具函式
 │   ├── constants/         # 篩選/排序選項等常數
-│   ├── mocks/             # mock 資料
-├── .env.local             # 環境變數（MongoDB 連線字串等）
-├── next.config.js         # Next.js 設定
-├── tailwind.config.js     # Tailwind 設定
-├── package.json
-└── README.md
+│   ├── store/             # Zustand 狀態管理
+│   ├── types/             # TypeScript 型別定義
+├── .env.local             # 環境變數
+├── next.config.ts         # Next.js 設定
+└── package.json
 ```
 
 ---
 
-## 快速開始
+## 🚀 快速開始
 
-1. **安裝Node.js**
-   Node version: 23 up
+### 環境需求
 
-2. **安裝依賴**
+- **Node.js**：版本 23 或以上
+- **npm**：包管理器
+
+### 安裝步驟
+
+1. **安裝依賴**
 
    ```bash
    npm install
    ```
 
-3. **設定環境變數**
+2. **設定環境變數**
    - 複製 `.env.local.example` 為 `.env.local`
-   - 設定 `MONGODB_URI` 為你的 MongoDB Atlas 連線字串（建議指定資料庫名稱）
+   - 設定 `MONGODB_URI` 為你的 MongoDB Atlas 連線字串
+   - 設定 `CLOUDINARY_URL` 為 Cloudinary 連線字串
 
-4. **啟動開發伺服器**
-
+3. **啟動開發伺服器**
    ```bash
    npm run dev
    ```
-
    預設在 [http://localhost:3000](http://localhost:3000) 開啟
 
----
-
-## 主要環境變數
+### 主要環境變數
 
 ```env
 MONGODB_URI=mongodb+srv://<user>:<password>@cluster0.mongodb.net/vibe-next
 CLOUDINARY_URL=cloudinary://<api_key>:<api_secret>@<cloud_name>
-# 其他 API 金鑰...
 ```
 
 ---
 
-## 常見問題
+## 🔧 開發工具
 
-- **Q: 為什麼查不到資料？**
-  - 請確認 MongoDB URI 是否正確、資料庫名稱一致、Schema 型別正確。
-- **Q: 圖片無法顯示？**
-  - 請確認 Cloudinary URL 正確，且已在 `next.config.js` 加入白名單。
-- **Q: 語音朗讀沒反應？**
-  - 請確認瀏覽器支援 Web Speech API，且內容非空。
+### 開發環境
 
----
+- **Turbopack**：快速的開發伺服器
+- **ESLint + Prettier**：程式碼品質與格式化
+- **TypeScript**：型別安全與開發體驗
 
-## 進階功能
+### 部署與 DevOps
 
-- **語音朗讀**：章節頁面可一鍵朗讀內容，支援暫停/繼續/停止。
-- **管理員後台**：可新增/編輯漫畫主題與章節，支援多選分類、圖片上傳等。
+- **Vercel**：推薦部署平台
+- **MongoDB Atlas**：雲端資料庫服務
+- **Cloudinary**：圖片 CDN 服務
 
 ---
 
-## 貢獻方式
+## 🎯 技術亮點
+
+### 1. 現代化架構
+
+- 採用 Next.js 15 最新特性
+- 使用 React 19 並發特性
+- TypeScript 完整型別支援
+
+### 2. 性能優化
+
+- 圖片懶載入與優化
+- 字體載入策略優化
+- 資料庫索引優化
+- 快取策略實作
+
+### 3. 安全性
+
+- JWT 身份驗證
+- 密碼 bcrypt 加密
+- 所有權驗證中間件
+- 輸入驗證與清理
+
+### 4. 可擴展性
+
+- 模組化組件設計
+- 可重用的 API 中間件
+- 清晰的資料模型設計
+- 完整的錯誤處理機制
+
+---
+
+## 🔮 未來發展方向
+
+### 短期目標
+
+- PWA 功能完善
+- 更多語音選項
+- 社群功能增強
+
+### 長期願景
+
+- AI 內容生成整合
+- 多語言支援
+- 行動應用開發
+- 商業化功能
+
+---
+
+## 🤝 貢獻方式
 
 1. Fork 本專案
 2. 建立新分支 (`git checkout -b feature/your-feature`)
@@ -118,13 +239,13 @@ CLOUDINARY_URL=cloudinary://<api_key>:<api_secret>@<cloud_name>
 
 ---
 
-## 聯絡方式
+## 📞 聯絡方式
 
-- 作者：你的名字/團隊
-- Email：ts03085781@gmail.com
-- [Issues](https://github.com/vibe-next/issues)
+- **Email**：ts03085781@gmail.com
+- **Issues**：[GitHub Issues](https://github.com/vibe-next/issues)
 
 ---
 
-如需更多協助，請參考原始碼註解或提出 Issue！  
+VoiceToon 不僅是一個技術專案，更是一個致力於改變數位閱讀體驗的創新平台，結合了現代化技術與人性化設計，為用戶提供前所未有的閱讀體驗。
+
 **歡迎一起打造最棒的 AI 小說/漫畫平台！**
