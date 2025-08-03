@@ -133,9 +133,10 @@ export default function CreationPage() {
                         <Image
                           src={creation.coverImage}
                           alt={creation.title}
-                          fill
-                          sizes="width:200px"
-                          className="object-cover"
+                          width={234}
+                          height={351}
+                          quality={75}
+                          className="object-cover w-[234px] h-[351px]"
                         />
                       )
                     ) : (
