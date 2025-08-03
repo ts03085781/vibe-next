@@ -162,12 +162,12 @@ function IntroductionContent() {
     <div className="min-h-screen bg-gray-50">
       <div className="container mx-auto px-4 py-8">
         {/* 漫畫資訊區 */}
-        <div className="flex flex-col items-center sm:items-start sm:flex-row gap-4 bg-white rounded-lg shadow-md p-6 mb-6">
+        <div className="flex flex-col items-center sm:items-start sm:flex-row gap-4 bg-white rounded-lg shadow-md p-6 mb-6 ">
           {mangaData.coverImage ? (
             isVideo ? (
               <video
                 src={mangaData.coverImage}
-                className="object-cover w-[280px] rounded-lg "
+                className="object-cover rounded-lg w-[280px] h-[420px]"
                 autoPlay
                 loop
                 muted
@@ -175,11 +175,12 @@ function IntroductionContent() {
               />
             ) : (
               <Image
+                className="object-cover rounded-lg w-[280px] h-[420px]"
                 src={mangaData.coverImage}
                 alt={mangaData.title}
                 width={280}
-                height={280}
-                className="object-cover rounded-lg"
+                height={420}
+                quality={75}
               />
             )
           ) : (

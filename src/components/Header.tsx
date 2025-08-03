@@ -70,7 +70,13 @@ export default function Header() {
       <div className="flex flex-col lg:flex-row gap-4 items-center justify-between mb-2">
         {/* Logo 與標題 */}
         <div className="flex items-center gap-3 cursor-pointer" onClick={handleBackToList}>
-          <Image src="/images/logo.png" alt="logo" width={40} height={40} />
+          <Image
+            className="w-[48px] h-[42px]"
+            src="/images/logo.png"
+            alt="logo"
+            width={48}
+            height={42}
+          />
           <span className="text-white text-2xl font-bold">VoiceToon</span>
         </div>
         {/* 搜尋框 */}

@@ -119,9 +119,13 @@ export default function Home() {
           />
 
           {/* 內容卡片列表 */}
-          {loading && <div>載入中...</div>}
+          {loading && <div className="text-center text-2xl font-bold text-gray-500">載入中...</div>}
+
+          {/* 錯誤訊息 */}
           {error && <div className="text-red-500">{error}</div>}
-          <div className="flex flex-wrap gap-4">
+
+          {/* 內容卡片列表 */}
+          <div className="flex flex-wrap gap-4 justify-center md:justify-start">
             {contentData.map((item: IManga) => (
               <ContentCard key={item._id} {...item} />
             ))}

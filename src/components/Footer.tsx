@@ -12,7 +12,13 @@ export default function Footer() {
           {/* 網站資訊 */}
           <div className="flex flex-col items-center md:items-start">
             <div className="flex items-center gap-2 mb-4">
-              <Image src="/images/logo.png" alt="logo" width={36} height={36} />
+              <Image
+                className="w-[32px] h-[28px]"
+                src="/images/logo.png"
+                alt="logo"
+                width={32}
+                height={28}
+              />
               <span className="text-xl font-bold">VoiceToon</span>
             </div>
             <p className="text-gray-300 text-sm mb-4">

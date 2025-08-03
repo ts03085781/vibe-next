@@ -40,9 +40,9 @@ export default function ContentCard({
       onClick={handleClick}
     >
       {/* 上方內容區 - 封面區域 */}
-      <div className="relative bg-gray-100 h-[351px]">
+      <div className="relative bg-gray-100  ">
         {/* 封面圖片或佔位符 */}
-        <div className="flex items-center justify-center h-full">
+        <div className="flex items-center justify-center h-[351px] w-[234px]">
           {coverImage ? (
             isVideo ? (
               <video
@@ -52,14 +52,17 @@ export default function ContentCard({
                 loop
                 muted
                 playsInline
+                width={234}
+                height={351}
               />
             ) : (
               <Image
+                className="object-cover w-[234px] h-[351px]"
                 src={coverImage}
                 alt={title}
-                fill
-                sizes="width:200px"
-                className="object-cover"
+                width={234}
+                height={351}
+                quality={75}
               />
             )
           ) : (
