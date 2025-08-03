@@ -2,6 +2,9 @@ import { NextRequest, NextResponse } from "next/server";
 import dbConnect from "@/lib/mongodb";
 import Manga from "@/models/Manga";
 import Chapter from "@/models/Chapter";
+import Comment from "@/models/Comment";
+import Rating from "@/models/Rating";
+import Favorite from "@/models/Favorite";
 import { ownershipMiddleware, handleApiError, handleApiSuccess } from "@/utils/middleware";
 
 // GET /api/creations/[id] - 獲取作品詳情
@@ -67,8 +70,15 @@ export async function DELETE(
 
     await dbConnect();
 
-    // 刪除作品和相關章節
-    await Promise.all([Manga.findByIdAndDelete(id), Chapter.deleteMany({ mangaId: id })]);
+    // 刪除作品和所有相關資料
+    await Promise.all([
+      Manga.findByIdAndDelete(id),
+      Chapter.deleteMany({ mangaId: id }),
+      Comment.deleteMany({ mangaId: id }),
+      Rating.deleteMany({ mangaId: id }),
+      // 從所有用戶的收藏列表中移除該作品
+      Favorite.updateMany({}, { $pull: { favorites: id } }),
+    ]);
 
     return handleApiSuccess({ message: "作品刪除成功" });
   } catch (error) {

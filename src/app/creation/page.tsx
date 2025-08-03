@@ -108,7 +108,7 @@ export default function CreationPage() {
             </Link>
           </div>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="flex flex-wrap gap-4 justify-center md:justify-start">
             {/* 作品列表 */}
             {creations.map(creation => (
               <div
