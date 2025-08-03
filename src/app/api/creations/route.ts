@@ -15,10 +15,9 @@ export async function GET(request: NextRequest) {
     const { searchParams } = new URL(request.url);
     const page = parseInt(searchParams.get("page") || "1");
     const limit = parseInt(searchParams.get("limit") || "20");
-    const status = searchParams.get("status");
 
     // 建立查詢條件
-    const query = { authorId: user._id, status: status || "all" };
+    const query = { authorId: user._id };
 
     const skip = (page - 1) * limit;
 
