@@ -1,5 +1,6 @@
-const mongoose = require("mongoose");
-require("dotenv").config({ path: ".env.local" });
+import mongoose from "mongoose";
+import dotenv from "dotenv";
+dotenv.config({ path: ".env.local" });
 
 // 連接資料庫
 async function connectDB() {
