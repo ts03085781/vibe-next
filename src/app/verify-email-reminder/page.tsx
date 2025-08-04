@@ -1,12 +1,11 @@
 "use client";
-import React, { useState } from "react";
-import { useRouter, useSearchParams } from "next/navigation";
+import React, { useState, Suspense } from "react";
+import { useSearchParams } from "next/navigation";
 import Link from "next/link";
 
-export default function VerifyEmailReminder() {
-  const router = useRouter();
+function VerifyEmailReminderContent() {
   const searchParams = useSearchParams();
-  const [email, setEmail] = useState(searchParams.get("email") || "");
+  const [email] = useState(searchParams.get("email") || "");
   const [isResending, setIsResending] = useState(false);
   const [message, setMessage] = useState("");
   const [messageType, setMessageType] = useState<"success" | "error" | "">("");
@@ -152,5 +151,13 @@ export default function VerifyEmailReminder() {
         </div>
       </div>
     </div>
+  );
+}
+
+export default function VerifyEmailReminderPage() {
+  return (
+    <Suspense fallback={<div className="text-center py-12">載入中...</div>}>
+      <VerifyEmailReminderContent />
+    </Suspense>
   );
 }

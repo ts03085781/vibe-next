@@ -1,9 +1,9 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
 
-export default function VerifyEmail() {
+function VerifyEmailContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const [verificationStatus, setVerificationStatus] = useState<"loading" | "success" | "error">(
@@ -124,5 +124,13 @@ export default function VerifyEmail() {
         </div>
       </div>
     </div>
+  );
+}
+
+export default function VerifyEmailPage() {
+  return (
+    <Suspense fallback={<div className="text-center py-12">載入中...</div>}>
+      <VerifyEmailContent />
+    </Suspense>
   );
 }
