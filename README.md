@@ -161,6 +161,10 @@ vibe-next/
 ```env
 MONGODB_URI=mongodb+srv://<user>:<password>@cluster0.mongodb.net/vibe-next
 CLOUDINARY_URL=cloudinary://<api_key>:<api_secret>@<cloud_name>
+GMAIL_USER=your-email@gmail.com
+GMAIL_PASS=your-app-password
+NEXT_PUBLIC_BASE_URL=http://localhost:3000
+CRON_SECRET=your-cron-secret-key  # 可選，用於保護 Cron Job
 ```
 
 ---

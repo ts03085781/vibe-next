@@ -3,6 +3,8 @@ import dbConnect from "@/lib/mongodb";
 import User from "@/models/User";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
+import { sendVerificationEmail } from "@/utils/email";
+import crypto from "crypto";
 
 const JWT_SECRET = process.env.JWT_SECRET;
 const REFRESH_SECRET = process.env.REFRESH_SECRET;
@@ -36,6 +38,11 @@ export async function POST(request: NextRequest) {
 
     // 密碼加密
     const hashed = await bcrypt.hash(password, 10);
+
+    // 生成郵件驗證 Token
+    const emailVerificationToken = crypto.randomBytes(32).toString("hex");
+    const emailVerificationExpires = new Date(Date.now() + 24 * 60 * 60 * 1000); // 24小時後過期
+
     const user = await User.create({
       username,
       email,
@@ -43,6 +50,8 @@ export async function POST(request: NextRequest) {
       nickname,
       createdDate: new Date(),
       updatedDate: new Date(),
+      emailVerificationToken,
+      emailVerificationExpires,
     });
 
     // 產生 Access Token 15分鐘過期
@@ -62,11 +71,19 @@ export async function POST(request: NextRequest) {
       lastActivityAt: new Date(),
     });
 
-    // 回傳使用者資訊
+    // 發送驗證郵件
+    try {
+      await sendVerificationEmail(user.email, emailVerificationToken, user.nickname);
+    } catch (emailError) {
+      console.error("發送驗證郵件失敗:", emailError);
+      // 不中斷註冊流程，但記錄錯誤
+    }
+
+    // 回傳使用者資訊（不包含 accessToken，因為需要郵件驗證）
     const response = NextResponse.json({
       success: true,
+      message: "註冊成功！請檢查您的電子郵件以完成驗證。",
       data: {
-        accessToken,
         user: {
           _id: user._id,
           username: user.username,
@@ -80,14 +97,7 @@ export async function POST(request: NextRequest) {
       },
     });
 
-    // 設定 Refresh Token Cookie
-    response.cookies.set("refreshToken", refreshToken, {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
-      sameSite: "strict",
-      maxAge: 7 * 24 * 60 * 60 * 1000, // 7天
-    });
-
+    // 註冊成功後不設定 Cookie，因為需要郵件驗證
     return response;
   } catch (error) {
     console.error("註冊失敗:", error);

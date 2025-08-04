@@ -53,9 +53,8 @@ export default function RegisterPage() {
       });
       const data = await res.json();
       if (data.success) {
-        login(data.data.accessToken, data.data.user);
-        alert("註冊成功，將跳轉至首頁");
-        router.push("/");
+        // 註冊成功後跳轉到郵件驗證提醒頁面
+        router.push(`/verify-email-reminder?email=${encodeURIComponent(form.email)}`);
       } else {
         setError(data.error || "註冊失敗");
       }

@@ -32,7 +32,12 @@ export default function LoginPage() {
         login(data.data.accessToken, data.data.user);
         router.push("/");
       } else {
-        setError(data.error || "登入失敗");
+        // 檢查是否需要郵件驗證
+        if (data.needsEmailVerification) {
+          router.push(`/verify-email-reminder?email=${encodeURIComponent(data.email)}`);
+        } else {
+          setError(data.error || "登入失敗");
+        }
       }
     } catch (e) {
       setError("API 請求失敗");
@@ -73,12 +78,25 @@ export default function LoginPage() {
         />
         <button
           type="submit"
-          className="w-full py-3 rounded-lg bg-orange-500 hover:bg-orange-600 text-white font-bold text-lg transition-all duration-150"
+          className="cursor-pointer w-full py-3 rounded-lg bg-orange-500 hover:bg-orange-600 text-white font-bold text-lg transition-all duration-150"
           disabled={loading}
         >
           {loading ? "登入中..." : "登入"}
         </button>
+
         {error && <div className="text-red-400 text-center">{error}</div>}
+
+        {/* 忘記密碼按鈕 */}
+        <div className="text-center">
+          <button
+            type="button"
+            onClick={() => router.push("/forgot-password")}
+            className="cursor-pointer text-orange-600 hover:text-orange-700 font-medium text-sm underline transition-colors"
+          >
+            忘記密碼？
+          </button>
+        </div>
+
         <div className="text-center text-gray-400 mt-2">
           還沒有帳號？{" "}
           <a href="/register" className="text-orange-600 hover:underline font-bold">

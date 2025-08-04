@@ -40,6 +40,19 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ success: false, error: "密碼錯誤" }, { status: 401 });
     }
 
+    // 檢查郵件驗證狀態
+    if (!user.emailVerified) {
+      return NextResponse.json(
+        {
+          success: false,
+          error: "請先驗證您的電子郵件地址",
+          needsEmailVerification: true,
+          email: user.email,
+        },
+        { status: 403 }
+      );
+    }
+
     // 產生Access Token 15分鐘過期
     const accessToken = jwt.sign(
       { userId: user._id, username: user.username, role: user.role },
