@@ -68,6 +68,13 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="zh-TW">
+      <head>
+        {/* google search console 驗證碼 */}
+        <meta
+          name="google-site-verification"
+          content="PGh9s2ZEvtKLU5HHyUey90dtFUI46BqmH3gBc-_SBCk"
+        />
+      </head>
       <body className="antialiased">
         <AppInit />
         <Header />
