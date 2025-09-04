@@ -74,6 +74,8 @@ export default function RootLayout({
           name="google-site-verification"
           content="PGh9s2ZEvtKLU5HHyUey90dtFUI46BqmH3gBc-_SBCk"
         />
+        {/* favicon標籤 用於顯示在 google 搜尋結果的網站圖示*/}
+        <link rel="icon" href="/favicon.ico" type="image/x-icon" />
       </head>
       <body className="antialiased">
         <AppInit />
